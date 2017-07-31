@@ -1,0 +1,16 @@
+{% if model %}
+    <div class="services_box">
+        {% for item in model %}
+            <div class="services_box-item"><img alt="alt" src="/userfiles/services/{{ item.image }}" />
+                <div class="title_box">
+                    <div class="title">{{ item.name }}</div>
+                </div>
+
+                <div class="desc">
+                    {{ item.description| raw }}
+                </div>
+                <a class="order_btn fancy_call-btn hvr-bounce-to-right" data-service="{{ item.name }}" href="#order_service">ЗАКАЗАТЬ УСЛУГУ</a></div>
+            <!-- /.services_box-item -->
+        {% endfor %}
+    </div>
+{% endif %}

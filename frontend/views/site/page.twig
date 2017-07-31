@@ -1,0 +1,58 @@
+{{ set(this, 'title', model.title) }}
+{{ this.registerMetaTag({'name':'description', 'content': model.description}) }}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="center content">
+
+                {{ model.text| raw }}
+
+                <div class="title">СКИДКИ</div>
+                <div class="delimiter"></div>
+                <p>Наши клиенты – компании малого и среднего бизнеса всех сфер деятельности, интернет-магазины и различные проекты электронной коммерции, порталы и сервисы.</p>
+                <div class="delimiter"></div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="plans_box container">
+    <div class="row">
+        <div class="col-md-4 col-sm-4">
+            <div class="plans_item">
+                <div class="title">ДЛЯ МАЛОГО БИЗНЕСА (план 1)</div>
+                <div class="price">100 ₽ <span>за квартал</span></div>
+                <div class="desc">
+                    <p>Если вы решите создать сайт и продвигать его в компании, проверенной временем и с положительными отзывами, вы не пожалеете.</p>
+                    <a class="order_btn hvr-bounce-to-right fancy_call-btn" href="#order_service" data-service="ДЛЯ МАЛОГО БИЗНЕСА (план 1)">ЗАКАЗАТЬ УСЛУГУ</a>
+                </div>
+            </div>
+            <!-- /.plans_item -->
+        </div>
+        <div class="col-md-4 col-sm-4">
+            <div class="plans_item">
+                <div class="title">ДЛЯ МАЛОГО БИЗНЕСА (план 2)</div>
+                <div class="price">100 $</div>
+                <div class="desc">
+                    <p>Если вы решите создать сайт и продвигать его в компании, проверенной временем и с положительными отзывами, вы не пожалеете.</p>
+                    <a class="order_btn hvr-bounce-to-right fancy_call-btn" href="#order_service" data-service="ДЛЯ МАЛОГО БИЗНЕСА (план 2)">ЗАКАЗАТЬ УСЛУГУ</a>
+                </div>
+            </div>
+            <!-- /.plans_item -->
+        </div>
+        <div class="col-md-4 col-sm-4">
+            <div class="plans_item">
+                <div class="title green">ДЛЯ МАЛОГО БИЗНЕСА (план 3)</div>
+                <div class="price">100 $ <span>в месяц</span></div>
+                <div class="desc">
+                    <p>Если вы решите создать сайт и продвигать его в компании, проверенной временем и с положительными отзывами, вы не пожалеете.</p>
+                    <a class="order_btn hvr-bounce-to-right fancy_call-btn" href="#order_service" data-service="ДЛЯ МАЛОГО БИЗНЕСА (план 3)">ЗАКАЗАТЬ УСЛУГУ</a>
+                </div>
+            </div>
+            <!-- /.plans_item -->
+        </div>
+    </div>
+</div>
+<!-- /.plans_box -->

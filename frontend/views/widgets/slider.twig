@@ -1,0 +1,10 @@
+{% if model %}
+    <div class="main_slider">
+        <div id="slider_slogans" class="owl-carousel">
+            {% for item in model %}
+                <div>{{ item.text| raw }}</div>
+            {% endfor %}
+        </div>
+    </div>
+    <!-- /.main_slider -->
+{% endif %}

@@ -1,0 +1,56 @@
+{{ set(this, 'title', model.title) }}
+{{ this.registerMetaTag({'name':'description', 'content': model.description}) }}
+
+{% if model.slider_text_id %}
+    {{ void(this.beginBlock('carousel')) }}
+        {{ use('frontend/widgets/Slider') }}
+        {{ slider_widget({'items': model.sliderText.sliderTextItems }) }}
+    {{ void(this.endBlock()) }}
+{% endif %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="center content">
+                {{ model.text| raw }}
+            </div>
+
+            {% if sofWorks %}
+                <div class="stages_of-work">
+                    {% for item in sofWorks %}
+                        <div class="stages_of-work-item">
+                            <img src="/userfiles/sof_work/{{ item.image }}" alt="{{ item.image_alt }}" title="{{ item.image_title }}">
+                            <div class="title">{{ item.name }}</div>
+                            <div class="desc">
+                                {{ item.description| raw }}
+                            </div>
+                        </div>
+                        <!-- /.stages_of-work-item -->
+                    {% endfor %}
+                </div>
+                <!-- /.stages_of-work -->
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+
+{% if guestbook %}
+    <div class="guestbook_box">
+        <div class="guestbook_carousel">
+            <div id="guestbook_carousel-items" class="owl-carousel">
+                {% for item in guestbook %}
+                    <div>
+                        <img src="/userfiles/guestbook/{{ item.image }}" alt="{{ item.image_alt }}" title="{{ item.image_title }}">
+                        <div class="text">
+                            {{ item.text| raw }}
+                        </div>
+                        <div class="name">{{ item.name }}</div>
+                        <div class="city">{{ item.city }}</div>
+                    </div>
+                {% endfor %}
+            </div>
+            <!-- /.main_slider -->
+    </div>
+    <!-- /.guestbook_box -->
+{% endif %}
