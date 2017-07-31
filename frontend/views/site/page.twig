@@ -5,6 +5,7 @@
         <div class="col-md-12">
             <div class="center content">
                 <h1>{{ model.name }}</h1>
+                {{ path('writemessage', {'action': 'writemessage'}) }}
                 {{ model.text| raw }}
             </div>
         </div>

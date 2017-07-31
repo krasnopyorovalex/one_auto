@@ -55,8 +55,8 @@ return [
             'rules' => [
                 '/' => 'site',
                 'sitemap.xml' => 'sitemap/xml',
-                'robots.txt' => 'robots',
-                '<alias>/page/<page:\d+>' => 'site/page',
+                'send/<action:(writemessage)>' => 'send/<action>',
+                //'<alias>/page/<page:\d+>' => 'site/page',
                 '<alias>' => 'site/page',
                 //'<controller:(rooms|news|articles|gallery)>/<alias:[\wd-]+>' => '<controller>/index'
             ],

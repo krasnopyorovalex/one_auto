@@ -13,6 +13,6 @@ class Services extends Widget
 
     public function run()
     {
-        return $this->render('/widgets/services.twig', ['model' => Model::find()->asArray()->all()]);
+        return $this->render('/widgets/services.twig', ['model' => Model::find()->orderBy('pos')->asArray()->all()]);
     }
 }

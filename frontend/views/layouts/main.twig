@@ -161,39 +161,8 @@
 </div>
 <!-- /#order_service -->
 
-<div id="write_message" class="form_box">
-    <div class="header">
-        <div class="title">Написать нам телеграмму</div>
-        <div class="info">
-            <div>У вас, видимо, имеется вопрос к нам, поэтому пишите, пишите нам:)<br /> Рады будем ответить!</div>
-        </div>
-        <!-- /.info -->
-    </div>
-    <!-- /.header -->
-    <div class="body">
-        <form action="#">
-
-            <div class="form-group">
-                <input type="text" placeholder="как к Вам обращаться?">
-            </div>
-
-            <div class="form-group">
-                <input type="email" placeholder="Ваш email">
-            </div>
-
-            <div class="form-group">
-                <textarea placeholder="дополнительная информация"></textarea>
-            </div>
-
-            <div class="form-group submit_box">
-                <a class="order_btn hvr-bounce-to-right" href="#order_service">Отправить телеграмму</a>
-            </div>
-
-        </form>
-    </div>
-    <!-- /.body -->
-</div>
-<!-- /#write_message -->
+{{ use('frontend/widgets/WriteMessage') }}
+{{ write_message_widget() }}
 
 <div id="recall" class="form_box">
     <div class="header">
