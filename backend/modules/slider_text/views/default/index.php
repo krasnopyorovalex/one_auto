@@ -10,11 +10,10 @@ use yii\helpers\Url;
 $this->params['breadcrumbs'][] = $this->context->module->params['name'];?>
         <?php echo GridView::widget([
             'dataProvider' => $dataProvider,
-            'summary' => false,
+            //'summary' => false,
             'tableOptions' => ['class' => 'table responsive'],
             'showFooter' => true,
             'columns' => [
-                'id',
                 'name',
                 [
                     'class' => 'yii\grid\ActionColumn',

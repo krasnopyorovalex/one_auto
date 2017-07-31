@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->context->module->params['name'];?>
     <?= Html::beginForm(['/'.$this->context->module->id.'/items/update-pos-items'], 'post', ['class' => 'with__positions']) ?>
         <?php echo GridView::widget([
             'dataProvider' => $dataProvider,
-            'summary' => false,
+            //'summary' => false,
             'tableOptions' => ['class' => 'table responsive'],
             'showFooter' => true,
             'columns' => [

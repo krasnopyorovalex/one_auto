@@ -127,6 +127,7 @@ AppAsset::register($this);
                     <li>Услуги - {services}</li>
                     <li>Портфолио - {portfolio}</li>
                     <li>Продукты - {products}</li>
+                    <li>Карта сайта - {sitemap}</li>
                 </ul>
             </div>
 

@@ -5,6 +5,7 @@ namespace frontend\components;
 use frontend\widgets\Portfolio;
 use frontend\widgets\Products;
 use frontend\widgets\Services;
+use frontend\widgets\Sitemap;
 
 class ParserService
 {
@@ -22,6 +23,9 @@ class ParserService
         }
         if (strstr($text, '{products}')) {
             $text = str_replace('<p>{products}</p>', Products::widget(), $text);
+        }
+        if (strstr($text, '{sitemap}')) {
+            $text = str_replace('<p>{sitemap}</p>', Sitemap::widget(), $text);
         }
         return $text;
     }

@@ -1,0 +1,7 @@
+<ul class="sitemap">
+    {% for item in model %}
+        <li>
+            <a href="{{ path('page/index', {'alias' : item.alias}) }}">{{ item.name }}</a>
+        </li>
+    {% endfor %}
+</ul>
