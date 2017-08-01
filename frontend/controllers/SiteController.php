@@ -28,7 +28,7 @@ class SiteController extends Controller
         return $this->render('index.twig',[
             'model' => $model,
             'sofWorks' => SofWork::find()->asArray()->all(),
-            'guestbook' => Guestbook::find()->asArray()->all()
+            'guestbook' => Guestbook::find()->orderBy('pos')->asArray()->all()
         ]);
     }
 
