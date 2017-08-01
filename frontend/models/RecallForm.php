@@ -6,16 +6,15 @@ use Yii;
 use yii\base\Model;
 
 /**
- * WriteMessageForm is the model behind the contact form.
+ * RecallForm is the model behind the contact form.
  */
-class WriteMessageForm extends Model
+class RecallForm extends Model
 {
 
-    const SUBJECT = 'Поступила телеграмма с нашего сайта';
+    const SUBJECT = 'Форма заказа обратного звоночка';
 
     public $name;
-    public $email;
-    public $info;
+    public $phone;
 
 
     /**
@@ -24,8 +23,7 @@ class WriteMessageForm extends Model
     public function rules()
     {
         return [
-            [['name', 'email', 'info'], 'required'],
-            ['email', 'email']
+            [['name', 'phone'], 'required']
         ];
     }
 
@@ -36,8 +34,7 @@ class WriteMessageForm extends Model
     {
         return [
             'name' => 'Ваше имя',
-            'email' => 'Ваш email',
-            'info' => 'Дополнительная информация',
+            'phone' => 'Номер телефона'
         ];
     }
 
@@ -47,7 +44,7 @@ class WriteMessageForm extends Model
      */
     public function sendEmail($email)
     {
-        return Yii::$app->mailer->compose('write-message',['model' => $this])
+        return Yii::$app->mailer->compose('recall',['model' => $this])
             ->setTo($email)
             ->setFrom(['info@krasber.ru' => $this->name])
             ->setSubject(self::SUBJECT)

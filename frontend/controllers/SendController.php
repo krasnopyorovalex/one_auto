@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use frontend\models\RecallForm;
 use frontend\models\WriteMessageForm;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
@@ -18,6 +19,7 @@ class SendController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'write-message' => ['post'],
+                    'recall' => ['post'],
                 ],
             ],
         ];
@@ -29,10 +31,16 @@ class SendController extends Controller
     public function actionWriteMessage()
     {
         $form = new WriteMessageForm();
-        if ( $form->load(\Yii::$app->request->post()) && $form->validate() && $form->sendEmail(\Yii::$app->params['email']) ) {
-            return $this->asJson(['status' => 'success', 'message' => \Yii::$app->params['success_send_form']]);
-        }
-        return $this->asJson(['status' => 'error', 'message' => \Yii::$app->params['error_send_form']]);
+        return $this->asJson(\Yii::$app->sender->sendMessage($form));
+    }
+
+    /**
+     * @return \yii\web\Response
+     */
+    public function actionRecall()
+    {
+        $form = new RecallForm();
+        return $this->asJson(\Yii::$app->sender->sendMessage($form));
     }
 
 }

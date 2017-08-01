@@ -24,6 +24,9 @@ return [
         'parser' => [
             'class' => 'frontend\components\ParserService'
         ],
+        'sender' => [
+            'class' => 'frontend\services\SendService'
+        ],
         'assetManager' => [
             'appendTimestamp' => true,
         ],
@@ -55,7 +58,7 @@ return [
             'rules' => [
                 '/' => 'site',
                 'sitemap.xml' => 'sitemap/xml',
-                'send/<action:(write-message)>' => 'send/<action>',
+                'send/<action:(write-message|recall)>' => 'send/<action>',
                 //'<alias>/page/<page:\d+>' => 'site/page',
                 '<alias>' => 'site/page',
                 //'<controller:(rooms|news|articles|gallery)>/<alias:[\wd-]+>' => '<controller>/index'
