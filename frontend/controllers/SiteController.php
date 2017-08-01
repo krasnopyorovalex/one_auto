@@ -27,7 +27,7 @@ class SiteController extends Controller
         $model['text'] = \Yii::$app->parser->parse($model['text']);
         return $this->render('index.twig',[
             'model' => $model,
-            'sofWorks' => SofWork::find()->asArray()->all(),
+            'sofWorks' => SofWork::find()->orderBy('pos')->asArray()->all(),
             'guestbook' => Guestbook::find()->orderBy('pos')->asArray()->all()
         ]);
     }

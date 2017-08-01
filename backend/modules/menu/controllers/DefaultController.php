@@ -16,9 +16,12 @@ class DefaultController extends ModuleController
 {
 
     public $actions = [
-        'menu-items-add' => 'Обновление пункта',
-        'menu-items-edit' => 'Добавление пункта',
+        'menu-items-add' => 'Добавление пункта',
+        'menu-items-edit' => 'Обновление пункта',
         'menu-items-delete' => 'Удаление пункта',
+        'add' => 'Добавление меню',
+        'edit' => 'Обновление меню',
+        'delete' => 'Удаление меню',
     ];
 
     public function behaviors()
