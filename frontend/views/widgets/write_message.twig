@@ -9,8 +9,10 @@
     <!-- /.header -->
     <div class="body">
         {% set form = active_form_begin({
-            'action': path('send/write-message')
+            'action': path('send/write-message'),
+            'id': 'write-message'
         }) %}
+            {{ html.tag('div','',{'class': 'alert'})| raw }}
             {{ form.field(modelForm, 'name').textInput({'placeholder': 'как к Вам обращаться?'}).label(false)| raw }}
             {{ form.field(modelForm, 'email').textInput({'placeholder': 'Ваш email'}).label(false)| raw }}
             {{ form.field(modelForm, 'info', {'options': {'class': 'form-group textarea'}}).textarea({'placeholder': 'дополнительная информация'}).label(false)| raw }}
