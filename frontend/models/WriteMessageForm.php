@@ -47,11 +47,10 @@ class WriteMessageForm extends Model
      */
     public function sendEmail($email)
     {
-        return Yii::$app->mailer->compose()
+        return Yii::$app->mailer->compose('write-message',['model' => $this])
             ->setTo($email)
-            ->setFrom([$this->email => $this->name])
+            ->setFrom(['info@krasber.ru' => $this->name])
             ->setSubject(self::SUBJECT)
-            ->setTextBody($this->info)
             ->send();
     }
 }
