@@ -20,7 +20,9 @@ class Menu extends Widget
     public function run()
     {
         if(!self::$menus){
-            self::$menus = ArrayHelper::map(Model::find()->with(['menuItems'])->asArray()->all(), 'sys_name', 'menuItems');
+            self::$menus = ArrayHelper::map(Model::find()->with(['menuItems' => function($query){
+                return $query->orderBy('pos');
+            }])->asArray()->all(), 'sys_name', 'menuItems');
         }
         return $this->render('/widgets/menu.twig', [
             'model' => self::$menus[$this->sysName],
