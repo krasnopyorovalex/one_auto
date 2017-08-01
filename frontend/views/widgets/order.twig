@@ -1,0 +1,35 @@
+<div id="order_service" class="form_box">
+    <div class="header">
+        <div class="title">ЗАКАЗАТЬ УСЛУГУ</div>
+        <div class="info">
+            <div>Если вы решите создать сайт и продвигать его в компании, проверенной временем и с положительными отзывами, вы не пожалеете.</div>
+        </div>
+        <!-- /.info -->
+    </div>
+    <!-- /.header -->
+    <div class="body">
+
+        {% set form = active_form_begin({
+            'action': path('send/order'),
+            'id': 'order-form'
+        }) %}
+            <div class="label_service-name">название услуги</div>
+            <div class="service_name"></div>
+            {{ form.field(modelForm, 'service', {'options': {'class': 'hidden'}}).hiddenInput().label(false).error(false)| raw }}
+            {{ html.tag('div','',{'class': 'alert'})| raw }}
+
+            {{ form.field(modelForm, 'phone', {'options': {'class': 'phone form-group'}}).label(false)| raw }}
+            {{ form.field(modelForm, 'email', {'options': {'class': 'email form-group'}}).textInput({'placeholder': 'Email'}).label(false)| raw }}
+            <div class="clearfix"></div>
+            {{ form.field(modelForm, 'fio').textInput({'placeholder': 'Ваше имя'}).label(false)| raw }}
+            {{ form.field(modelForm, 'info', {'options': {'class': 'form-group textarea'}}).textarea({'placeholder': 'дополнительная информация'}).label(false)| raw }}
+
+            <div class="form-group submit_box">
+                {{ html.submitButton('Заказать', {'class': 'order_btn hvr-bounce-to-right'})| raw }}
+            </div>
+        {{ active_form_end() }}
+
+    </div>
+    <!-- /.body -->
+</div>
+<!-- /#order_service -->

@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use frontend\models\OrderForm;
 use frontend\models\RecallForm;
 use frontend\models\WriteMessageForm;
 use yii\filters\VerbFilter;
@@ -20,6 +21,7 @@ class SendController extends Controller
                 'actions' => [
                     'write-message' => ['post'],
                     'recall' => ['post'],
+                    'order' => ['post'],
                 ],
             ],
         ];
@@ -40,6 +42,15 @@ class SendController extends Controller
     public function actionRecall()
     {
         $form = new RecallForm();
+        return $this->asJson(\Yii::$app->sender->sendMessage($form));
+    }
+
+    /**
+     * @return \yii\web\Response
+     */
+    public function actionOrder()
+    {
+        $form = new OrderForm();
         return $this->asJson(\Yii::$app->sender->sendMessage($form));
     }
 

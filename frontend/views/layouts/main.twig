@@ -114,45 +114,8 @@
 </ul>
 <!-- /.contacts_box -->
 
-<div id="order_service" class="form_box">
-    <div class="header">
-        <div class="title">ЗАКАЗАТЬ УСЛУГУ</div>
-        <div class="info">
-            <div>Если вы решите создать сайт и продвигать его в компании, проверенной временем и с положительными отзывами, вы не пожалеете.</div>
-        </div>
-        <!-- /.info -->
-    </div>
-    <!-- /.header -->
-    <div class="body">
-        <form action="#">
-            <div class="label_service-name">название услуги</div>
-            <div class="service_name">Создание сайта на готовом дизайне</div>
-
-            <div class="form-group phone">
-                <input type="text" placeholder="Телефон">
-            </div>
-
-            <div class="form-group email">
-                <input type="email" placeholder="Email">
-            </div>
-            <div class="clearfix"></div>
-            <div class="form-group">
-                <input type="text" placeholder="ФИО">
-            </div>
-
-            <div class="form-group">
-                <textarea placeholder="дополнительная информация"></textarea>
-            </div>
-
-            <div class="form-group submit_box">
-                <a class="order_btn hvr-bounce-to-right" href="#order_service">ЗАКАЗАТЬ</a>
-            </div>
-
-        </form>
-    </div>
-    <!-- /.body -->
-</div>
-<!-- /#order_service -->
+{{ use('frontend/widgets/Order') }}
+{{ order_widget() }}
 
 {{ use('frontend/widgets/WriteMessage') }}
 {{ write_message_widget() }}

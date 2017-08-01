@@ -1,6 +1,6 @@
-{% if model.menuItems %}
+{% if model %}
     <ul class="{{ cssClass }}">
-        {% for item in model.menuItems %}
+        {% for item in model %}
             <li{% if app.request.url == item.link %} class="active"{% endif %}><a href="{{ item.link }}">{{ item.name }}</a></li>
         {% endfor %}
     </ul>
