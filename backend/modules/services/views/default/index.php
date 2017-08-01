@@ -16,6 +16,7 @@ $this->params['breadcrumbs'][] = $this->context->module->params['name'];?>
             'showFooter' => true,
             'columns' => [
                 'name',
+                'alias',
                 [
                     'header' => 'Иконка',
                     'value' => function ($model) {
