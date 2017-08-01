@@ -10,7 +10,7 @@
     <div class="body">
         {% set form = active_form_begin({
             'action': path('send/recall'),
-            'id': 'recall'
+            'id': 'recall-form'
         }) %}
             {{ html.tag('div','',{'class': 'alert'})| raw }}
             {{ form.field(modelForm, 'name').textInput({'placeholder': 'как к Вам обращаться?'}).label(false)| raw }}
