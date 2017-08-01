@@ -21,7 +21,7 @@ class UploadImageCkEditor extends Action{
     public function run()
     {
         $path = $this->_getFileDir();
-        if (!file_exists($path)) FileHelper::createDirectory($path, 755, true);
+        if (!file_exists($path)) FileHelper::createDirectory($path, 0755, true);
         $file = $path . basename($_FILES['upload']['name']);
 
         if (move_uploaded_file($_FILES['upload']['tmp_name'], $file)) {

@@ -55,7 +55,7 @@ return [
             'rules' => [
                 '/' => 'site',
                 'sitemap.xml' => 'sitemap/xml',
-                'send/<action:(writemessage)>' => 'send/<action>',
+                'send/<action:(write-message)>' => 'send/<action>',
                 //'<alias>/page/<page:\d+>' => 'site/page',
                 '<alias>' => 'site/page',
                 //'<controller:(rooms|news|articles|gallery)>/<alias:[\wd-]+>' => '<controller>/index'

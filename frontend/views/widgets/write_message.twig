@@ -9,11 +9,11 @@
     <!-- /.header -->
     <div class="body">
         {% set form = active_form_begin({
-            'action': path('handler/action', {'action': 'write-message'})
+            'action': path('send/write-message')
         }) %}
-            {{ form.field(modelForm, 'name').textInput({'placeholder': 'как к Вам обращаться?'}).label(false).error(false)| raw }}
-            {{ form.field(modelForm, 'email').textInput({'placeholder': 'Ваш email'}).label(false).error(false)| raw }}
-            {{ form.field(modelForm, 'info').textarea({'placeholder': 'дополнительная информация'}).label(false).error(false)| raw }}
+            {{ form.field(modelForm, 'name').textInput({'placeholder': 'как к Вам обращаться?'}).label(false)| raw }}
+            {{ form.field(modelForm, 'email').textInput({'placeholder': 'Ваш email'}).label(false)| raw }}
+            {{ form.field(modelForm, 'info', {'options': {'class': 'form-group textarea'}}).textarea({'placeholder': 'дополнительная информация'}).label(false)| raw }}
             <div class="form-group submit_box">
                 {{ html.submitButton('Отправить телеграмму', {'class': 'order_btn hvr-bounce-to-right'})| raw }}
             </div>
