@@ -20,9 +20,6 @@ class m170727_145911_pages extends Migration
             'text' => $this->text(),
             'alias' => $this->string()->notNull()->unique(),
             'slider_text_id' => $this->integer(),
-//            'image' => $this->string(512)->notNull(),
-//            'image_title' => $this->string(512)->notNull(),
-//            'image_alt' => $this->string(512)->notNull(),
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull(),
         ],$tableOptions);

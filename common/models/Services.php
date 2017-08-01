@@ -11,7 +11,11 @@ use yii\helpers\ArrayHelper;
  *
  * @property integer $id
  * @property string $name
+ * @property string $alias
+ * @property string $title
  * @property string $description
+ * @property string $text
+ * @property string $preview
  * @property string $image
  * @property string $image_title
  * @property string $image_alt
@@ -51,11 +55,12 @@ class Services extends MainModel
     public function rules()
     {
         return [
-            [['name'], 'required'],
-            [['description'], 'string'],
-            [['created_at', 'updated_at', 'pos'], 'integer'],
-            [['name'], 'string', 'max' => 255],
-            [['image', 'image_title', 'image_alt'], 'string', 'max' => 512],
+            [['name', 'alias', 'title'], 'required'],
+            [['text', 'preview'], 'string'],
+            [['pos', 'created_at', 'updated_at'], 'integer'],
+            [['name', 'alias'], 'string', 'max' => 255],
+            [['title', 'description', 'image', 'image_title', 'image_alt'], 'string', 'max' => 512],
+            [['alias'], 'unique'],
         ];
     }
 
@@ -67,7 +72,10 @@ class Services extends MainModel
         return [
             'id' => 'ID',
             'name' => 'Название',
-            'description' => 'Описание услуги',
+            'title' => 'Title',
+            'description' => 'Description',
+            'text' => 'Контент',
+            'preview' => 'Краткое описание услуги',
             'image' => 'Изображение',
             'image_title' => 'title',
             'image_alt' => 'alt',
@@ -75,6 +83,7 @@ class Services extends MainModel
             'updated_at' => 'Updated At',
             'file' => 'Выбрать иконку',
             'pos' => 'Позиция',
+            'alias' => 'Alias'
         ];
     }
 }

@@ -3,11 +3,13 @@
 /* @var $model common\models\Services */
 
 use backend\assets\SingleEditorAsset;
+use backend\assets\AddEditorAsset;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
 SingleEditorAsset::register($this);
+AddEditorAsset::register($this);
 
 $this->params['breadcrumbs'][] = ['label' => $this->context->module->params['name'], 'url' => Url::toRoute(['/'.$this->context->module->id])];
 $this->params['breadcrumbs'][] = $this->context->actions[$this->context->action->id];
@@ -30,8 +32,15 @@ $this->params['breadcrumbs'][] = $this->context->actions[$this->context->action-
                             <div class="row">
                                 <div class="col-md-12">
                                     <?= $form->field($model, 'name')->textInput(['autocomplete' => 'off']) ?>
-                                    <?= $form->field($model, 'description')->textarea([
+                                    <?= $form->field($model, 'title')->textInput(['autocomplete' => 'off']) ?>
+                                    <?= $form->field($model, 'description')->textInput(['autocomplete' => 'off']) ?>
+                                    <?= $form->field($model, 'alias')->textInput(['autocomplete' => 'off']) ?>
+                                    <?= $form->field($model, 'preview')->textarea([
                                         'id' => 'editor-full',
+                                        'placeholder' => 'Введите текст...'
+                                    ]) ?>
+                                    <?= $form->field($model, 'text')->textarea([
+                                        'id' => 'editor-full-add',
                                         'placeholder' => 'Введите текст...'
                                     ]) ?>
                                 </div>
