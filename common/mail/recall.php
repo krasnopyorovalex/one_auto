@@ -6,5 +6,5 @@
 ?>
 <div class="recall">
     <p>Имя: <?= $model->name?></p>
-    <p>Электронный адрес: <?= $model->phone?></p>
+    <p>Номер телефона: <?= $model->phone?></p>
 </div>
