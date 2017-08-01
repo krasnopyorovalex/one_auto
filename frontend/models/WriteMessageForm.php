@@ -25,8 +25,16 @@ class WriteMessageForm extends Model
     {
         return [
             [['name', 'email', 'info'], 'required'],
-            ['email', 'email']
+            ['email', 'email'],
+            ['info', 'validateInfo']
         ];
+    }
+
+    public function validateInfo()
+    {
+        if (strstr($this->info, 'http')) {
+            $this->addError('info', 'Нельзя вводить ссылки');
+        }
     }
 
     /**

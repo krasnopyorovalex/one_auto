@@ -26,9 +26,18 @@ class OrderForm extends Model
     {
         return [
             [['service', 'phone', 'email', 'fio'], 'required'],
+            [['service', 'phone', 'email', 'fio'], 'trim'],
             ['email', 'email'],
-            [['info'], 'string']
+            [['info'], 'string'],
+            ['info', 'validateInfo'],
         ];
+    }
+
+    public function validateInfo()
+    {
+        if (strstr($this->info, 'http')) {
+            $this->addError('info', 'Нельзя вводить ссылки');
+        }
     }
 
     /**
