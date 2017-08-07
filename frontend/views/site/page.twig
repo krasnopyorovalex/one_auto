@@ -1,5 +1,13 @@
 {{ set(this, 'title', model.title) }}
 {{ this.registerMetaTag({'name':'description', 'content': model.description}) }}
+
+{% if model.slider_text_id %}
+    {{ void(this.beginBlock('carousel')) }}
+        {{ use('frontend/widgets/Slider') }}
+        {{ slider_widget({'items': model.sliderText.sliderTextItems }) }}
+    {{ void(this.endBlock()) }}
+{% endif %}
+
 <div class="container wrapper">
     <div class="row">
         <div class="col-md-12">
