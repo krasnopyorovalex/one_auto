@@ -1,7 +1,7 @@
 {% if model %}
     <ul class="{{ cssClass }}">
         {% for item in model %}
-            <li{% if app.request.url == item.link %} class="active"{% endif %}><a href="{{ item.link }}">{{ item.name }}</a></li>
+            <li{% if app.request.url == item.link or app.controller.id == item.link| replace({'/':''}) %} class="active"{% endif %}><a href="{{ item.link }}">{{ item.name }}</a></li>
         {% endfor %}
     </ul>
 {% endif %}

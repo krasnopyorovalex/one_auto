@@ -61,7 +61,7 @@ return [
                 'send/<action:(write-message|recall|order)>' => 'send/<action>',
                 //'<alias>/page/<page:\d+>' => 'site/page',
                 '<alias>' => 'site/page',
-                //'<controller:(rooms|news|articles|gallery)>/<alias:[\wd-]+>' => '<controller>/index'
+                '<controller:(services)>/<alias:[\wd-]+>' => '<controller>/show'
             ],
         ],
         'view' => [

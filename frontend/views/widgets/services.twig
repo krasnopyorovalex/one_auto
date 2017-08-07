@@ -1,7 +1,10 @@
 {% if model %}
     <div class="services_box">
         {% for item in model %}
-            <div class="services_box-item"><img alt="alt" src="/userfiles/services/{{ item.image }}" />
+            <div class="services_box-item">
+                <a href="{{ path('services/show', {'alias' : item.alias}) }}">
+                    <img alt="{{ item.image_alt }}" title="{{ item.image_title }}" src="/userfiles/services/{{ item.image }}" />
+                </a>
                 <div class="title_box">
                     <div class="title">{{ item.name }}</div>
                 </div>
