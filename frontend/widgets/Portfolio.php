@@ -15,6 +15,6 @@ class Portfolio extends Widget
      */
     public function run()
     {
-        return $this->render('/widgets/portfolio.twig', ['model' => \common\models\Portfolio::find()->with(['portfolioImages'])->asArray()->all()]);
+        return $this->render('/widgets/portfolio.twig', ['model' => \common\models\Portfolio::find()->with(['portfolioImages'])->orderBy('pos')->asArray()->all()]);
     }
 }

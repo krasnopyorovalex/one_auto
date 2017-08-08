@@ -52,6 +52,14 @@ class DefaultController extends ModuleController
         ]);
     }
 
+    public function actionIndex()
+    {
+        $model = new Portfolio();
+        return $this->render('index',[
+            'dataProvider' => $this->findData($model::find()->orderBy('pos'))
+        ]);
+    }
+
     /**
      * @param $id
      * @return bool
