@@ -1,27 +1,25 @@
-<div class="portfolio_popup-carousel owl-carousel">
-    <div class="item">
-        <img src="/images/portfolio_single_image_01.png" alt="alt">
+{% if model.portfolioImages %}
+    <div class="portfolio_popup-carousel owl-carousel">
+        {% for item in  model.portfolioImages %}
+            <div class="item">
+                <img src="/userfiles/gallery/{{ model.id }}/{{ item.name }}.{{ item.ext }}" alt="{{ item.alt }}" title="{{ item.title }}">
+            </div>
+        {% endfor %}
     </div>
-    <div class="item">
-        <img src="/images/portfolio_single_image_02.png" alt="alt">
-    </div>
-    <div class="item">
-        <img src="/images/portfolio_single_image_01.png" alt="alt">
-    </div>
-</div>
-<!-- /.portfolio_popup-carousel -->
+    <!-- /.portfolio_popup-carousel -->
+{% endif %}
 <div class="portfolio_popup-desc">
     <div class="portfolio_popup-desc-domain">
         example.com
     </div>
     <!-- /.portfolio_popup-domain -->
     <div class="portfolio_popup-desc-main">
-        <p>Если вы решите создать сайт и продвигать его в компании, проверенной временем и с положительными отзывами, вы не пожалеете.</p>
+        {{ model.description| raw }}
     </div>
     <!-- /.portfolio_popup-main -->
-    <div class="portfolio_popup-desc-text">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci amet doloremque eaque esse expedita id ipsa ipsum, itaque magnam molestiae mollitia pariatur ratione, veniam. Atque consectetur distinctio dolore hic vel.</p>
-    </div>
-    <!-- /.portfolio_popup-text -->
+    {#<div class="portfolio_popup-desc-text">#}
+        {#<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci amet doloremque eaque esse expedita id ipsa ipsum, itaque magnam molestiae mollitia pariatur ratione, veniam. Atque consectetur distinctio dolore hic vel.</p>#}
+    {#</div>#}
+    {#<!-- /.portfolio_popup-text -->#}
 </div>
 <!-- /.portfolio_popup-desc -->

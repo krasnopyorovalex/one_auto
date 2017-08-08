@@ -28,7 +28,7 @@ class PortfolioController extends SiteController
      */
     public function actionShow($id)
     {
-        $model = Portfolio::find()->where(['id' => $id])->one();
+        $model = Portfolio::find()->where(['id' => $id])->with(['portfolioImages'])->one();
         return $this->renderAjax('portfolio.twig',[
             'model' => $model
         ]);
