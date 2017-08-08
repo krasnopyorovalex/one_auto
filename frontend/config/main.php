@@ -59,7 +59,7 @@ return [
                 '/' => 'site',
                 'sitemap.xml' => 'sitemap/xml',
                 'send/<action:(write-message|recall|order)>' => 'send/<action>',
-                //'<alias>/page/<page:\d+>' => 'site/page',
+                '<controller:(portfolio)>/<id:[\d-]+>' => '<controller>/show',
                 '<alias>' => 'site/page',
                 '<controller:(services)>/<alias:[\wd-]+>' => '<controller>/show'
             ],

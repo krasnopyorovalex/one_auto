@@ -2,6 +2,7 @@
 namespace frontend\widgets;
 
 use common\models\Menu as Model;
+use common\models\MenuItems;
 use yii\base\Widget;
 use yii\helpers\ArrayHelper;
 
@@ -21,7 +22,7 @@ class Menu extends Widget
     {
         if(!self::$menus){
             self::$menus = ArrayHelper::map(Model::find()->with(['menuItems' => function($query){
-                return $query->orderBy('pos');
+                return $query->where(['parent_id' => MenuItems::NOT_PARENT])->with(['menuItems'])->orderBy('pos');
             }])->asArray()->all(), 'sys_name', 'menuItems');
         }
         return $this->render('/widgets/menu.twig', [
