@@ -79,7 +79,7 @@
 .btn .icon-move:hover {
     cursor: move;
 }
-.nav-justified:hover {
+.nav-justified li:hover {
     cursor: move;
 }
 .thumbnail {

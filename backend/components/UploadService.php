@@ -25,7 +25,7 @@ class UploadService implements UploadInterface
         $fileFull = $path . $fileName . '.' . $fileExt;
         if($file->saveAs($fileFull))
         {
-            (new ImageManager())->make($fileFull)->resize(300, 280)->save($path.$fileName.'_thumb.'.$fileExt);
+            (new ImageManager())->make($fileFull)->resize(320, 300)->save($path.$fileName.'_thumb.'.$fileExt);
             return [
                 'name' => $fileName,
                 'ext' => $fileExt

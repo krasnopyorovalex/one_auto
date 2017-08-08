@@ -38,6 +38,7 @@ class Portfolio extends \yii\db\ActiveRecord
         return [
             [['name', 'domain'], 'required'],
             [['description'], 'string'],
+            [['name', 'domain'], 'trim'],
             [['pos'], 'integer'],
             [['name'], 'string', 'max' => 255],
             [['domain'], 'string', 'max' => 128],

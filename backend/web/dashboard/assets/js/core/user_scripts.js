@@ -27,7 +27,7 @@ jQuery(function() {
                 url: action,
                 type: "POST",
                 success: function() {
-                    return _this.closest('div.thumbnail-single').fadeOut() && jQuery.jGrowl('Изображение удалено успешно', { theme: 'bg-slate-700', header: 'Сообщение из конторы' });
+                    return _this.closest('li').fadeOut() && jQuery.jGrowl('Изображение удалено успешно', { theme: 'bg-slate-700', header: 'Сообщение из конторы' });
                 }
             });
         }
@@ -83,7 +83,7 @@ jQuery(function() {
                 url: _this.parent('a').attr('href'),
                 type: "POST",
                 success: function () {
-                    return _this.closest('div.image-thumb').fadeOut() && jQuery.jGrowl('Изображение галереи удалено успешно', {
+                    return _this.closest('li').fadeOut() && jQuery.jGrowl('Изображение галереи удалено успешно', {
                             theme: 'bg-slate-700',
                             header: 'Сообщение из конторы'
                         });
