@@ -3,9 +3,7 @@
 /* @var $model common\models\MenuItems */
 /* @var $menu common\models\Menu */
 
-use common\models\Pages;
 use yii\bootstrap\ActiveForm;
-use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use backend\assets\SelectAsset;
 
@@ -26,10 +24,7 @@ $this->params['breadcrumbs'][] = $model->isNewRecord ? 'Добавление п�
                 <div class="row">
                     <div class="col-md-12">
                         <?= $form->field($model, 'name')->textInput(['autocomplete' => 'off']) ?>
-                        <?= $form->field($model, 'link')->dropDownList(ArrayHelper::map(Pages::find()->asArray()->all(), function ($item){
-                            return $item['alias'] == 'index' ? str_replace('index','/',$item['alias']) : '/'.$item['alias'];
-                        },'name'), [
-                            'prompt' => 'Не выбрано',
+                        <?= $form->field($model, 'link')->dropDownList($model->drawDDM(), [
                             'class' => 'select-search', 'data-width' => '100%'
                         ])?>
                         <?php if($model->isNewRecord):?>

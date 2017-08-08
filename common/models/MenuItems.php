@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "{{%menu_items}}".
@@ -82,5 +83,23 @@ class MenuItems extends \yii\db\ActiveRecord
     public function getMenuItems()
     {
         return $this->hasMany(MenuItems::className(), ['parent_id' => 'id']);
+    }
+
+    /**
+     * @return array
+     */
+    public function drawDDM()
+    {
+        $pages = ArrayHelper::map(Pages::find()->asArray()->all(), function ($item){
+            return $item['alias'] == 'index' ? str_replace('index','/',$item['alias']) : '/'.$item['alias'];
+        },'name', function (){
+            return 'Страницы';
+        });
+        $services = ArrayHelper::map(Services::find()->asArray()->all(), function ($item){
+            return '/services/'.$item['alias'];
+        },'name', function (){
+            return 'Услуги';
+        });
+        return ArrayHelper::merge($pages,$services);
     }
 }
