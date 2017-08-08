@@ -74,6 +74,8 @@ $(function() {
     // Draggable pills
     //
 
+    startDnDImages();
+
     // Basic pills
     dragula([document.getElementById('pills-target-left')], {
         mirrorContainer: document.querySelector('#pills-target-left')
@@ -84,19 +86,7 @@ $(function() {
     //     mirrorContainer: document.querySelector('#pills-target-right')
     // });
 
-    dragula([document.getElementById('pills-target-right')])
-        .on('out', function (el, container) {
-            var list = [];
-            jQuery('#pills-target-right li').each(function (item) {
-                list[item] = jQuery(this).attr('data-id');
-            });
-            return $.post(window.location.pathname.replace('update','update-positions-images'), {'data': list}, function(){
-                return jQuery.jGrowl('Порядок изображений сохранён успешно:)', {
-                    theme: 'bg-slate-700',
-                    header: 'Сообщение из конторы'
-                });
-            });
-    });
+
 
     // Toolbar pills
     dragula([document.getElementById('pills-toolbar-target-left')], {
@@ -147,3 +137,19 @@ $(function() {
     });
 
 });
+
+function startDnDImages() {
+    return dragula([document.getElementById('pills-target-right')])
+        .on('out', function (el, container) {
+            var list = [];
+            jQuery('#pills-target-right li').each(function (item) {
+                list[item] = jQuery(this).attr('data-id');
+            });
+            return $.post(window.location.pathname.replace('update','update-positions-images'), {'data': list}, function(){
+                return jQuery.jGrowl('Порядок изображений сохранён успешно:)', {
+                    theme: 'bg-slate-700',
+                    header: 'Сообщение из конторы'
+                });
+            });
+        });
+}

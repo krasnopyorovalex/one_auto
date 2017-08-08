@@ -42,7 +42,8 @@ $(function() {
             url: window.location.pathname.replace('update','loaded'),
             type: "POST",
             success: function(data) {
-                return _images_box.html(data);
+                _images_box.html(data);
+                return startDnDImages();
             }
         });
     });

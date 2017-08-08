@@ -10,10 +10,10 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
+DnDAsset::register($this);
 SingleEditorAsset::register($this);
 FileUploaderAsset::register($this);
 GalleryAsset::register($this);
-DnDAsset::register($this);
 
 $this->params['breadcrumbs'][] = ['label' => $this->context->module->params['name'], 'url' => Url::toRoute(['/'.$this->context->module->id])];
 $this->params['breadcrumbs'][] = $this->context->actions[$this->context->action->id];
