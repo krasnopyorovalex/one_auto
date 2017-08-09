@@ -16,6 +16,10 @@
                 <h1>{{ model.name }}</h1>
                 {{ model.text| raw }}
 
+                <div class="delimiter">&nbsp;</div>
+                <div class="title center">Другие услуги</div>
+                <div class="delimiter">&nbsp;</div>
+
                 {{ use('frontend/widgets/Services') }}
                 {{ services_widget({'exclude': model.id}) }}
 

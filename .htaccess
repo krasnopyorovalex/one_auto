@@ -1,4 +1,3 @@
-AddHandler application/x-httpd-php56 .php
 # Mod_Autoindex
 <IfModule mod_autoindex.c>
   # Запрещаем просмотр содержимого папок
