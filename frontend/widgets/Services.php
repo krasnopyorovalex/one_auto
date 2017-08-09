@@ -6,6 +6,9 @@ use yii\base\Widget;
 
 class Services extends Widget
 {
+
+    public $exclude = null;
+
     public function init()
     {
         parent::init();
@@ -13,6 +16,10 @@ class Services extends Widget
 
     public function run()
     {
-        return $this->render('/widgets/services.twig', ['model' => Model::find()->orderBy('pos')->asArray()->all()]);
+        $model = Model::find()->orderBy('pos');
+        if($this->exclude){
+            $model->where(['<>','id', $this->exclude]);
+        }
+        return $this->render('/widgets/services.twig', ['model' => $model->asArray()->all()]);
     }
 }
