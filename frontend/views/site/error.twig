@@ -1,2 +1,17 @@
 {{ set(this, 'title', app.params['title_404']) }}
 
+<div class="container wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="center content">
+                <h1>{{ app.params['title_404'] }}</h1>
+
+                <p>{{ app.params['message_404'] }}</p>
+
+                {{ use('frontend/widgets/Sitemap') }}
+                {{ sitemap_widget() }}
+
+            </div>
+        </div>
+    </div>
+</div>
