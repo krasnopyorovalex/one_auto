@@ -49,6 +49,7 @@ AppAsset::register($this);
                             <li><a href="<?= \yii\helpers\Url::toRoute(['/portfolio/default/index'])?>"><i class="icon-images3"></i> <span>Портфолио</span></a></li>
                             <li><a href="<?= \yii\helpers\Url::toRoute(['/products/default/index'])?>"><i class="icon-bag"></i> <span>Продукты</span></a></li>
                             <li><a href="<?= \yii\helpers\Url::toRoute(['/menu/default/index'])?>"><i class="icon-lan2"></i> <span>Навигация</span></a></li>
+                            <li><a href="<?= \yii\helpers\Url::toRoute(['/redirects/default/index'])?>"><i class="icon-transmission"></i> <span>Редиректы</span></a></li>
 
                         </ul>
                     </div>

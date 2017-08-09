@@ -1,6 +1,7 @@
 <?php
 namespace frontend\components;
 
+use common\models\Redirects;
 use yii\helpers\Url;
 
 /**
@@ -34,6 +35,15 @@ class RedirectorService
         }
         if(strstr($this->uri,'/index')){
             $this->do_redirect(Url::base(true));
+        }
+        $this->check_301();
+    }
+
+    private function check_301()
+    {
+        $model = Redirects::find()->select(['new_alias','old_alias'])->indexBy('old_alias')->column();
+        if(isset($model[$this->uri])){
+            $this->do_redirect(Url::base(true) . $model[\Yii::$app->request->url]);
         }
     }
 

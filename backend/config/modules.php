@@ -24,4 +24,7 @@ return [
     'menu' => [
         'class' => 'backend\modules\menu\Menu',
     ],
+    'redirects' => [
+        'class' => 'backend\modules\redirects\Redirects',
+    ],
 ];

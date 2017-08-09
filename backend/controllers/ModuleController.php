@@ -2,6 +2,8 @@
 
 namespace backend\controllers;
 
+use common\models\MenuItems;
+use common\models\Redirects;
 use Yii;
 use backend\interfaces\IActions;
 use yii\filters\AccessControl;
@@ -122,9 +124,9 @@ class ModuleController extends SiteController implements IActions
     protected function loadData($model, $redirect = null)
     {
         if($model->load(Yii::$app->request->post()) && $model->validate()) {
-//            if(!$model->isNewRecord && $model->isAttributeChanged('alias')){
-//                $this->insertNewRedirect($model);
-//            }
+            if(!$model->isNewRecord && $model->isAttributeChanged('alias')){
+                $this->insertNewRedirect($model);
+            }
             $model->save();
             if($redirect){
                 return $this->redirect($redirect);
@@ -139,10 +141,14 @@ class ModuleController extends SiteController implements IActions
      */
     protected function insertNewRedirect($model)
     {
-        return (new Redirects([
-            'old_alias' => Redirects::DELIMITER.str_replace(['pages/'], '', $model::tableName().Redirects::DELIMITER.$model->getOldAttribute('alias')),
-            'new_alias' => Redirects::DELIMITER.str_replace(['pages/'], '', $model::tableName().Redirects::DELIMITER.$model->alias)
-        ]))->save();
+        $redirect = new Redirects();
+        $redirect->old_alias = preg_replace("/\/+/","/", '/'.str_replace(['pages','{{%','}}'], '', $model::tableName().'/'.$model->getOldAttribute('alias')));
+        $redirect->new_alias = preg_replace("/\/+/","/", '/'.str_replace(['pages','{{%','}}'], '', $model::tableName().'/'.$model->alias));
+        if($linkMenu = MenuItems::find()->where(['link' => $redirect->old_alias])->one()){
+            $linkMenu->link = $redirect->new_alias;
+            $linkMenu->update();
+        }
+        return $redirect->save();
     }
 
 }
