@@ -9,7 +9,7 @@
     <!-- /.header -->
     <div class="body">
         {% set form = active_form_begin({
-            'action': path('send/recall'),
+            'action': path('/send/recall'),
             'id': 'recall-form'
         }) %}
             {{ html.tag('div','',{'class': 'alert'})| raw }}
