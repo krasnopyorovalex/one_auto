@@ -6,7 +6,7 @@
             <div class="center content">
                 <h1>{{ app.params['title_404'] }}</h1>
 
-                <p>{{ app.params['message_404'] }}</p>
+                <p>Вы набрали неправильный адрес страницы. Пожалуйста, перейдите на <a href="{{ app.homeUrl }}">главную страницу</a> сайта или воспользуйтесь картой сайта.</p>
 
                 {{ use('frontend/widgets/Sitemap') }}
                 {{ sitemap_widget() }}
