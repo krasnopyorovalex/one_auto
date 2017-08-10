@@ -1,7 +1,7 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
     <url>
         <loc>{{ app.request.hostInfo }}</loc>
-        <lastmod>{{ "now"|date("m.d.Y H:i:s") }}</lastmod>
+        <lastmod>{{ "now"| date("d.m.Y H:i:s") }}</lastmod>
         <changefreq>daily</changefreq>
         <priority>1</priority>
     </url>
@@ -9,7 +9,7 @@
 {% for item in pages %}
     <url>
         <loc>{{ app.request.hostInfo }}/{{ item.alias }}</loc>
-        <lastmod>{{ item.updated_at|date("m.d.Y H:i:s") }}</lastmod>
+        <lastmod>{{ item.updated_at| date("d.m.Y H:i:s") }}</lastmod>
         <changefreq>daily</changefreq>
         <priority>1</priority>
     </url>
@@ -19,7 +19,7 @@
 {% for item in services %}
     <url>
         <loc>{{ app.request.hostInfo }}/services/{{ item.alias }}</loc>
-        <lastmod>{{ item.updated_at|date("m.d.Y H:i:s") }}</lastmod>
+        <lastmod>{{ item.updated_at| date("d.m.Y H:i:s") }}</lastmod>
         <changefreq>daily</changefreq>
         <priority>1</priority>
     </url>
