@@ -17,6 +17,7 @@ class m170729_142650_products extends Migration
             'name' => $this->string(512)->notNull(),
             'description' => $this->text(),
             'price' => $this->string('255')->notNull(),
+            'color' => $this->string(32)->notNull(),
             'pos' => $this->integer()->defaultValue(0),
             'btn_text' => $this->string(64)->notNull(),
             'form_type' => $this->integer()

@@ -5,8 +5,10 @@
 use backend\assets\SingleEditorAsset;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Url;
+use backend\assets\SelectAsset;
 
 SingleEditorAsset::register($this);
+SelectAsset::register($this);
 
 $this->params['breadcrumbs'][] = ['label' => $this->context->module->params['name'], 'url' => Url::toRoute(['/'.$this->context->module->id])];
 $this->params['breadcrumbs'][] = $this->context->actions[$this->context->action->id];
@@ -22,8 +24,16 @@ $this->params['breadcrumbs'][] = $this->context->actions[$this->context->action-
                 <div class="row">
                     <div class="col-md-12">
                         <?= $form->field($model, 'form_type')->dropDownList([
-                                0 => 'Тип формы номер ноль',
-                                1 => 'Тип формы номер адын',
+                                0 => 'Тип формы #1',
+                                1 => 'Тип формы #2',
+                        ],[
+                            'class' => 'select-search', 'data-width' => '100%'
+                        ]) ?>
+                        <?= $form->field($model, 'color')->dropDownList([
+                            'green' => 'Зелёный',
+                        ],[
+                            'prompt' => 'Не выбрано',
+                            'class' => 'select-search', 'data-width' => '100%'
                         ]) ?>
                         <?= $form->field($model, 'name') ?>
                         <?= $form->field($model, 'price') ?>

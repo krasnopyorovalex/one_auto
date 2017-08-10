@@ -11,6 +11,7 @@ use Yii;
  * @property string $name
  * @property string $description
  * @property string $price
+ * @property string $color
  * @property integer $pos
  * @property string $btn_text
  * @property integer $form_type
@@ -37,6 +38,7 @@ class Products extends \yii\db\ActiveRecord
             [['name'], 'string', 'max' => 512],
             [['price'], 'string', 'max' => 255],
             [['btn_text'], 'string', 'max' => 64],
+            [['color'], 'string', 'max' => 32],
         ];
     }
 
@@ -53,6 +55,7 @@ class Products extends \yii\db\ActiveRecord
             'pos' => 'Позиция',
             'btn_text' => 'Текст кнопки',
             'form_type' => 'Тип формы',
+            'color' => 'Цвет плашки',
         ];
     }
 }
