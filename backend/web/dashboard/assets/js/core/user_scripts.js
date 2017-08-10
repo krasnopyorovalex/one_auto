@@ -27,7 +27,7 @@ jQuery(function() {
                 url: action,
                 type: "POST",
                 success: function() {
-                    return _this.closest('li').fadeOut() && jQuery.jGrowl('Изображение удалено успешно', { theme: 'bg-slate-700', header: 'Сообщение из конторы' });
+                    return _this.closest('img').fadeOut() && jQuery.jGrowl('Изображение удалено успешно', { theme: 'bg-slate-700', header: 'Сообщение из конторы' });
                 }
             });
         }
