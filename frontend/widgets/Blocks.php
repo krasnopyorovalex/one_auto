@@ -19,7 +19,9 @@ class Blocks extends Widget
     public function run()
     {
         if(!self::$blocks){
-            self::$blocks = ArrayHelper::index(Model::find()->asArray()->all(), 'id');
+            self::$blocks = ArrayHelper::index(Model::find()->asArray()->all(), function ($item) {
+                return '{block_'.$item['id'].'}';
+            });
         }
         return $this->render('/widgets/blocks.twig', ['model' => self::$blocks[$this->id]]);
     }

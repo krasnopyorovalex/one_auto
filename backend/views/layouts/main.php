@@ -130,7 +130,7 @@ AppAsset::register($this);
                     <li>Портфолио - {portfolio}</li>
                     <li>Продукты - {products}</li>
                     <li>Карта сайта - {sitemap}</li>
-                    <li>Блоки сайта - {block_1}, где цифра id блока</li>
+                    <li>Блоки сайта - {block_1}, где цифра id блока. Блоки обязательно обернуть div'ом c классом - center</li>
                 </ul>
             </div>
 

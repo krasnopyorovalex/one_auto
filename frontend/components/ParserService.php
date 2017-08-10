@@ -31,12 +31,9 @@ class ParserService
 
         preg_match_all("/{block_[0-9]+}/", $text, $matches);
         if(isset($matches[0]) && count($matches[0])){
-            $text = array_map(function ($item){
-                 return Blocks::widget([
-                    'id' => (int)str_replace(['{','}','block_'],'',$item)
-                ]);
-            },$matches[0]);
-            $text = implode('&nbsp;', $text);
+           foreach ($matches[0] as $item){
+               $text = str_replace([$item], Blocks::widget(['id' => $item]), $text);
+           }
         }
         return $text;
     }
