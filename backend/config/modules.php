@@ -27,4 +27,7 @@ return [
     'redirects' => [
         'class' => 'backend\modules\redirects\Redirects',
     ],
+    'blocks' => [
+        'class' => 'backend\modules\blocks\Blocks',
+    ],
 ];

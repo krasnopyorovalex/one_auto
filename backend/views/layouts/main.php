@@ -41,6 +41,7 @@ AppAsset::register($this);
 
                             <!-- Main -->
                             <li class="navigation-header"><span>Навигация</span> <i class="icon-menu" title="Навигация"></i></li>
+                            <li><a href="<?= \yii\helpers\Url::toRoute(['/blocks/default/index'])?>"><i class="icon-grid7"></i> <span>Блоки сайта</span></a></li>
                             <li><a href="<?= \yii\helpers\Url::toRoute(['/pages/default/index'])?>"><i class="icon-compose"></i> <span>Страницы</span></a></li>
                             <li><a href="<?= \yii\helpers\Url::toRoute(['/services/default/index'])?>"><i class="icon-list2"></i> <span>Услуги</span></a></li>
                             <li><a href="<?= \yii\helpers\Url::toRoute(['/sof_work/default/index'])?>"><i class="icon-stairs-up"></i> <span>Этапы работы</span></a></li>
@@ -129,6 +130,7 @@ AppAsset::register($this);
                     <li>Портфолио - {portfolio}</li>
                     <li>Продукты - {products}</li>
                     <li>Карта сайта - {sitemap}</li>
+                    <li>Блоки сайта - {block_1}, где цифра id блока</li>
                 </ul>
             </div>
 

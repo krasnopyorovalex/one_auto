@@ -1,0 +1,18 @@
+<div class="block_decorated {{ model.color }}">
+    <div class="title">{{ model.name }}</div>
+
+    <div class="price">{{ model.price| raw }}</div>
+
+    <div class="desc">
+        {{ model.description| raw }}
+    </div>
+    <!-- /.desc -->
+
+    {% if model.btn_text %}
+    <div class="order_box">
+        <a class="order_btn fancy_call-btn" data-service="{{ model.name }}" href="#order_service">{{ model.btn_text }}</a>
+    </div>
+    <!-- /.order_box -->
+    {% endif %}
+</div>
+<!-- /.block_decorated -->
