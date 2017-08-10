@@ -20,7 +20,7 @@ class DefaultController extends ModuleController
         'menu-items-edit' => 'Обновление пункта',
         'menu-items-delete' => 'Удаление пункта',
         'add' => 'Добавление меню',
-        'edit' => 'Обновление меню',
+        'update' => 'Обновление меню',
         'delete' => 'Удаление меню',
     ];
 
