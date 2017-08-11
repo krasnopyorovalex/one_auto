@@ -21,7 +21,7 @@
                     {% for item in sofWorks %}
                         <div class="stages_of-work-item">
                             <img src="/userfiles/sof_work/{{ item.image }}" alt="{{ item.image_alt }}" title="{{ item.image_title }}">
-                            <div class="title">{{ item.name }}</div>
+                            <h3 class="title">{{ item.name }}</h3>
                             <div class="desc">
                                 {{ item.description| raw }}
                             </div>
