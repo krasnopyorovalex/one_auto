@@ -16,7 +16,7 @@ class PortfolioController extends SiteController
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'show' => ['post', 'get'],
+                    'show' => ['post'],
                 ],
             ],
         ];
