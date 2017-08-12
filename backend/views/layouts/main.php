@@ -41,7 +41,6 @@ AppAsset::register($this);
 
                             <!-- Main -->
                             <li class="navigation-header"><span>Навигация</span> <i class="icon-menu" title="Навигация"></i></li>
-                            <li><a href="<?= \yii\helpers\Url::toRoute(['/blocks/default/index'])?>"><i class="icon-grid7"></i> <span>Блоки сайта</span></a></li>
                             <li><a href="<?= \yii\helpers\Url::toRoute(['/pages/default/index'])?>"><i class="icon-compose"></i> <span>Страницы</span></a></li>
                             <li><a href="<?= \yii\helpers\Url::toRoute(['/services/default/index'])?>"><i class="icon-list2"></i> <span>Услуги</span></a></li>
                             <li><a href="<?= \yii\helpers\Url::toRoute(['/sof_work/default/index'])?>"><i class="icon-stairs-up"></i> <span>Этапы работы</span></a></li>
@@ -49,6 +48,7 @@ AppAsset::register($this);
                             <li><a href="<?= \yii\helpers\Url::toRoute(['/slider_text/default/index'])?>"><i class="icon-file-text2"></i> <span>Слайдер-текст</span></a></li>
                             <li><a href="<?= \yii\helpers\Url::toRoute(['/portfolio/default/index'])?>"><i class="icon-images3"></i> <span>Портфолио</span></a></li>
                             <li><a href="<?= \yii\helpers\Url::toRoute(['/products/default/index'])?>"><i class="icon-bag"></i> <span>Продукты</span></a></li>
+                            <li><a href="<?= \yii\helpers\Url::toRoute(['/blocks/default/index'])?>"><i class="icon-grid7"></i> <span>Блоки сайта</span></a></li>
                             <li><a href="<?= \yii\helpers\Url::toRoute(['/menu/default/index'])?>"><i class="icon-lan2"></i> <span>Навигация</span></a></li>
                             <li><a href="<?= \yii\helpers\Url::toRoute(['/redirects/default/index'])?>"><i class="icon-transmission"></i> <span>Редиректы</span></a></li>
 
@@ -131,6 +131,8 @@ AppAsset::register($this);
                     <li>Продукты - {products}</li>
                     <li>Карта сайта - {sitemap}</li>
                     <li>Блоки сайта - {block_1}, где цифра id блока. Блоки обязательно обернуть div'ом c классом - center</li>
+                    <li>Ссылки в контенте - &lt;a href="/alias"&gt;Портфолио&lt;/a&gt;</li>
+                    <li>Разделитель горизонтальный - &lt;div class="delimiter"&gt;&nbsp;&lt;/div&gt;</li>
                 </ul>
             </div>
 
