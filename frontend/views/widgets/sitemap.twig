@@ -2,7 +2,7 @@
     {% for item in model %}
         <li>
             <a href="{{ path('site/page', {'alias' : item.alias| replace({'index': ''})}) }}">{{ item.name }}</a>
-            {% if '{services}' in item.text and item.alias != 'index' %}
+            {% item.alias == 'services' %}
                 <ul>
                     {% for item in services %}
                         <li>
