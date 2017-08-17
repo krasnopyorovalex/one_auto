@@ -6,7 +6,7 @@
                     <img alt="{{ item.image_alt }}" title="{{ item.image_title }}" src="/userfiles/services/{{ item.image }}" />
                 </a>
                 <div class="title_box">
-                    <div class="title">{{ item.name }}</div>
+                    <a class="title" href="{{ path('services/show', {'alias' : item.alias}) }}">{{ item.name }}</a>
                 </div>
 
                 <div class="desc">

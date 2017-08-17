@@ -30,7 +30,6 @@ class PortfolioController extends SiteController
      */
     public function actionShow($id)
     {
-        $this->enableCsrfValidation = false;
         if(!$model = Portfolio::find()->where(['id' => $id])->with(['portfolioImages'])->one()){
             throw new NotFoundHttpException('The requested page does not exist.');
         }
