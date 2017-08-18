@@ -6,7 +6,8 @@
     <title>{{ this.title| raw }}</title>
     {{ html.csrfMetaTags| raw }}
     {{ void(this.head) }}
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+<link href="{{ app.request.hostInfo }}/favicon.ico" rel="shortcut icon" />
+<link href="{{ app.request.hostInfo }}/favicon.ico" rel="icon" type="image/x-icon" />
 </head>
 <body>
 {{ void(this.beginBody()) }}
