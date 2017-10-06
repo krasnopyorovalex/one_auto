@@ -1,7 +1,6 @@
 <?php
 namespace frontend\controllers;
 
-use common\models\Guestbook;
 use common\models\Pages;
 use common\models\SofWork;
 use yii\web\Controller;
@@ -27,8 +26,7 @@ class SiteController extends Controller
         $model['text'] = \Yii::$app->parser->parse($model['text']);
         return $this->render('index.twig',[
             'model' => $model,
-            'sofWorks' => SofWork::find()->orderBy('pos')->asArray()->all(),
-            'guestbook' => Guestbook::find()->orderBy('pos')->asArray()->all()
+            'sofWorks' => SofWork::find()->orderBy('pos')->asArray()->all()
         ]);
     }
 
@@ -39,9 +37,11 @@ class SiteController extends Controller
         }])->one()){
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+        $guestbook = \Yii::$app->parser->parseGuestbook($model['text']);
         $model['text'] = \Yii::$app->parser->parse($model['text']);
         return $this->render('page.twig',[
-            'model' => $model
+            'model' => $model,
+            'guestbook' => $guestbook
         ]);
     }
 

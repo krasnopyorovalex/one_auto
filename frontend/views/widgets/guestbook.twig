@@ -1,0 +1,18 @@
+<div class="guestbook_box">
+    <div class="guestbook_carousel">
+        <div id="guestbook_carousel-items" class="owl-carousel">
+            {% for item in guestbook %}
+                <div>
+                    <img src="/userfiles/guestbook/{{ item.image }}" alt="{{ item.image_alt }}" title="{{ item.image_title }}">
+                    <div class="text">
+                        {{ item.text| raw }}
+                    </div>
+                    <div class="name">{{ item.name }}</div>
+                    <div class="city">{{ item.city }}</div>
+                </div>
+            {% endfor %}
+        </div>
+        <!-- /.main_slider -->
+    </div>
+</div>
+<!-- /.guestbook_box -->

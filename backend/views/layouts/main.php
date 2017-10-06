@@ -130,6 +130,7 @@ AppAsset::register($this);
                     <li>Портфолио - {portfolio}</li>
                     <li>Продукты - {products}</li>
                     <li>Карта сайта - {sitemap}</li>
+                    <li>Гостевая книга - {guestbook}</li>
                     <li>Блоки сайта - {block_1}, где цифра id блока. Блоки обязательно обернуть div'ом c классом - center</li>
                     <li>Ссылки в контенте - &lt;a href="/alias"&gt;Портфолио&lt;/a&gt;</li>
                     <li>Разделитель горизонтальный - &lt;div class="delimiter"&gt;&nbsp;&lt;/div&gt;</li>
