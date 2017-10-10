@@ -3,7 +3,6 @@
 namespace frontend\components;
 
 use frontend\widgets\Blocks;
-use frontend\widgets\Guestbook;
 use frontend\widgets\Portfolio;
 use frontend\widgets\Products;
 use frontend\widgets\Services;
@@ -48,9 +47,10 @@ class ParserService
      */
     public function parseGuestbook($text)
     {
+        $guestbook = false;
         if (strstr($text, '{guestbook}')) {
-            $text = str_replace('<p>{guestbook}</p>', Guestbook::widget(), $text);
+            $guestbook = true;
         }
-        return $text;
+        return $guestbook;
     }
 }
