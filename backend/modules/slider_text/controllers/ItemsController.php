@@ -62,32 +62,31 @@ class ItemsController extends ModuleController
         }
         return $this->render('form',[
             'model' =>  $model,
-            'slider_text_id' => $id,
             'slider_text' => SliderText::findOne($id)
         ]);
     }
 
     public function actionEditItem($id)
     {
-        $model = SliderTextItems::find()->where(['id' => $id])->one();
+        $model = SliderTextItems::find()->where(['id' => $id])->with(['sliderText'])->one();
         if($model->load(Yii::$app->request->post()) && $model->validate() && $model->save()) {
             return $this->redirect(Url::previous());
         }
         return $this->render('form',[
             'model' =>  $model,
-            'slider_text' => SliderText::findOne($id)
+            'slider_text' => $model['sliderText']
         ]);
     }
 
     public function actionDeleteItem($id)
     {
-        $model = SliderTextItems::findOne($id);
+        $model = SliderTextItems::find()->where(['id' => $id])->with(['sliderText'])->one();
         if(Yii::$app->request->isPost && $model->delete()){
             return $this->redirect(Url::previous());
         }
         return $this->render('form', [
             'model' => $model,
-            'slider_text' => SliderText::findOne($id)
+            'slider_text' => $model['sliderText']
         ]);
     }
 

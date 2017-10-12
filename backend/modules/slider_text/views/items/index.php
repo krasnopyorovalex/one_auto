@@ -9,8 +9,8 @@ use yii\helpers\Url;
 /* @var $dataProvider common\models\SliderTextItems */
 /* @var $this yii\web\View */
 
-$this->params['breadcrumbs'][] = ['label' => $slider_text['name'], 'url' => Url::toRoute(['/slider_text'])];
-$this->params['breadcrumbs'][] = $this->context->module->params['name'];?>
+$this->params['breadcrumbs'][] = ['label' => $this->context->module->params['name'], 'url' => Url::toRoute(['/slider_text'])];
+$this->params['breadcrumbs'][] = $slider_text['name'];?>
 
     <?= Html::beginForm(['/'.$this->context->module->id.'/items/update-pos-items'], 'post', ['class' => 'with__positions']) ?>
         <?php echo GridView::widget([

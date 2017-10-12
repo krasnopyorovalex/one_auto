@@ -5,7 +5,6 @@
 
 use backend\assets\SingleEditorAsset;
 use yii\bootstrap\ActiveForm;
-use yii\helpers\Html;
 use yii\helpers\Url;
 
 SingleEditorAsset::register($this);
