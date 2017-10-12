@@ -13,11 +13,6 @@ class Menu extends Widget
 
     private static $menus;
 
-    public function init()
-    {
-        parent::init();
-    }
-
     public function run()
     {
         if(!self::$menus){

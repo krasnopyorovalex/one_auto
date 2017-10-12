@@ -6,10 +6,6 @@ use yii\base\Widget;
 
 class Sitemap extends Widget
 {
-    public function init()
-    {
-        parent::init();
-    }
 
     public function run()
     {

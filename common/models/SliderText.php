@@ -58,6 +58,6 @@ class SliderText extends \yii\db\ActiveRecord
      */
     public function getSliderTextItems()
     {
-        return $this->hasMany(SliderTextItems::className(), ['slider_text_id' => 'id']);
+        return $this->hasMany(SliderTextItems::className(), ['slider_text_id' => 'id'])->orderBy('pos');
     }
 }

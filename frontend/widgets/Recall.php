@@ -6,11 +6,6 @@ use yii\base\Widget;
 
 class Recall extends Widget
 {
-    public function init()
-    {
-        parent::init();
-    }
-
     public function run()
     {
         return $this->render('/widgets/recall.twig', ['modelForm' => new Model()]);

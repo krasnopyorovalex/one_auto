@@ -5,10 +5,6 @@ use yii\base\Widget;
 
 class Portfolio extends Widget
 {
-    public function init()
-    {
-        parent::init();
-    }
 
     /**
      * @return string

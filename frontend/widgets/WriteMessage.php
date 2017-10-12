@@ -6,10 +6,6 @@ use yii\base\Widget;
 
 class WriteMessage extends Widget
 {
-    public function init()
-    {
-        parent::init();
-    }
 
     public function run()
     {

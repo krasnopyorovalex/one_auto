@@ -9,11 +9,6 @@ class Services extends Widget
 
     public $exclude = null;
 
-    public function init()
-    {
-        parent::init();
-    }
-
     public function run()
     {
         $model = Model::find()->orderBy('pos');

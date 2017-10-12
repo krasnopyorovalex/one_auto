@@ -11,11 +11,6 @@ class Blocks extends Widget
     public $id;
     private static $blocks;
 
-    public function init()
-    {
-        parent::init();
-    }
-
     public function run()
     {
         if(!self::$blocks){
