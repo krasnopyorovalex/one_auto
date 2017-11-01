@@ -17,7 +17,9 @@ class Menu extends Widget
     {
         if(!self::$menus){
             self::$menus = ArrayHelper::map(Model::find()->with(['menuItems' => function($query){
-                return $query->where(['parent_id' => MenuItems::NOT_PARENT])->with(['menuItems'])->orderBy('pos');
+                return $query->where(['parent_id' => MenuItems::NOT_PARENT])->with(['menuItems' => function($query){
+                    return $query->orderBy('pos');
+                }])->orderBy('pos');
             }])->asArray()->all(), 'sys_name', 'menuItems');
         }
         return $this->render('/widgets/menu.twig', [
