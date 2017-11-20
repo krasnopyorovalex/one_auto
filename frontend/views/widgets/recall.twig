@@ -15,6 +15,9 @@
             {{ html.tag('div','',{'class': 'alert'})| raw }}
             {{ form.field(modelForm, 'name').textInput({'placeholder': 'как к Вам обращаться?'}).label(false)| raw }}
             {{ form.field(modelForm, 'phone', {'options': {'class': 'phone form-group'}}).label(false)| raw }}
+            <div class="form-group agree_personal-data">
+                *Оставляя заявку вы соглашаетесь на <a href="#">обработку персональных данных</a>
+            </div>
             <div class="form-group submit_box">
                 {{ html.submitButton('Заказать', {'class': 'order_btn hvr-bounce-to-right'})| raw }}
             </div>
