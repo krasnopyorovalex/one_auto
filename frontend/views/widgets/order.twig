@@ -24,7 +24,7 @@
             {{ form.field(modelForm, 'fio').textInput({'placeholder': 'Ваше имя'}).label(false)| raw }}
             {{ form.field(modelForm, 'info', {'options': {'class': 'form-group textarea'}}).textarea({'placeholder': 'дополнительная информация'}).label(false)| raw }}
             <div class="form-group agree_personal-data">
-                *Оставляя заявку вы соглашаетесь на <a href="#">обработку персональных данных</a>
+                *Оставляя заявку вы соглашаетесь на <a href="{{ path('site/page', {'alias': 'personal-data'}) }}">обработку персональных данных</a>
             </div>
             <div class="form-group submit_box">
                 {{ html.submitButton('Отправить', {'class': 'order_btn hvr-bounce-to-right'})| raw }}
