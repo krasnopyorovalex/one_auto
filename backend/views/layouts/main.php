@@ -42,6 +42,8 @@ AppAsset::register($this);
                             <!-- Main -->
                             <li class="navigation-header"><span>Навигация</span> <i class="icon-menu" title="Навигация"></i></li>
                             <li><a href="<?= \yii\helpers\Url::toRoute(['/pages/default/index'])?>"><i class="icon-compose"></i> <span>Страницы</span></a></li>
+                            <li><a href="<?= \yii\helpers\Url::toRoute(['/news/default/index'])?>"><i class="icon-newspaper"></i> <span>Новости</span></a></li>
+                            <li><a href="<?= \yii\helpers\Url::toRoute(['/articles/default/index'])?>"><i class="icon-magazine"></i> <span>Статьи</span></a></li>
                             <li><a href="<?= \yii\helpers\Url::toRoute(['/services/default/index'])?>"><i class="icon-list2"></i> <span>Услуги</span></a></li>
                             <li><a href="<?= \yii\helpers\Url::toRoute(['/sof_work/default/index'])?>"><i class="icon-stairs-up"></i> <span>Этапы работы</span></a></li>
                             <li><a href="<?= \yii\helpers\Url::toRoute(['/guestbook/default/index'])?>"><i class="icon-bubble2"></i> <span>Отзывы</span></a></li>
@@ -129,6 +131,9 @@ AppAsset::register($this);
                     <li>Услуги - {services}</li>
                     <li>Портфолио - {portfolio}</li>
                     <li>Продукты - {products}</li>
+                    <li>Блок новостей-статей - {news_articles_list}</li>
+                    <li>Новости - {news_list}</li>
+                    <li>Статьи - {articles_list}</li>
                     <li>Карта сайта - {sitemap}</li>
                     <li>Гостевая книга - {guestbook}</li>
                     <li>Блоки сайта - {block_1}, где цифра id блока. Блоки обязательно обернуть div'ом c классом - center</li>

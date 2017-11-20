@@ -30,4 +30,10 @@ return [
     'blocks' => [
         'class' => 'backend\modules\blocks\Blocks',
     ],
+    'news' => [
+        'class' => 'backend\modules\news\News',
+    ],
+    'articles' => [
+        'class' => 'backend\modules\articles\Articles',
+    ],
 ];

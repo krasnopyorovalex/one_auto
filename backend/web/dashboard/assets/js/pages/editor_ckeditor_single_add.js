@@ -2,7 +2,7 @@ jQuery(function() {
 
     // Full featured editor
     CKEDITOR.replace('editor-full-add', {
-        height: '220px'
+        height: '180px'
     });
     
 });

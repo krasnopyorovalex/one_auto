@@ -61,7 +61,7 @@ return [
                 'send/<action:(write-message|recall|order)>' => 'send/<action>',
                 '<controller:(portfolio)>/<id:[\d-]+>' => '<controller>/show',
                 '<alias>' => 'site/page',
-                '<controller:(services)>/<alias:[\wd-]+>' => '<controller>/show'
+                '<controller:(services|news|articles)>/<alias:[\wd-]+>' => '<controller>/show'
             ],
         ],
         'view' => [
@@ -76,7 +76,8 @@ return [
                     ],
                     'globals' => [
                         'html' => '\yii\helpers\Html',
-                        'url' => '\yii\helpers\Url'
+                        'url' => '\yii\helpers\Url',
+                        'stringHelper' => '\yii\helpers\StringHelper'
                     ],
                     'uses' => ['yii\bootstrap'],
                 ],

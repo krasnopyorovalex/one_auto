@@ -35,5 +35,11 @@
         </div>
     </div>
 </div>
+
+<div class="container">
+    {{ use('frontend/widgets/NewsArticlesList') }}
+    {{ news_articles_list_widget() }}
+</div>
+
 {{ use('frontend/widgets/Guestbook') }}
 {{ guestbook_widget() }}
