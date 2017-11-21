@@ -4,6 +4,7 @@ namespace frontend\components;
 
 use frontend\widgets\ArticlesList;
 use frontend\widgets\Blocks;
+use frontend\widgets\Landings;
 use frontend\widgets\NewsArticlesList;
 use frontend\widgets\NewsList;
 use frontend\widgets\Portfolio;
@@ -42,6 +43,9 @@ class ParserService
         }
         if (strstr($text, '{articles_list}')) {
             $text = str_replace('<p>{articles_list}</p>', ArticlesList::widget(), $text);
+        }
+        if (strstr($text, '{landings_list}')) {
+            $text = str_replace('<p>{landings_list}</p>', Landings::widget(), $text);
         }
 
         preg_match_all("/{block_[0-9]+}/", $text, $matches);

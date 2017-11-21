@@ -36,4 +36,7 @@ return [
     'articles' => [
         'class' => 'backend\modules\articles\Articles',
     ],
+    'landings' => [
+        'class' => 'backend\modules\landings\Landings',
+    ],
 ];

@@ -44,6 +44,7 @@ AppAsset::register($this);
                             <li><a href="<?= \yii\helpers\Url::toRoute(['/pages/default/index'])?>"><i class="icon-compose"></i> <span>Страницы</span></a></li>
                             <li><a href="<?= \yii\helpers\Url::toRoute(['/news/default/index'])?>"><i class="icon-newspaper"></i> <span>Новости</span></a></li>
                             <li><a href="<?= \yii\helpers\Url::toRoute(['/articles/default/index'])?>"><i class="icon-magazine"></i> <span>Статьи</span></a></li>
+                            <li><a href="<?= \yii\helpers\Url::toRoute(['/landings/default/index'])?>"><i class="icon-wrench2"></i> <span>Лендосы</span></a></li>
                             <li><a href="<?= \yii\helpers\Url::toRoute(['/services/default/index'])?>"><i class="icon-list2"></i> <span>Услуги</span></a></li>
                             <li><a href="<?= \yii\helpers\Url::toRoute(['/sof_work/default/index'])?>"><i class="icon-stairs-up"></i> <span>Этапы работы</span></a></li>
                             <li><a href="<?= \yii\helpers\Url::toRoute(['/guestbook/default/index'])?>"><i class="icon-bubble2"></i> <span>Отзывы</span></a></li>
@@ -134,6 +135,7 @@ AppAsset::register($this);
                     <li>Блок новостей-статей - {news_articles_list}</li>
                     <li>Новости - {news_list}</li>
                     <li>Статьи - {articles_list}</li>
+                    <li>Лендосы - {landings_list}</li>
                     <li>Карта сайта - {sitemap}</li>
                     <li>Гостевая книга - {guestbook}</li>
                     <li>Блоки сайта - {block_1}, где цифра id блока. Блоки обязательно обернуть div'ом c классом - center</li>
