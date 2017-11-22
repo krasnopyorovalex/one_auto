@@ -35,6 +35,7 @@ $this->params['breadcrumbs'][] = $this->context->actions[$this->context->action-
 
                 <?= $form->field($model, 'name')->textInput(['autocomplete' => 'off']) ?>
                 <?= $form->field($model, 'btn_text')->textInput(['autocomplete' => 'off']) ?>
+                <?= $form->field($model, 'link')->textInput(['autocomplete' => 'off']) ?>
                 <?= $form->field($model, 'price')->textarea([
                     'id' => 'editor-full-add',
                     'placeholder' => 'Введите текст...'

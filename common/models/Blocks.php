@@ -34,6 +34,7 @@ class Blocks extends \yii\db\ActiveRecord
             [['price', 'description'], 'string'],
             [['name'], 'string', 'max' => 512],
             [['btn_text'], 'string', 'max' => 64],
+            [['link'], 'string', 'max' => 128],
             [['color'], 'string', 'max' => 16],
         ];
     }
@@ -50,6 +51,7 @@ class Blocks extends \yii\db\ActiveRecord
             'description' => 'Описание',
             'btn_text' => 'Текст кнопки',
             'color' => 'Цвет',
+            'link' => 'Ссылка для названия блока',
         ];
     }
 }

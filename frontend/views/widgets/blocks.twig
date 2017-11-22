@@ -1,5 +1,13 @@
 <div class="block_decorated {{ model.color }}">
-    <div class="title">{{ model.name }}</div>
+    <div class="title">
+        {% if model.link %}
+            <a href="{{ model.link }}">
+                {{ model.name }}
+            </a>
+        {% else %}
+            {{ model.name }}
+        {% endif %}
+    </div>
 
     <div class="price">{{ model.price| raw }}</div>
 

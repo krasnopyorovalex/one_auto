@@ -17,7 +17,8 @@ class m170810_121633_blocks extends Migration
             'price' => $this->text(),
             'description' => $this->text(),
             'btn_text' => $this->string(64)->notNull(),
-            'color' => $this->string(16)->notNull()
+            'color' => $this->string(16)->notNull(),
+            'link' => $this->string(128)->notNull()
         ],$tableOptions);
     }
 

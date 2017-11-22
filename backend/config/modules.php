@@ -18,9 +18,9 @@ return [
     'portfolio' => [
         'class' => 'backend\modules\portfolio\Portfolio',
     ],
-    'products' => [
-        'class' => 'backend\modules\products\Products',
-    ],
+//    'products' => [
+//        'class' => 'backend\modules\products\Products',
+//    ],
     'menu' => [
         'class' => 'backend\modules\menu\Menu',
     ],

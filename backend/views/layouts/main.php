@@ -50,7 +50,6 @@ AppAsset::register($this);
                             <li><a href="<?= \yii\helpers\Url::toRoute(['/guestbook/default/index'])?>"><i class="icon-bubble2"></i> <span>Отзывы</span></a></li>
                             <li><a href="<?= \yii\helpers\Url::toRoute(['/slider_text/default/index'])?>"><i class="icon-file-text2"></i> <span>Слайдер-текст</span></a></li>
                             <li><a href="<?= \yii\helpers\Url::toRoute(['/portfolio/default/index'])?>"><i class="icon-images3"></i> <span>Портфолио</span></a></li>
-                            <li><a href="<?= \yii\helpers\Url::toRoute(['/products/default/index'])?>"><i class="icon-bag"></i> <span>Продукты</span></a></li>
                             <li><a href="<?= \yii\helpers\Url::toRoute(['/blocks/default/index'])?>"><i class="icon-grid7"></i> <span>Блоки сайта</span></a></li>
                             <li><a href="<?= \yii\helpers\Url::toRoute(['/menu/default/index'])?>"><i class="icon-lan2"></i> <span>Навигация</span></a></li>
                             <li><a href="<?= \yii\helpers\Url::toRoute(['/redirects/default/index'])?>"><i class="icon-transmission"></i> <span>Редиректы</span></a></li>
@@ -131,7 +130,7 @@ AppAsset::register($this);
                 <ul>
                     <li>Услуги - {services}</li>
                     <li>Портфолио - {portfolio}</li>
-                    <li>Продукты - {products}</li>
+<!--                    <li>Продукты - {products}</li>-->
                     <li>Блок новостей-статей - {news_articles_list}</li>
                     <li>Новости - {news_list}</li>
                     <li>Статьи - {articles_list}</li>
