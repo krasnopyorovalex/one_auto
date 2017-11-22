@@ -24,7 +24,7 @@ class WriteMessageForm extends Model
     public function rules()
     {
         return [
-            [['name', 'info'], 'required'],
+            [['name', 'email'], 'required'],
             ['email', 'email'],
             ['info', 'validateInfo']
         ];
