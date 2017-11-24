@@ -11,6 +11,7 @@ use yii\helpers\ArrayHelper;
  *
  * @property integer $id
  * @property string $name
+ * @property string $link
  * @property string $image
  * @property string $image_alt
  * @property string $image_title
@@ -53,6 +54,7 @@ class Landings extends \yii\db\ActiveRecord
             [['name'], 'required'],
             [['pos', 'created_at', 'updated_at'], 'integer'],
             [['name', 'image_alt', 'image_title'], 'string', 'max' => 512],
+            [['link'], 'string', 'max' => 255],
             [['image'], 'string', 'max' => 64],
         ];
     }
@@ -65,6 +67,7 @@ class Landings extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'name' => 'Название',
+            'link' => 'Ссылка для многостраничных сайтов',
             'image' => 'Изображение',
             'file' => 'Изображение',
             'image_alt' => 'alt',

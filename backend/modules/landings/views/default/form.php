@@ -27,6 +27,7 @@ $this->params['breadcrumbs'][] = $this->context->actions[$this->context->action-
                             <div class="row">
                                 <div class="col-md-12">
                                     <?= $form->field($model, 'name')->textInput(['autocomplete' => 'off']) ?>
+                                    <?= $form->field($model, 'link')->textInput(['autocomplete' => 'off']) ?>
                                 </div>
                             </div>
 

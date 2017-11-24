@@ -15,6 +15,7 @@ class m171121_151546_create_landings_table extends Migration
         $this->createTable('landings', [
             'id' => $this->primaryKey(),
             'name' => $this->string(512)->notNull(),
+            'link' => $this->string(128)->notNull(),
             'image' => $this->string(64)->notNull(),
             'image_alt' => $this->string(512)->notNull(),
             'image_title' => $this->string(512)->notNull(),

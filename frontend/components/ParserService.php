@@ -44,8 +44,8 @@ class ParserService
         if (strstr($text, '{articles_list}')) {
             $text = str_replace('<p>{articles_list}</p>', ArticlesList::widget(), $text);
         }
-        if (strstr($text, '{landings_list}')) {
-            $text = str_replace('<p>{landings_list}</p>', Landings::widget(), $text);
+        if (strstr($text, '{tpl_list}')) {
+            $text = str_replace('<p>{tpl_list}</p>', Landings::widget(), $text);
         }
 
         preg_match_all("/{block_[0-9]+}/", $text, $matches);
