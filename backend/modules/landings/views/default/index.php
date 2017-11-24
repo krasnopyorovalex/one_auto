@@ -24,6 +24,13 @@ $this->params['breadcrumbs'][] = $this->context->module->params['name'];?>
                     'format' => 'raw'
                 ],
                 [
+                    'header' => 'Тип сайта',
+                    'value' => function ($model) {
+                        return $model['is_landing'] ? 'Лендос' : 'Шаблонный сайт';
+                    },
+                    'format' => 'raw'
+                ],
+                [
                     'header' => 'Позиция',
                     'class' => 'yii\grid\ActionColumn',
                     'template' => '{pos}',

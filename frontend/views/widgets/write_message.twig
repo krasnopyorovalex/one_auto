@@ -10,7 +10,10 @@
     <div class="body">
         {% set form = active_form_begin({
             'action': path('/send/write-message'),
-            'id': 'write-message-form'
+            'id': 'write-message-form',
+            'options': {
+                'onsubmit': 'yaCounter45495162.reachGoal(\'TELEGRAMMA\'); return true;'
+            }
         }) %}
             {{ html.tag('div','',{'class': 'alert'})| raw }}
             {{ form.field(modelForm, 'name').textInput({'placeholder': 'как к Вам обращаться?'}).label(false)| raw }}

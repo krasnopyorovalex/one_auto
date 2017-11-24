@@ -11,7 +11,11 @@ class Landings extends Widget
     public function run()
     {
         return $this->render('/widgets/landings.twig', [
-            'model' => \common\models\Landings::find()->where(['is_landing' => $this->is_landing])->asArray()->all()
+            'model' => \common\models\Landings::find()
+                ->where(['is_landing' => $this->is_landing])
+                ->orderBy('pos')
+                ->asArray()
+                ->all()
         ]);
     }
 }

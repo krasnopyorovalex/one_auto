@@ -11,7 +11,10 @@
 
         {% set form = active_form_begin({
             'action': path('/send/order'),
-            'id': 'order-form'
+            'id': 'order-form',
+            'options': {
+                'onsubmit': 'yaCounter45495162.reachGoal(\'ZAKAZ\'); return true;'
+            }
         }) %}
             <div class="label_service-name">название услуги</div>
             <div class="service_name"></div>
