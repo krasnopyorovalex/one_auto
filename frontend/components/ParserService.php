@@ -47,6 +47,9 @@ class ParserService
         if (strstr($text, '{tpl_list}')) {
             $text = str_replace('<p>{tpl_list}</p>', Landings::widget(), $text);
         }
+        if (strstr($text, '{landings_list}')) {
+            $text = str_replace('<p>{landings_list}</p>', Landings::widget(['is_landing' => \common\models\Landings::IS_LANDING]), $text);
+        }
 
         preg_match_all("/{block_[0-9]+}/", $text, $matches);
         if(isset($matches[0]) && count($matches[0])){

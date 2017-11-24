@@ -20,6 +20,7 @@ class m171121_151546_create_landings_table extends Migration
             'image_alt' => $this->string(512)->notNull(),
             'image_title' => $this->string(512)->notNull(),
             'pos' => $this->integer()->defaultValue(0),
+            'is_landing' => $this->smallinteger(1)->notNull()->defaultValue(0),
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull()
         ]);

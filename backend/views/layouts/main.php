@@ -134,7 +134,8 @@ AppAsset::register($this);
                     <li>Блок новостей-статей - {news_articles_list}</li>
                     <li>Новости - {news_list}</li>
                     <li>Статьи - {articles_list}</li>
-                    <li>Лендосы - {tpl_list}</li>
+                    <li>Шаблонные сайты - {tpl_list}</li>
+                    <li>Лендосы - {landings_list}</li>
                     <li>Карта сайта - {sitemap}</li>
                     <li>Гостевая книга - {guestbook}</li>
                     <li>Блоки сайта - {block_1}, где цифра id блока. Блоки обязательно обернуть div'ом c классом - center</li>

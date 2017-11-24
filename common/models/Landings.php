@@ -16,6 +16,7 @@ use yii\helpers\ArrayHelper;
  * @property string $image_alt
  * @property string $image_title
  * @property integer $pos
+ * @property integer $is_landing
  * @property integer $created_at
  * @property integer $updated_at
  */
@@ -24,6 +25,7 @@ class Landings extends \yii\db\ActiveRecord
 
     const PATH = '/userfiles/landings/';
     const IMAGE_ENTITY = 'image';
+    const IS_LANDING = 1;
 
     public $file;
 
@@ -52,7 +54,7 @@ class Landings extends \yii\db\ActiveRecord
     {
         return [
             [['name'], 'required'],
-            [['pos', 'created_at', 'updated_at'], 'integer'],
+            [['pos', 'created_at', 'updated_at', 'is_landing'], 'integer'],
             [['name', 'image_alt', 'image_title'], 'string', 'max' => 512],
             [['link'], 'string', 'max' => 255],
             [['image'], 'string', 'max' => 64],
@@ -73,6 +75,7 @@ class Landings extends \yii\db\ActiveRecord
             'image_alt' => 'alt',
             'image_title' => 'title',
             'pos' => 'Позиция',
+            'is_landing' => 'Лендинг?',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];

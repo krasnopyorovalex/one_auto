@@ -28,6 +28,7 @@ $this->params['breadcrumbs'][] = $this->context->actions[$this->context->action-
                                 <div class="col-md-12">
                                     <?= $form->field($model, 'name')->textInput(['autocomplete' => 'off']) ?>
                                     <?= $form->field($model, 'link')->textInput(['autocomplete' => 'off']) ?>
+                                    <?= $form->field($model, 'is_landing')->checkbox() ?>
                                 </div>
                             </div>
 
