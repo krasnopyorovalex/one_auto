@@ -24,7 +24,7 @@ class SitemapController extends SiteController
         return $this->render('sitemap.twig',[
             'pages' => Pages::find()->where(['<>','alias','index'])->asArray()->all(),
             'services' => Services::find()->orderBy('pos')->asArray()->all(),
-            'articles' => Articles::find()->orderBy('pos')->asArray()->all(),
+            'articles' => Articles::find()->orderBy('date DESC')->asArray()->all(),
         ]);
     }
 }
