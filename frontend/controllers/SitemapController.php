@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use common\models\Articles;
 use common\models\Pages;
 use common\models\Services;
 use yii\web\Response;
@@ -22,7 +23,8 @@ class SitemapController extends SiteController
 
         return $this->render('sitemap.twig',[
             'pages' => Pages::find()->where(['<>','alias','index'])->asArray()->all(),
-            'services' => Services::find()->orderBy('pos')->asArray()->all()
+            'services' => Services::find()->orderBy('pos')->asArray()->all(),
+            'articles' => Articles::find()->orderBy('pos')->asArray()->all(),
         ]);
     }
 }

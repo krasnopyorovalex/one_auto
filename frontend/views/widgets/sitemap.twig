@@ -11,6 +11,15 @@
                     {% endfor %}
                 </ul>
             {% endif %}
+            {% if item.alias == 'articles' %}
+                <ul>
+                    {% for item in articles %}
+                        <li>
+                            <a href="{{ path('articles/show', {'alias' : item.alias}) }}">{{ item.name }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
         </li>
     {% endfor %}
 </ul>
