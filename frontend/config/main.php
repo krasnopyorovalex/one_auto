@@ -58,7 +58,7 @@ return [
             'rules' => [
                 '/' => 'site',
                 'sitemap.xml' => 'sitemap/xml',
-                'send/<action:(write-message|recall|order)>' => 'send/<action>',
+                'send/<action:(write-message|recall|order|subscribe)>' => 'send/<action>',
                 '<controller:(portfolio)>/<id:[\d-]+>' => '<controller>/show',
                 '<alias>' => 'site/page',
                 '<controller:(services|news|articles)>/<alias:[\wd-]+>' => '<controller>/show',
