@@ -14,7 +14,7 @@ class Sitemap extends Widget
         return $this->render('/widgets/sitemap.twig', [
             'model' => Model::find()->asArray()->all(),
             'services' => Services::find()->asArray()->all(),
-            'articles' => Articles::find()->asArray()->all()
+            'articles' => Articles::find()->orderBy('date DESC')->asArray()->all()
         ]);
     }
 }
