@@ -64,9 +64,10 @@
     padding: 0;
 }
 .navbar-brand > img {
-    width: 74px;
+    width: 100%;
+    max-width: 150px;
     height: auto;
-    margin: 0 auto;
+    margin: 5px auto 0;
 }
 .center {
     text-align: center;
