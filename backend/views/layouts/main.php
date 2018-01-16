@@ -100,7 +100,7 @@ AppAsset::register($this);
 
                 <!-- Footer -->
                 <div class="footer text-muted">
-                    &copy; ООО «Красбер» <?= date('Y')?>
+                    &copy; ООО «Красбер» 2017 - <?= date('Y')?>
                 </div>
                 <!-- /footer -->
 

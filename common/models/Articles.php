@@ -3,7 +3,6 @@
 namespace common\models;
 
 use backend\components\FileBehavior;
-use Yii;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -23,7 +22,7 @@ use yii\helpers\ArrayHelper;
  * @property integer $created_at
  * @property integer $updated_at
  */
-class Articles extends \yii\db\ActiveRecord
+class Articles extends MainModel
 {
 
     const PATH = '/userfiles/articles/';
