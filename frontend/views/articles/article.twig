@@ -15,6 +15,9 @@
                 <!-- /.breadcrumbs -->
 
                 <h1>{{ model.name }}</h1>
+                {% if model.image %}
+                    <img src="/userfiles/articles/{{ model.image }}" alt="{{ model.image_alt }}" title="{{ model.image_title }}" class="responsive">
+                {% endif %}
                 {{ model.text| raw }}
             </div>
         </div>
