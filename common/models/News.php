@@ -64,6 +64,7 @@ class News extends \yii\db\ActiveRecord
             [['image'], 'string', 'max' => 64],
             [['alias'], 'string', 'max' => 255],
             [['alias'], 'unique'],
+            [['name', 'description', 'title', 'alias'], 'trim']
         ];
     }
 

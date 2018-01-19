@@ -61,6 +61,7 @@ class Services extends MainModel
             [['name', 'alias'], 'string', 'max' => 255],
             [['title', 'description', 'image', 'image_title', 'image_alt'], 'string', 'max' => 512],
             [['alias'], 'unique'],
+            [['name', 'description', 'title', 'alias'], 'trim']
         ];
     }
 

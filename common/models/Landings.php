@@ -58,6 +58,7 @@ class Landings extends \yii\db\ActiveRecord
             [['name', 'image_alt', 'image_title'], 'string', 'max' => 512],
             [['link'], 'string', 'max' => 255],
             [['image'], 'string', 'max' => 64],
+            [['name'], 'trim'],
         ];
     }
 

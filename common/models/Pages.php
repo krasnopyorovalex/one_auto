@@ -33,6 +33,7 @@ class Pages extends MainModel
     {
         return [
             [['name', 'title', 'alias'], 'required'],
+            [['name', 'description', 'title', 'alias'], 'trim'],
             [['text'], 'string'],
             [['created_at', 'updated_at'], 'integer'],
             [['name', 'title', 'description'], 'string', 'max' => 512],
