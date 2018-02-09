@@ -29,7 +29,7 @@ class Menu extends Module implements ModelProviderInterface
      */
     public function getModel()
     {
-        return \common\models\Menu::className();
+        return \common\models\Menu::class;
     }
 
 }

@@ -2,7 +2,6 @@
 namespace frontend\controllers;
 
 use common\models\Pages;
-use common\models\SofWork;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
@@ -20,28 +19,19 @@ class SiteController extends Controller
      */
     public function actionIndex($alias = 'index')
     {
-        $model = Pages::find()->where(['alias' => $alias])->with(['sliderText' => function($query){
-            return $query->with(['sliderTextItems']);
-        }])->one();
-        $model['text'] = \Yii::$app->parser->parse($model['text']);
+        $model = Pages::find()->where(['alias' => $alias])->one();
         return $this->render('index.twig',[
-            'model' => $model,
-            'sofWorks' => SofWork::find()->orderBy('pos')->asArray()->all()
+            'model' => $model
         ]);
     }
 
     public function actionPage($alias)
     {
-        if(!$model = Pages::find()->where(['alias' => $alias])->with(['sliderText' => function($query){
-            return $query->with(['sliderTextItems']);
-        }])->one()){
+        if(!$model = Pages::find()->where(['alias' => $alias])->one()){
             throw new NotFoundHttpException('The requested page does not exist.');
         }
-        $guestbook = \Yii::$app->parser->parseGuestbook($model['text']);
-        $model['text'] = \Yii::$app->parser->parse($model['text']);
         return $this->render('page.twig',[
-            'model' => $model,
-            'guestbook' => $guestbook
+            'model' => $model
         ]);
     }
 

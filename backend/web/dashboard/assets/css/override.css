@@ -223,3 +223,22 @@ li.mjs-nestedSortable-collapsed.mjs-nestedSortable-hovering div {
 .info_btn {
     margin: 0 20px;
 }
+.required label:after {
+    content: "*";
+}
+.form-group .checker {
+    float: left;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+.form-group{
+    position: relative;
+}
+.form-group .help-block-error {
+    position: absolute;
+    bottom: -2.4em;
+    left: 0;
+}
+.form-group .input-group-addon:hover {
+    cursor: pointer;
+}

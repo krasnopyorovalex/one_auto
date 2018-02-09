@@ -19,19 +19,16 @@ class m170727_145911_pages extends Migration
             'description' => $this->string(512)->notNull(),
             'text' => $this->text(),
             'alias' => $this->string()->notNull()->unique(),
-            'slider_text_id' => $this->integer(),
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull(),
         ],$tableOptions);
 
         $this->createIndex('idx-pages-alias', '{{%pages}}', 'alias');
 
-        $this->addForeignKey('fk-pages-slider_text_id', '{{%pages}}', 'slider_text_id', '{{%slider_text}}', 'id', 'SET NULL', 'RESTRICT');
-
         $this->insert('{{%pages}}', [
-            'name'        => 'ООО «Красбер»',
-            'title'       => 'Мы будем рвать всех:) ООО «Красбер»',
-            'description' => '',
+            'name'        => 'one auto',
+            'title'       => 'one auto',
+            'description' => 'one auto',
             'text'        => '',
             'alias'       => 'index',
             'created_at'  => time(),
@@ -43,15 +40,4 @@ class m170727_145911_pages extends Migration
     {
         $this->dropTable('{{%pages}}');
     }
-
-    /*
-    // Use safeUp/safeDown to run migration code within a transaction
-    public function safeUp()
-    {
-    }
-
-    public function safeDown()
-    {
-    }
-    */
 }

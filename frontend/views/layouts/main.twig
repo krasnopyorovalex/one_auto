@@ -1,160 +1,155 @@
-{{ register_asset_bundle('frontend/assets/AppAsset') }}{{ use('frontend/widgets/Menu') }}{{ void(this.beginPage()) }}<!DOCTYPE html>
+{{ void(this.beginPage()) }}<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="{{ app.charset }}">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes">
     <title>{{ this.title| raw }}</title>
+    {{ register_asset_bundle('frontend/assets/AppAsset') }}
     {{ html.csrfMetaTags| raw }}
     {{ void(this.head) }}
-<link href="{{ app.request.hostInfo }}/favicon.ico" rel="shortcut icon" />
-<link href="{{ app.request.hostInfo }}/favicon.ico" rel="icon" type="image/x-icon" />
 </head>
 <body>
 {{ void(this.beginBody()) }}
-<header>
-    <div class="container-fluid">
-        <div class="container_menu row">
-            <div class="col-md-2 col-sm-12 col-xs-4">
-                <a href="/">
-                    <img src="{{ app.request.hostInfo }}/images/logo.png" alt="Создание сайта в веб-студии Красбер" class="logo" title="Веб-студия ООО Красбер">
-                </a>
-            </div>
-            <div class="col-md-3 col-md-push-7 col-sm-12">
-                <div class="header_contacts hidden-xs">
-                    <p><a href="tel:89787547499">8 (978) 754-74-99</a>&nbsp;&nbsp;&nbsp;<a href="mailto:info@krasber.ru">info@krasber.ru</a></p>
-                    <p><a href="#subscribe_form" class="order_btn fancy_call-btn hvr-bounce-to-right">Подписаться</a></p>
+    <header>
+        <div class="wrapper">
+            <div class="header__sections">
+                <div class="logo">
+                    <a href="/">
+                        <img src="img/logo.png" alt="logo">
+                    </a>
                 </div>
-                <!-- /.header_contacts -->
-            </div>
-            <div class="col-md-7 col-md-pull-3 col-sm-12 col-xs-8">
-                <nav class="navbar center-block">
-                    <div class="navbar-header">
-                        <div class="header_contacts-mobile visible-xs">
-                            <ul>
-                                <li><a href="tel:89787547499" class="icon icon_phone"></a></li>
-                                <li><a href="#write_message" class="icon icon_envelope fancy_call-btn"></a></li>
-                                <li><a href="#" class="icon icon_share"></a></li>
-                            </ul>
+                <!-- /.logo -->
+                <div class="h__contact-menu">
+                    <div class="contact__box">
+                        <div class="contact__box-city">
+                            <span>Город:</span>
+                            <div class="custom__select">
+                                <select name="cities" id="cities">
+                                    <option value="0" selected="">Тюмень</option>
+                                    <option value="1">Москва</option>
+                                    <option value="2">Воронеж</option>
+                                    <option value="3">Симферополь</option>
+                                </select>
+                            </div>
+                            <!-- /.custom__select -->
                         </div>
-                        <button type="button" class="navbar-toggle toggle-mnu">
-                            <span></span>
-                        </button>
+                        <!-- /.contact__box-city -->
+                        <div class="contact__box-address">
+                            <span>Адрес:</span>
+                            <div class="value">ул. Интернациональная, 121</div>
+                        </div>
+                        <!-- /.contact__box-address -->
+                        <div class="contact__box-phone">
+                            <a href="te:+7345288888">+7 (3452) 88-88-88</a>
+                        </div>
+                        <!-- /.contact__box-phone -->
                     </div>
-                    <div id="navbar" class="navbar-collapse">
-                        {{ menu_widget({'sysName': 'menu_header', 'cssClass': 'nav navbar-nav'}) }}
-                    </div><!--/.nav-collapse -->
-                </nav>
-                <div class="socials_mobile visible-xs">
-                    <ul class="socials">
-                        <li><a href="https://www.facebook.com/krasber/" target="_blank"><i class="icon icon_fb"></i> Facebook</a></li>
-                        <li><a href="https://vk.com/krasber" target="_blank"><i class="icon icon_vk"></i> VKONTAKTE</a></li>
-                        {#<li><a href="https://ok.ru/group/53600855064784" target="_blank"><i class="icon icon_od"></i> Одноклассники</a></li>#}
-                        <li><a href="https://www.instagram.com/krasber_studio/" target="_blank"><i class="icon icon_in"></i> Instagram</a></li>
+                    <!-- /.contact__box -->
+                    <menu>
+                        <ul>
+                            <li><a href="#">Каталог автозапчастей</a></li>
+                            <li class="active"><a href="#">Запчасти для ТО</a></li>
+                            <li><a href="#">Масла и автохимия</a>
+                                <ul>
+                                    <li><a href="#">Двигатель / комплектующие</a></li>
+                                    <li><a href="#">Охлаждение двигателя</a>
+                                        <ul>
+                                            <li><a href="#">Двигатель / комплектующие</a></li>
+                                            <li><a href="#">Охлаждение двигателя</a></li>
+                                            <li><a href="#">Ходовая / Рулевая</a></li>
+                                            <li><a href="#">Тормозная система</a></li>
+                                            <li><a href="#">Отопление / кондиционер</a></li>
+                                            <li><a href="#">Кузовщина / автостекла</a></li>
+                                            <li><a href="#">Выхлопная система</a></li>
+                                            <li><a href="#">Трансмиссия / сцепление</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="#">Ходовая / Рулевая</a>
+                                        <ul>
+                                            <li><a href="#">Двигатель / комплектующие</a></li>
+                                            <li><a href="#">Охлаждение двигателя</a></li>
+                                            <li><a href="#">Ходовая / Рулевая</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="#">Тормозная система</a></li>
+                                    <li><a href="#">Отопление / кондиционер</a></li>
+                                    <li><a href="#">Кузовщина / автостекла</a></li>
+                                    <li><a href="#">Выхлопная система</a></li>
+                                    <li><a href="#">Трансмиссия / сцепление</a></li>
+                                    <li><a href="#">Оптика</a></li>
+                                    <li><a href="#">Электрика</a></li>
+                                    <li><a href="#">Аксессуары</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">Шины и диски</a></li>
+                            <li><a href="#">Контакты</a></li>
+                        </ul>
+                    </menu>
+                </div>
+                <!-- /.h__contact-menu -->
+            </div>
+            <!-- /.header__sections -->
+        </div>
+        <!-- /.wrapper -->
+    </header>
+
+    <section class="search">
+        <div class="wrapper">
+            <div class="search__box">
+                <div class="search__box-items">
+                    <div class="find__by">
+                        <span>Искать по:</span>
+                        <ul>
+                            <li class="active" data-type="articul">артикулу (коду детали)</li>
+                            <li data-type="name">названию</li>
+                        </ul>
+                    </div>
+                    <!-- /.find__by -->
+                    <form action="#">
+                        <input type="text" placeholder="Введите артикул...">
+                        <input type="hidden" value="articul" name="type">
+                        <i class="icon__search" title="Найти"></i>
+                    </form>
+                </div>
+            </div>
+            <!-- /.search__box -->
+        </div>
+    </section>
+    <!-- /.search -->
+
+    {{ content| raw }}
+
+    <footer>
+        <div class="wrapper">
+            <div class="items border">
+                <div class="logo">
+                    <img src="img/logo.png" alt="alt">
+                </div>
+                <div class="menu">
+                    <ul>
+                        <li><a href="#">Оформление заказа</a></li>
+                        <li><a href="#">Публичная оферт</a></li>
+                        <li><a href="#">О персональных данных</a></li>
+                        <li><a href="#">Контакты</a></li>
+                        <li><a href="#">Оплата и доставка</a></li>
                     </ul>
                 </div>
+                <div class="contacts">
+                    <div class="contacts__box-phone">
+                        <a href="te:+7345288888">+7 (3452) 88-88-88</a>
+                    </div>
+                    <!-- /.contact__box-phone -->
+                    <div class="contacts__street">
+                        ул. Интернациональная, 121
+                    </div>
+                </div>
+            </div>
+            <div class="items copyright">
+                <div class="left">© 2017-2018</div>
+                <div class="right"><a href="#">Создание и продвижение сайта</a></div>
             </div>
         </div>
-        <!-- /.container_menu -->
-        {{ this.blocks['carousel']| raw }}
-    </div>
-    <!-- /.container-fluid -->
-</header>
-
-{{ content| raw }}
-
-<div class="container-fluid footer">
-    <div class="row">
-        <div class="col-md-4 col-sm-4">
-            {#<div class="title">наши услуги</div>#}
-            {{ menu_widget({'sysName': 'menu_footer_first'}) }}
-        </div>
-        <div class="col-md-4 col-sm-4">
-            {#<div class="title">контакты</div>#}
-            <a href="mailto:info@krasber.ru">info@krasber.ru</a>
-            <a href="tel:89787547499">8 (978) 754-74-99</a>
-            <ul class="socials">
-                <li><a href="https://www.facebook.com/krasber/" target="_blank"><i class="icon icon_fb"></i></a></li>
-                <li><a href="https://vk.com/krasber" target="_blank"><i class="icon icon_vk"></i></a></li>
-                {#<li><a href="https://ok.ru/group/53600855064784" target="_blank"><i class="icon icon_od"></i></a></li>#}
-                <li><a href="https://www.instagram.com/krasber_studio/" target="_blank"><i class="icon icon_in"></i></a></li>
-            </ul>
-            {#<div class="title">МЕССЕНДЖЕРЫ</div>#}
-            <p>Звоните, пишите,<br /> пообщаемся, договоримся!</p>
-            <ul class="messengers">
-                <li><a href="tg://@nata_ber"><i class="icon icon_telegram"></i></a></li>
-                <li><a href="whatsapp://send?text=Hello!&phone=+89787547499&abid=+89787547499"><i class="icon icon_whatsapp"></i></a></li>
-                <li><a href="skype:live:info_773422"><i class="icon icon_skype"></i></a></li>
-                <li><a href="viber://add?number=89787547499"><i class="icon icon_viber"></i></a></li>
-            </ul>
-        </div>
-        <div class="col-md-4 col-sm-4">
-            {#<div class="title">Нижнее меню</div>#}
-            {{ menu_widget({'sysName': 'menu_footer'}) }}
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="copy">
-                2017 - {{ now| date("Y") }} © Создание и раскрутка сайтов. ООО «Красбер»
-            </div>
-        </div>
-    </div>
-</div>
-
-<ul class="contacts_box hidden-xs">
-    <li>
-        <a href="#write_message" class="fancy_call-btn"><i class="icon icon_envelope"></i></a>
-        <p>Написать нам телеграмму</p>
-    </li>
-    <li>
-        <a href="#recall" class="fancy_call-btn"><i class="icon icon_phone"></i></a>
-        <p>Вам перезвонить? Заполняйте форму:)</p>
-    </li>
-    <li>
-        <i class="icon icon_up"></i>
-        <p>В самый вверх!</p>
-    </li>
-</ul>
-<!-- /.contacts_box -->
-
-{{ use('frontend/widgets/Order') }}
-{{ order_widget() }}
-
-{{ use('frontend/widgets/WriteMessage') }}
-{{ write_message_widget() }}
-
-{{ use('frontend/widgets/Recall') }}
-{{ recall_widget() }}
-
-{{ use('frontend/widgets/Subscribe') }}
-{{ subscribe_widget() }}
-
-<div id="portfolio_popup" class="form_box"></div>
-<!-- /#portfolio_popup -->
-
-<div class="top_mobile tran4s">
-    <i class="glyphicon glyphicon-menu-up"></i>
-</div>
-<!-- /.top_mobile -->
-
-<div class="subscribe_box-info">
-    <div class="info">
-        Подпишитесь сейчас и получите скидку
-    </div>
-    <a href="#subscribe_form" class="order_btn fancy_call-btn hvr-bounce-to-right">Подписаться</a>
-    <i class="glyphicon glyphicon-remove"></i>
-</div>
-<!-- /.subscribe_box-info -->
-
-<!-- Yandex.Metrika counter --> <script type="text/javascript" > (function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter45495162 = new Ya.Metrika({ id:45495162, clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true, trackHash:true }); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = "https://mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks"); </script> <!-- /Yandex.Metrika counter --><!-- Yandex.Metrika counter --> <script type="text/javascript" > (function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter45495162 = new Ya.Metrika({ id:45495162, clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true, trackHash:true }); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = "https://mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks"); </script> <!-- /Yandex.Metrika counter -->
-<!-- Global Site Tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107358703-1"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments)};
-    gtag('js', new Date());
-    gtag('config', 'UA-107358703-1');
-</script>
+    </footer>
 {{ void(this.endBody()) }}
 </body>
 </html>{{ void(this.endPage()) }}

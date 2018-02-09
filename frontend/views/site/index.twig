@@ -1,45 +1,263 @@
 {{ set(this, 'title', model.title) }}
 {{ this.registerMetaTag({'name':'description', 'content': model.description}) }}
 
-{% if model.slider_text_id %}
-    {{ void(this.beginBlock('carousel')) }}
-        {{ use('frontend/widgets/Slider') }}
-        {{ slider_widget({'items': model.sliderText.sliderTextItems }) }}
-    {{ void(this.endBlock()) }}
-{% endif %}
-
-<div class="container wrapper">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="center content">
-                <h1>{{ model.name }}</h1>
-                {{ model.text| raw }}
-            </div>
-
-            {% if sofWorks %}
-                <div class="stages_of-work">
-                    {% for item in sofWorks %}
-                        <div class="stages_of-work-item">
-                            <img src="/userfiles/sof_work/{{ item.image }}" alt="{{ item.image_alt }}" title="{{ item.image_title }}">
-                            <h3 class="title">{{ item.name }}</h3>
-                            <div class="desc">
-                                {{ item.description| raw }}
-                            </div>
-                        </div>
-                        <!-- /.stages_of-work-item -->
-                    {% endfor %}
+<section class="categories">
+    <div class="wrapper">
+        <div class="items">
+            <div class="first__column">
+                <div class="categories__item">
+                    <img src="./img/cat_img-01.png" alt="alt">
+                    <div class="categories__item-desc">
+                        <div class="categories__item-name">Запчасти для ТО</div>
+                        <div class="categories__item-count">1 024 моделей</div>
+                    </div>
+                    <!-- /.categories__item-desc -->
                 </div>
-                <!-- /.stages_of-work -->
-            {% endif %}
-
+                <!-- /.categories__item -->
+            </div>
+            <!-- /.first_column -->
+            <div class="second__column">
+                <div class="first__column">
+                    <div class="categories__item">
+                        <img src="./img/cat_img-02.png" alt="alt">
+                        <div class="categories__item-desc">
+                            <div class="categories__item-name">Автохимия</div>
+                            <div class="categories__item-count">1 024 моделей</div>
+                        </div>
+                        <!-- /.categories__item-desc -->
+                    </div>
+                    <!-- /.categories__item -->
+                    <div class="categories__item">
+                        <img src="./img/cat_img-03.png" alt="alt">
+                        <div class="categories__item-desc">
+                            <div class="categories__item-name">Диски</div>
+                            <div class="categories__item-count">1 024 моделей</div>
+                        </div>
+                        <!-- /.categories__item-desc -->
+                    </div>
+                    <!-- /.categories__item -->
+                </div>
+                <div class="categories__item margin__left-05">
+                    <img src="./img/cat_img-04.png" alt="alt">
+                    <div class="categories__item-desc">
+                        <div class="categories__item-name">Каталог автозапчастей</div>
+                        <div class="categories__item-count">1 024 моделей</div>
+                    </div>
+                    <!-- /.categories__item-desc -->
+                </div>
+                <!-- /.categories__item -->
+            </div>
+            <!-- /.second__column -->
+            <div class="third__column">
+                <div class="categories__item">
+                    <img src="./img/cat_img-05.png" alt="alt">
+                    <div class="categories__item-desc">
+                        <div class="categories__item-name">Шины</div>
+                        <div class="categories__item-count">1 024 моделей</div>
+                    </div>
+                    <!-- /.categories__item-desc -->
+                </div>
+                <!-- /.categories__item -->
+                <div class="categories__view-all">
+                    <a href="#">Показать <br /> все категории</a>
+                </div>
+                <!-- /.categories__view-all -->
+            </div>
+            <!-- /.third__column -->
         </div>
     </div>
-</div>
+</section>
+<!-- /.categories -->
 
-{#<div class="container">#}
-    {#{{ use('frontend/widgets/NewsArticlesList') }}#}
-    {#{{ news_articles_list_widget() }}#}
-{#</div>#}
-
-{{ use('frontend/widgets/Guestbook') }}
-{{ guestbook_widget() }}
+<section class="brands">
+    <div class="wrapper">
+        <div class="items">
+            <div class="item">
+                <img src="img/brand_audi.png" alt="alt">
+                <ul>
+                    <li><a href="#">100 / 200 / V8</a></li>
+                    <li><a href="#">80 / 90</a></li>
+                    <li><a href="#">A1</a></li>
+                    <li><a href="#">A2</a></li>
+                    <li><a href="#">A3</a></li>
+                    <li><a href="#">A4</a></li>
+                    <li><a href="#">A5</a></li>
+                    <li><a href="#">A6</a></li>
+                    <li><a href="#">A7</a></li>
+                    <li><a href="#">A8</a></li>
+                </ul>
+            </div>
+            <div class="item">
+                <img src="img/brand_walksvagen.png" alt="alt">
+                <ul>
+                    <li><a href="#">AMAROK</a></li>
+                    <li><a href="#">ARTEON</a></li>
+                    <li><a href="#">BEETLE / NEW BEETLE</a></li>
+                    <li><a href="#">BORA</a></li>
+                    <li><a href="#">CADDY</a></li>
+                    <li><a href="#">CORRADO</a></li>
+                    <li><a href="#">CRAFTER</a></li>
+                    <li><a href="#">DERBY</a></li>
+                    <li><a href="#">EOS</a></li>
+                    <li><a href="#">FOX</a></li>
+                </ul>
+            </div>
+            <div class="item">
+                <img src="img/brand_skoda.png" alt="alt">
+                <ul>
+                    <li><a href="#">CITIGO</a></li>
+                    <li><a href="#">FABIA</a></li>
+                    <li><a href="#">FAVORIT</a></li>
+                    <li><a href="#">FELICIA</a></li>
+                    <li><a href="#">KODIAQ</a></li>
+                    <li><a href="#">OCTAVIA</a></li>
+                    <li><a href="#">RAPID</a></li>
+                    <li><a href="#">ROOMSTER</a></li>
+                    <li><a href="#">SUPERB</a></li>
+                    <li><a href="#">YETI</a></li>
+                </ul>
+            </div>
+            <div class="item">
+                <img src="img/brand_suzuki.png" alt="alt">
+                <ul>
+                    <li><a href="#">ALHAMBRA</a></li>
+                    <li><a href="#">ALTEA</a></li>
+                    <li><a href="#">AROSA</a></li>
+                    <li><a href="#">Ateca</a></li>
+                    <li><a href="#">CORDOBA</a></li>
+                    <li><a href="#">EXEO</a></li>
+                    <li><a href="#">IBIZA</a></li>
+                    <li><a href="#">INCA</a></li>
+                    <li><a href="#">LEON</a></li>
+                    <li><a href="#">MII</a></li>
+                </ul>
+            </div>
+            <div class="item">
+                <img src="img/brand_opel.png" alt="alt">
+                <ul>
+                    <li><a href="#">ADAM</a></li>
+                    <li><a href="#">AGILA</a></li>
+                    <li><a href="#">AMPERA</a></li>
+                    <li><a href="#">AMPERA-E</a></li>
+                    <li><a href="#">ANTARA</a></li>
+                    <li><a href="#">ASCONA</a></li>
+                    <li><a href="#">ASTRA</a></li>
+                    <li><a href="#">Astra K</a></li>
+                    <li><a href="#">Astra K</a></li>
+                    <li><a href="#">CASCADA</a></li>
+                </ul>
+            </div>
+            <div class="item">
+                <img src="img/brand_ford.png" alt="alt">
+                <ul>
+                    <li><a href="#">B-MAX</a></li>
+                    <li><a href="#">C-MAX</a></li>
+                    <li><a href="#">COUGAR</a></li>
+                    <li><a href="#">ECOSPORT</a></li>
+                    <li><a href="#">ESCORT</a></li>
+                    <li><a href="#">FIESTA</a></li>
+                    <li><a href="#">Fiesta VII</a></li>
+                    <li><a href="#">FOCUS</a></li>
+                    <li><a href="#">FUSION</a></li>
+                    <li><a href="#">GALAXY</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="items">
+            <div class="item">
+                <img src="img/brand_audi.png" alt="alt">
+                <ul>
+                    <li><a href="#">100 / 200 / V8</a></li>
+                    <li><a href="#">80 / 90</a></li>
+                    <li><a href="#">A1</a></li>
+                    <li><a href="#">A2</a></li>
+                    <li><a href="#">A3</a></li>
+                    <li><a href="#">A4</a></li>
+                    <li><a href="#">A5</a></li>
+                    <li><a href="#">A6</a></li>
+                    <li><a href="#">A7</a></li>
+                    <li><a href="#">A8</a></li>
+                </ul>
+            </div>
+            <div class="item">
+                <img src="img/brand_walksvagen.png" alt="alt">
+                <ul>
+                    <li><a href="#">AMAROK</a></li>
+                    <li><a href="#">ARTEON</a></li>
+                    <li><a href="#">BEETLE / NEW BEETLE</a></li>
+                    <li><a href="#">BORA</a></li>
+                    <li><a href="#">CADDY</a></li>
+                    <li><a href="#">CORRADO</a></li>
+                    <li><a href="#">CRAFTER</a></li>
+                    <li><a href="#">DERBY</a></li>
+                    <li><a href="#">EOS</a></li>
+                    <li><a href="#">FOX</a></li>
+                </ul>
+            </div>
+            <div class="item">
+                <img src="img/brand_skoda.png" alt="alt">
+                <ul>
+                    <li><a href="#">CITIGO</a></li>
+                    <li><a href="#">FABIA</a></li>
+                    <li><a href="#">FAVORIT</a></li>
+                    <li><a href="#">FELICIA</a></li>
+                    <li><a href="#">KODIAQ</a></li>
+                    <li><a href="#">OCTAVIA</a></li>
+                    <li><a href="#">RAPID</a></li>
+                    <li><a href="#">ROOMSTER</a></li>
+                    <li><a href="#">SUPERB</a></li>
+                    <li><a href="#">YETI</a></li>
+                </ul>
+            </div>
+            <div class="item">
+                <img src="img/brand_suzuki.png" alt="alt">
+                <ul>
+                    <li><a href="#">ALHAMBRA</a></li>
+                    <li><a href="#">ALTEA</a></li>
+                    <li><a href="#">AROSA</a></li>
+                    <li><a href="#">Ateca</a></li>
+                    <li><a href="#">CORDOBA</a></li>
+                    <li><a href="#">EXEO</a></li>
+                    <li><a href="#">IBIZA</a></li>
+                    <li><a href="#">INCA</a></li>
+                    <li><a href="#">LEON</a></li>
+                    <li><a href="#">MII</a></li>
+                </ul>
+            </div>
+            <div class="item">
+                <img src="img/brand_opel.png" alt="alt">
+                <ul>
+                    <li><a href="#">ADAM</a></li>
+                    <li><a href="#">AGILA</a></li>
+                    <li><a href="#">AMPERA</a></li>
+                    <li><a href="#">AMPERA-E</a></li>
+                    <li><a href="#">ANTARA</a></li>
+                    <li><a href="#">ASCONA</a></li>
+                    <li><a href="#">ASTRA</a></li>
+                    <li><a href="#">Astra K</a></li>
+                    <li><a href="#">Astra K</a></li>
+                    <li><a href="#">CASCADA</a></li>
+                </ul>
+            </div>
+            <div class="item">
+                <img src="img/brand_ford.png" alt="alt">
+                <ul>
+                    <li><a href="#">B-MAX</a></li>
+                    <li><a href="#">C-MAX</a></li>
+                    <li><a href="#">COUGAR</a></li>
+                    <li><a href="#">ECOSPORT</a></li>
+                    <li><a href="#">ESCORT</a></li>
+                    <li><a href="#">FIESTA</a></li>
+                    <li><a href="#">Fiesta VII</a></li>
+                    <li><a href="#">FOCUS</a></li>
+                    <li><a href="#">FUSION</a></li>
+                    <li><a href="#">GALAXY</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="load__more-btn">
+            <a href="#">Показать все модели</a>
+        </div>
+    </div>
+</section>
+<!-- /.brands -->

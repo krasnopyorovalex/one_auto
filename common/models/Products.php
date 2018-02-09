@@ -1,23 +1,48 @@
 <?php
 
 namespace common\models;
-
-use Yii;
+use backend\components\FileBehavior;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "{{%products}}".
  *
- * @property integer $id
+ * @property int $id
+ * @property int $subcategory_id
  * @property string $name
+ * @property string $title
  * @property string $description
- * @property string $price
- * @property string $color
- * @property integer $pos
- * @property string $btn_text
- * @property integer $form_type
+ * @property string $text
+ * @property string $alias
+ * @property int $price
+ * @property string $image
+ * @property int $created_at
+ * @property int $updated_at
+ *
+ * @property SubCategory $subcategory
+ * @property ProductsOptionsVia[] $productsOptionsVias
+ * @property ProductsOptions[] $options
  */
-class Products extends \yii\db\ActiveRecord
+class Products extends MainModel
 {
+    const PATH = '/userfiles/products/';
+    const IMAGE_ENTITY = 'image';
+
+    public $file;
+    public $options;
+
+    public function behaviors()
+    {
+        return ArrayHelper::merge(parent::behaviors(),[
+            [
+                'class' => FileBehavior::className(),
+                'path' => self::PATH,
+                'entity_db' => self::IMAGE_ENTITY
+            ]
+        ]);
+    }
+
+
     /**
      * @inheritdoc
      */
@@ -32,13 +57,15 @@ class Products extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'price', 'btn_text'], 'required'],
-            [['description'], 'string'],
-            [['pos', 'form_type'], 'integer'],
-            [['name'], 'string', 'max' => 512],
-            [['price'], 'string', 'max' => 255],
-            [['btn_text'], 'string', 'max' => 64],
-            [['color'], 'string', 'max' => 32],
+            [['subcategory_id', 'name', 'title', 'description', 'alias'], 'required'],
+            [['subcategory_id', 'price', 'created_at', 'updated_at'], 'integer'],
+            [['text'], 'string'],
+            [['name', 'title', 'description'], 'string', 'max' => 512],
+            [['alias'], 'string', 'max' => 255],
+            [['image'], 'string', 'max' => 36],
+            [['alias'], 'unique'],
+            [['subcategory_id'], 'exist', 'skipOnError' => true, 'targetClass' => SubCategory::className(), 'targetAttribute' => ['subcategory_id' => 'id']],
+            [['options'], 'safe']
         ];
     }
 
@@ -49,13 +76,55 @@ class Products extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Название продукта',
-            'description' => 'Описание',
+            'subcategory_id' => 'Subcategory ID',
+            'name' => 'Name',
+            'title' => 'Title',
+            'description' => 'Description',
+            'text' => 'Text',
+            'alias' => 'Alias',
             'price' => 'Цена',
-            'pos' => 'Позиция',
-            'btn_text' => 'Текст кнопки',
-            'form_type' => 'Тип формы',
-            'color' => 'Цвет плашки',
+            'image' => 'Image',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSubcategory()
+    {
+        return $this->hasOne(SubCategory::className(), ['id' => 'subcategory_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProductsOptionsVias()
+    {
+        return $this->hasMany(ProductsOptionsVia::className(), ['product_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOptions()
+    {
+        return $this->hasMany(ProductsOptions::className(), ['id' => 'option_id'])->viaTable('{{%products_options_via}}', ['product_id' => 'id']);
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        if($this->options){
+            $this->unlinkAll('options', true);
+            foreach ($this->options as $key => $value){
+                (new ProductsOptionsVia([
+                    'product_id' => $this->id,
+                    'option_id' => $key,
+                    'value' => $value
+                ]))->save();
+            }
+        }
+        parent::afterSave($insert, $changedAttributes);
     }
 }

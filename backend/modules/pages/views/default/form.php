@@ -4,7 +4,6 @@
 
 use backend\assets\SingleEditorAsset;
 use backend\assets\SelectAsset;
-use common\models\SliderText;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
@@ -31,13 +30,6 @@ $this->params['breadcrumbs'][] = $this->context->actions[$this->context->action-
                         <div class="tab-pane active" id="main">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <?= $form->field($model, 'slider_text_id')->dropDownList(
-                                            ArrayHelper::map(SliderText::find()->asArray()->all(),'id','name'),
-                                            [
-                                                'prompt' => 'Не выбрано',
-                                                'class' => 'select-search', 'data-width' => '100%'
-                                            ]
-                                    )?>
                                     <?= $form->field($model, 'name')->textInput(['autocomplete' => 'off']) ?>
                                     <?= $form->field($model, 'title')->textInput(['autocomplete' => 'off']) ?>
                                     <?= $form->field($model, 'description')->textInput(['autocomplete' => 'off']) ?>

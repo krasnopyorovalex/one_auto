@@ -23,6 +23,9 @@ $this->params['breadcrumbs'][] = $model->isNewRecord ? 'Добавление п�
 
                 <div class="row">
                     <div class="col-md-12">
+                        <?= $form->field($model, 'parent_id')->dropDownList($model->getTree(), [
+                            'class' => 'select-search', 'data-width' => '100%'
+                        ])?>
                         <?= $form->field($model, 'name')->textInput(['autocomplete' => 'off']) ?>
                         <?= $form->field($model, 'link')->dropDownList($model->drawDDM(), [
                             'class' => 'select-search', 'data-width' => '100%'

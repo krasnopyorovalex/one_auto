@@ -2,51 +2,15 @@
 
 namespace backend\controllers;
 
-use common\models\MenuItems;
-use common\models\Redirects;
 use Yii;
-use backend\interfaces\IActions;
-use yii\filters\AccessControl;
 use yii\data\ActiveDataProvider;
 use backend\interfaces\ModelProviderInterface;
 use yii\web\NotFoundHttpException;
-//use common\models\Redirects;
-use yii\filters\VerbFilter;
 use backend\components\FileHelper as FH;
 
-class ModuleController extends SiteController implements IActions
+class ModuleController extends SiteController
 {
     private $_model = null;
-
-    public $actions = [
-        'update' => 'Обновление',
-        'add' => 'Добавление',
-        'delete' => 'Удаление',
-    ];
-
-    public function behaviors()
-    {
-        return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'actions' => ['index', 'add', 'update', 'delete', 'remove-image', 'update-pos'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'remove-image' => ['post'],
-                    'update-pos' => ['post'],
-                    'upload' => ['post']
-                ],
-            ],
-        ];
-    }
 
     public function init()
     {
@@ -103,6 +67,7 @@ class ModuleController extends SiteController implements IActions
      */
     public function actionRemoveImage($id)
     {
+
         $model = $this->_model;
         $model = $model::findOne($id);
         if(FH::removeFile($model->image,$model::PATH)){
@@ -110,45 +75,6 @@ class ModuleController extends SiteController implements IActions
             return $model->save();
         }
         return false;
-    }
-
-    protected function findData($query)
-    {
-        return new ActiveDataProvider([
-            'query' => $query,
-            'sort' => false,
-            'pagination' => false
-        ]);
-    }
-
-    protected function loadData($model, $redirect = null)
-    {
-        if($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if(!$model->isNewRecord && $model->isAttributeChanged('alias')){
-                $this->insertNewRedirect($model);
-            }
-            $model->save();
-            if($redirect){
-                return $this->redirect($redirect);
-            }
-            return $this->redirect(Yii::$app->homeUrl . $this->module->id);
-        }
-    }
-
-    /**
-     * @param $model
-     * @return bool
-     */
-    protected function insertNewRedirect($model)
-    {
-        $redirect = new Redirects();
-        $redirect->old_alias = preg_replace("/\/+/","/", '/'.str_replace(['pages','{{%','}}'], '', $model::tableName().'/'.$model->getOldAttribute('alias')));
-        $redirect->new_alias = preg_replace("/\/+/","/", '/'.str_replace(['pages','{{%','}}'], '', $model::tableName().'/'.$model->alias));
-        if($linkMenu = MenuItems::find()->where(['link' => $redirect->old_alias])->one()){
-            $linkMenu->link = $redirect->new_alias;
-            $linkMenu->update();
-        }
-        return $redirect->save();
     }
 
 }

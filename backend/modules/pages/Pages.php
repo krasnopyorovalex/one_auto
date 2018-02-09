@@ -1,6 +1,7 @@
 <?php
 
 namespace backend\modules\pages;
+
 use backend\interfaces\ModelProviderInterface;
 use yii\base\Module;
 
@@ -28,6 +29,6 @@ class Pages extends Module implements ModelProviderInterface
      */
     public function getModel()
     {
-        return \common\models\Pages::className();
+        return \common\models\Pages::class;
     }
 }

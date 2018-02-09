@@ -4,6 +4,7 @@
 /* @var $content string */
 
 use backend\assets\AppAsset;
+use common\widgets\Alert;
 use yii\helpers\Html;
 use yii\widgets\Breadcrumbs;
 
@@ -16,7 +17,7 @@ AppAsset::register($this);
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
-    <title>Административная панель - ООО «Красбер»</title>
+    <title>Административная панель - <?= Yii::$app->request->serverName?></title>
     <?php $this->head() ?>
 </head>
 <body>
@@ -42,26 +43,14 @@ AppAsset::register($this);
                             <!-- Main -->
                             <li class="navigation-header"><span>Навигация</span> <i class="icon-menu" title="Навигация"></i></li>
                             <li><a href="<?= \yii\helpers\Url::toRoute(['/pages/default/index'])?>"><i class="icon-compose"></i> <span>Страницы</span></a></li>
-<!--                            <li><a href="--><?//= \yii\helpers\Url::toRoute(['/news/default/index'])?><!--"><i class="icon-newspaper"></i> <span>Новости</span></a></li>-->
-                            <li><a href="<?= \yii\helpers\Url::toRoute(['/articles/default/index'])?>"><i class="icon-magazine"></i> <span>Статьи</span></a></li>
-                            <li><a href="<?= \yii\helpers\Url::toRoute(['/landings/default/index'])?>"><i class="icon-wrench2"></i> <span>Шаблонные сайты</span></a></li>
-                            <li><a href="<?= \yii\helpers\Url::toRoute(['/services/default/index'])?>"><i class="icon-list2"></i> <span>Услуги</span></a></li>
-                            <li><a href="<?= \yii\helpers\Url::toRoute(['/sof_work/default/index'])?>"><i class="icon-stairs-up"></i> <span>Этапы работы</span></a></li>
-                            <li><a href="<?= \yii\helpers\Url::toRoute(['/guestbook/default/index'])?>"><i class="icon-bubble2"></i> <span>Отзывы</span></a></li>
-                            <li><a href="<?= \yii\helpers\Url::toRoute(['/slider_text/default/index'])?>"><i class="icon-file-text2"></i> <span>Слайдер-текст</span></a></li>
-                            <li><a href="<?= \yii\helpers\Url::toRoute(['/portfolio/default/index'])?>"><i class="icon-images3"></i> <span>Портфолио</span></a></li>
-                            <li><a href="<?= \yii\helpers\Url::toRoute(['/blocks/default/index'])?>"><i class="icon-grid7"></i> <span>Блоки сайта</span></a></li>
                             <li><a href="<?= \yii\helpers\Url::toRoute(['/menu/default/index'])?>"><i class="icon-lan2"></i> <span>Навигация</span></a></li>
-                            <li><a href="<?= \yii\helpers\Url::toRoute(['/redirects/default/index'])?>"><i class="icon-transmission"></i> <span>Редиректы</span></a></li>
-
+                            <li><a href="<?= \yii\helpers\Url::toRoute(['/subdomains/default/index'])?>"><i class="icon-earth"></i> <span>Поддомены</span></a></li>
+                            <li><a href="<?= \yii\helpers\Url::toRoute(['/catalog/default/index'])?>"><i class="icon-folder5"></i> <span>Каталог</span></a></li>
+                            <li><a href="<?= \yii\helpers\Url::toRoute(['/products_options/default/index'])?>"><i class="icon-list-numbered"></i> <span>Атрибуты продукции</span></a></li>
                         </ul>
                     </div>
                 </div>
                 <!-- /main navigation -->
-
-                <div class="info_btn">
-                    <button type="button" data-toggle="modal" data-target="#modal_info" class="btn btn-primary btn-labeled btn-xlg"><b><i class="icon-info3"></i></b> Информация</button>
-                </div>
 
             </div>
         </div>
@@ -95,6 +84,7 @@ AppAsset::register($this);
             <div class="content">
 
                 <!-- Dashboard content -->
+                    <?= Alert::widget() ?>
                     <?= $content ?>
                 <!-- /dashboard content -->
 
@@ -115,43 +105,6 @@ AppAsset::register($this);
 
 </div>
 <!-- /page container -->
-
-<!-- Basic modal -->
-<div id="modal_info" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header bg-primary">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h5 class="modal-title">Применение shortcode'ов</h5>
-            </div>
-
-            <div class="modal-body">
-                <h6 class="text-semibold">Доступные shortcode'ы:</h6>
-                <ul>
-                    <li>Услуги - {services}</li>
-                    <li>Портфолио - {portfolio}</li>
-<!--                    <li>Продукты - {products}</li>-->
-<!--                    <li>Блок новостей-статей - {news_articles_list}</li>-->
-<!--                    <li>Новости - {news_list}</li>-->
-                    <li>Статьи - {articles_list}</li>
-                    <li>Шаблонные сайты - {tpl_list}</li>
-                    <li>Лендосы - {landings_list}</li>
-                    <li>Карта сайта - {sitemap}</li>
-                    <li>Гостевая книга - {guestbook}</li>
-                    <li>Блоки сайта - {block_1}, где цифра id блока. Блоки обязательно обернуть div'ом c классом - center</li>
-                    <li>Ссылки в контенте - &lt;a href="/alias"&gt;Портфолио&lt;/a&gt;</li>
-                    <li>Разделитель горизонтальный - &lt;div class="delimiter"&gt;&nbsp;&lt;/div&gt;</li>
-                </ul>
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btn bg-primary" data-dismiss="modal">Закрыть</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- /basic modal -->
-
 <?php $this->endBody() ?>
 </body>
 </html>

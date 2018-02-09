@@ -9,5 +9,5 @@ use backend\controllers\ModuleController;
  */
 class DefaultController extends ModuleController
 {
-        
+
 }

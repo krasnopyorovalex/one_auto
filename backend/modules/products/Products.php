@@ -1,7 +1,6 @@
 <?php
 
 namespace backend\modules\products;
-
 use backend\interfaces\ModelProviderInterface;
 use yii\base\Module;
 
@@ -21,15 +20,12 @@ class Products extends Module implements ModelProviderInterface
     public function init()
     {
         parent::init();
-        $this->params['name'] = 'Продукты';
+        $this->params['name'] = 'Продукция';
         // custom initialization code goes here
     }
 
-    /**
-     * @return string
-     */
     public function getModel()
     {
-        return \common\models\Products::className();
+        return \common\models\Products::class;
     }
 }

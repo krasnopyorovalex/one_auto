@@ -41,9 +41,9 @@ jQuery(function(){
                 type: "POST",
                 data: to_server,
                 success: function() {
-                    return jQuery.jGrowl('Порядок изображений сохранён успешно:)', {
+                    return jQuery.jGrowl('Порядок элементов сохранён успешно', {
                         theme: 'bg-slate-700',
-                        header: 'Сообщение из конторы'
+                        header: 'Системное сообщение...'
                     });
                 }
             });

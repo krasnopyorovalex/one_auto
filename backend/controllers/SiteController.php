@@ -2,6 +2,7 @@
 namespace backend\controllers;
 
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use common\models\LoginForm;
@@ -13,6 +14,12 @@ use yii\filters\VerbFilter;
 class SiteController extends Controller
 {
     public $enableCsrfValidation = false;
+    public $actions = [
+        'update' => 'Обновление',
+        'add' => 'Добавление',
+        'delete' => 'Удаление',
+    ];
+
     /**
      * @inheritdoc
      */
@@ -27,7 +34,7 @@ class SiteController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'upload-ckeditor', 'multiupload'],
+                        'actions' => ['logout', 'index', 'upload-ckeditor', 'multiupload', 'add', 'update', 'delete', 'remove-image', 'update-pos'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -37,7 +44,10 @@ class SiteController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'logout' => ['post'],
-                    'multiupload' => ['post']
+                    'multiupload' => ['post'],
+                    'remove-image' => ['post'],
+                    'update-pos' => ['post'],
+                    'upload' => ['post']
                 ],
             ],
         ];
@@ -87,5 +97,26 @@ class SiteController extends Controller
         Yii::$app->user->logout();
 
         return $this->goHome();
+    }
+
+    public function findData($query)
+    {
+        return new ActiveDataProvider([
+            'query' => $query,
+            'sort' => false,
+            'pagination' => false
+        ]);
+    }
+
+
+    public function loadData(yii\db\ActiveRecord $model, $redirect = null)
+    {
+        if($model->load(Yii::$app->request->post()) && $model->validate() && $model->save()) {
+            if($redirect){
+                return $this->redirect($redirect);
+            }
+            return $this->redirect(Yii::$app->homeUrl . $this->module->id);
+        }
+        return false;
     }
 }

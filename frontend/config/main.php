@@ -21,9 +21,6 @@ return [
             'csrfParam' => '_csrf-frontend',
             'baseUrl' => ''
         ],
-        'parser' => [
-            'class' => 'frontend\components\ParserService'
-        ],
         'sender' => [
             'class' => 'frontend\services\SendService'
         ],
@@ -37,7 +34,7 @@ return [
         ],
         'session' => [
             // this is the name of the session cookie used for login on the frontend
-            'name' => 'advanced-frontend',
+            'name' => 'frontend-one-auto',
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -71,7 +68,6 @@ return [
                 'twig' => [
                     'class' => 'yii\twig\ViewRenderer',
                     'cachePath' => '@runtime/Twig/cache',
-                    // Array of twig options:
                     'options' => [
                         'auto_reload' => true,
                     ],
