@@ -4,56 +4,49 @@ use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-/* @var $dataProvider common\models\Catalog */
-/* @var $catalog common\models\Catalog */
+/* @var $dataProvider common\models\AutoBrands */
 /* @var $this yii\web\View */
 
-$this->params['breadcrumbs'][] = ['label' => $this->context->module->params['name'], 'url' => Url::toRoute(['/'.$this->context->module->id])];
-$this->params['breadcrumbs'][] = $catalog->name;
+$this->params['breadcrumbs'][] = $this->context->module->params['name'];
 ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+
         'tableOptions' => ['class' => 'table responsive'],
         'columns' => [
             'name',
             'alias',
             [
-                'header' => 'Обновлена',
-                'value' => function ($model) {
-                    return Yii::$app->formatter->asDate($model->updated_at);
-                },
-            ],
-            [
                 'class' => 'yii\grid\ActionColumn',
                 'header' => 'Действия',
-                'template' => '{update} {sub-categories} {delete}',
+                'template' => '{update} {models} {delete}',
                 'buttons' => [
                     'update' => function($url){
                         return Html::a(Html::tag('i','',[
                             'class' => 'icon-pencil',
                             'data-popup' => 'tooltip',
                             'data-original-title' => 'Редактировать запись'
-                        ]), str_replace('catalog','category',$url));
+                        ]), $url);
                     },
-                    'sub-categories' => function($url){
+                    'models' => function($url){
                         return Html::a(Html::tag('i','',[
                             'class' => 'icon-list2',
                             'data-popup' => 'tooltip',
-                            'data-original-title' => 'Перейти к подкатегориям'
-                        ]), str_replace('catalog','category',$url));
+                            'data-original-title' => 'Перейти к моделям'
+                        ]), $url);
                     },
                     'delete' => function($url){
                         return Html::a(Html::tag('i','',[
                             'class' => 'icon-trash',
                             'data-popup' => 'tooltip',
                             'data-original-title' => 'Удалить запись'
-                        ]), str_replace('catalog','category',$url));
+                        ]), $url);
                     }
                 ],
             ],
         ],
     ]);
-    echo Html::tag('div', Html::a('Добавить' . Html::tag('i','',['class' => 'icon-add position-right']), Url::toRoute(["/category/add/".$catalog->id]), [
+    echo Html::tag('div', Html::a('Добавить' . Html::tag('i','',['class' => 'icon-add position-right']), Url::toRoute(["/{$this->context->module->id}/add"]), [
         'class' => 'btn bg-blue white'
     ]));?>

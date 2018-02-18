@@ -12,7 +12,7 @@ class SubCategoryRepository
         if (!$subCategory = SubCategory::find()->where(['id' => $id])->with(['category' => function($query){
             return $query->with(['catalog']);
         }])->one()) {
-            throw new NotFoundException('Catalog is not found.');
+            throw new NotFoundException('Subcategory is not found.');
         }
         return $subCategory;
     }

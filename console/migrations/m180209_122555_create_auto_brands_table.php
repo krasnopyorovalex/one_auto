@@ -3,9 +3,9 @@
 use yii\db\Migration;
 
 /**
- * Handles the creation of table `auto_brand`.
+ * Handles the creation of table `auto_brands`.
  */
-class m180209_122555_create_auto_brand_table extends Migration
+class m180209_122555_create_auto_brands_table extends Migration
 {
     /**
      * @inheritdoc
@@ -17,13 +17,15 @@ class m180209_122555_create_auto_brand_table extends Migration
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
 
-        $this->createTable('auto_brand', [
+        $this->createTable('auto_brands', [
             'id' => $this->primaryKey(),
             'name' => $this->string(512)->notNull(),
-            'alias' => $this->string()->notNull()
+            'text' => $this->text(),
+            'alias' => $this->string()->notNull(),
+            'image' => $this->string(36)
         ],$tableOptions);
 
-        $this->createIndex('{{%idx-auto_brand-alias}}', '{{%auto_brand}}', 'alias', true);
+        $this->createIndex('{{%idx-auto_brands-alias}}', '{{%auto_brands}}', 'alias', true);
     }
 
     /**
@@ -31,6 +33,6 @@ class m180209_122555_create_auto_brand_table extends Migration
      */
     public function down()
     {
-        $this->dropTable('auto_brand');
+        $this->dropTable('auto_brands');
     }
 }

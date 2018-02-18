@@ -42,7 +42,7 @@ $this->params['breadcrumbs'][] = $category->name;
                         return Html::a(Html::tag('i','',[
                             'class' => 'icon-list2',
                             'data-popup' => 'tooltip',
-                            'data-original-title' => 'Перейти к категориям'
+                            'data-original-title' => 'Перейти к товарам'
                         ]), str_replace('category','subcategory',$url));
                     },
                     'delete' => function($url){

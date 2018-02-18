@@ -11,8 +11,6 @@ use yii\helpers\ArrayHelper;
  * @property int $id
  * @property int $catalog_id
  * @property string $name
- * @property string $title
- * @property string $description
  * @property string $text
  * @property string $alias
  * @property string $image
@@ -55,10 +53,10 @@ class Category extends MainModel
     public function rules()
     {
         return [
-            [['catalog_id', 'name', 'title', 'description', 'alias'], 'required'],
+            [['catalog_id', 'name', 'alias'], 'required'],
             [['catalog_id', 'created_at', 'updated_at'], 'integer'],
             [['text'], 'string'],
-            [['name', 'title', 'description'], 'string', 'max' => 512],
+            [['name'], 'string', 'max' => 512],
             [['alias'], 'string', 'max' => 255],
             [['image'], 'string', 'max' => 36],
             [['alias'], 'unique'],
@@ -77,8 +75,6 @@ class Category extends MainModel
             'id' => 'ID',
             'catalog_id' => 'Catalog ID',
             'name' => 'Name',
-            'title' => 'Title',
-            'description' => 'Description',
             'text' => 'Text',
             'alias' => 'Alias',
             'image' => 'Image',

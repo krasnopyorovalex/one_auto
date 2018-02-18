@@ -10,8 +10,6 @@ use yii\helpers\ArrayHelper;
  * @property int $id
  * @property int $subcategory_id
  * @property string $name
- * @property string $title
- * @property string $description
  * @property string $text
  * @property string $alias
  * @property int $price
@@ -20,6 +18,7 @@ use yii\helpers\ArrayHelper;
  * @property int $updated_at
  *
  * @property SubCategory $subcategory
+ * @property ProductsAutoVia[] $productsAutoVias
  * @property ProductsOptionsVia[] $productsOptionsVias
  * @property ProductsOptions[] $options
  */
@@ -30,6 +29,7 @@ class Products extends MainModel
 
     public $file;
     public $options;
+    public $autoBrandsValues;
 
     public function behaviors()
     {
@@ -57,15 +57,15 @@ class Products extends MainModel
     public function rules()
     {
         return [
-            [['subcategory_id', 'name', 'title', 'description', 'alias'], 'required'],
+            [['subcategory_id', 'name', 'alias'], 'required'],
             [['subcategory_id', 'price', 'created_at', 'updated_at'], 'integer'],
             [['text'], 'string'],
-            [['name', 'title', 'description'], 'string', 'max' => 512],
+            [['name'], 'string', 'max' => 512],
             [['alias'], 'string', 'max' => 255],
             [['image'], 'string', 'max' => 36],
             [['alias'], 'unique'],
             [['subcategory_id'], 'exist', 'skipOnError' => true, 'targetClass' => SubCategory::className(), 'targetAttribute' => ['subcategory_id' => 'id']],
-            [['options'], 'safe']
+            [['options', 'autoBrandsValues'], 'safe']
         ];
     }
 
@@ -78,8 +78,6 @@ class Products extends MainModel
             'id' => 'ID',
             'subcategory_id' => 'Subcategory ID',
             'name' => 'Name',
-            'title' => 'Title',
-            'description' => 'Description',
             'text' => 'Text',
             'alias' => 'Alias',
             'price' => 'Цена',
@@ -100,6 +98,22 @@ class Products extends MainModel
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getProductsAutoVias()
+    {
+        return $this->hasMany(ProductsAutoVia::className(), ['product_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAutoBrands()
+    {
+        return $this->hasMany(AutoBrands::className(), ['id' => 'auto_brand_id'])->viaTable('{{%products_auto_via}}', ['product_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getProductsOptionsVias()
     {
         return $this->hasMany(ProductsOptionsVia::className(), ['product_id' => 'id']);
@@ -113,6 +127,11 @@ class Products extends MainModel
         return $this->hasMany(ProductsOptions::className(), ['id' => 'option_id'])->viaTable('{{%products_options_via}}', ['product_id' => 'id']);
     }
 
+    public function afterFind()
+    {
+        $this->autoBrandsValues = ArrayHelper::getColumn($this['autoBrands'],'id');
+    }
+
     public function afterSave($insert, $changedAttributes)
     {
         if($this->options){
@@ -122,6 +141,15 @@ class Products extends MainModel
                     'product_id' => $this->id,
                     'option_id' => $key,
                     'value' => $value
+                ]))->save();
+            }
+        }
+        $this->unlinkAll('productsAutoVias', true);
+        if($this->autoBrandsValues){
+            foreach ($this->autoBrandsValues as $autoBrand){
+                (new ProductsAutoVia([
+                    'product_id' => $this->id,
+                    'auto_brand_id' => $autoBrand
                 ]))->save();
             }
         }

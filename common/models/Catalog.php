@@ -11,8 +11,6 @@ use yii\helpers\Inflector;
  *
  * @property int $id
  * @property string $name
- * @property string $title
- * @property string $description
  * @property string $text
  * @property string $alias
  * @property string $image
@@ -54,10 +52,10 @@ class Catalog extends MainModel
     public function rules()
     {
         return [
-            [['name', 'title', 'description', 'alias'], 'required'],
+            [['name', 'alias'], 'required'],
             [['text'], 'string'],
             [['created_at', 'updated_at'], 'integer'],
-            [['name', 'title', 'description'], 'string', 'max' => 512],
+            [['name'], 'string', 'max' => 512],
             [['image'], 'string', 'max' => 36],
             [['alias'], 'string', 'max' => 255],
             ['alias', 'unique', 'message' =>  'Такой alias уже есть в системе'],
@@ -73,8 +71,6 @@ class Catalog extends MainModel
         return [
             'id' => 'ID',
             'name' => 'Name',
-            'title' => 'Title',
-            'description' => 'Description',
             'text' => 'Text',
             'alias' => 'Alias',
             'image' => 'Image',

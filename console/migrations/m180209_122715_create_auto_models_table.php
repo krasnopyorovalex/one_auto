@@ -3,9 +3,9 @@
 use yii\db\Migration;
 
 /**
- * Handles the creation of table `auto_model`.
+ * Handles the creation of table `auto_models`.
  */
-class m180209_122715_create_auto_model_table extends Migration
+class m180209_122715_create_auto_models_table extends Migration
 {
     /**
      * @inheritdoc
@@ -16,17 +16,17 @@ class m180209_122715_create_auto_model_table extends Migration
         if ($this->db->driverName === 'mysql') {
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
-        $this->createTable('auto_model', [
+        $this->createTable('auto_models', [
             'id' => $this->primaryKey(),
             'brand_id' => $this->integer()->notNull(),
             'name' => $this->string(512)->notNull(),
             'alias' => $this->string()->notNull()
         ],$tableOptions);
 
-        $this->createIndex('{{%idx-auto_model-brand_id}}', '{{%auto_model}}', 'brand_id');
-        $this->createIndex('{{%idx-auto_model-alias}}', '{{%auto_model}}', 'alias', true);
+        $this->createIndex('{{%idx-auto_models-brand_id}}', '{{%auto_models}}', 'brand_id');
+        $this->createIndex('{{%idx-auto_models-alias}}', '{{%auto_models}}', 'alias', true);
 
-        $this->addForeignKey('{{%fk-auto_model-brand_id}}', '{{%auto_model}}', 'brand_id', '{{%auto_brand}}', 'id');
+        $this->addForeignKey('{{%fk-auto_models-brand_id}}', '{{%auto_models}}', 'brand_id', '{{%auto_brands}}', 'id');
     }
 
     /**
@@ -34,6 +34,6 @@ class m180209_122715_create_auto_model_table extends Migration
      */
     public function down()
     {
-        $this->dropTable('auto_model');
+        $this->dropTable('auto_models');
     }
 }

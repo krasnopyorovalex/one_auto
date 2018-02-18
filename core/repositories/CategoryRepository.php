@@ -10,7 +10,7 @@ class CategoryRepository
     public function get($id): ActiveRecord
     {
         if (!$category = Category::find()->where(['id' => $id])->with(['catalog'])->one()) {
-            throw new NotFoundException('Catalog is not found.');
+            throw new NotFoundException('Category is not found.');
         }
         return $category;
     }

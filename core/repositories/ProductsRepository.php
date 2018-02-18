@@ -9,12 +9,12 @@ class ProductsRepository
 {
     public function get($id): ActiveRecord
     {
-        if (!$product = Products::find()->where(['id' => $id])->with(['productsOptionsVias','subcategory' => function($query){
+        if (!$product = Products::find()->where(['id' => $id])->with(['autoBrands','productsOptionsVias','subcategory' => function($query){
             return $query->with(['category' => function($query){
                 return $query->with(['catalog']);
             }]);
         }])->one()) {
-            throw new NotFoundException('Catalog is not found.');
+            throw new NotFoundException('Product is not found.');
         }
         return $product;
     }

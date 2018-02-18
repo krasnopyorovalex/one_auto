@@ -3,40 +3,34 @@
 namespace common\models;
 
 use backend\components\FileBehavior;
-use Yii;
-use yii\helpers\ArrayHelper;
 
 /**
- * This is the model class for table "{{%sub_category}}".
+ * This is the model class for table "{{%auto_brands}}".
  *
  * @property int $id
- * @property int $category_id
  * @property string $name
  * @property string $text
  * @property string $alias
  * @property string $image
- * @property int $created_at
- * @property int $updated_at
  *
- * @property Category $category
+ * @property AutoModels[] $autoModels
  */
-class SubCategory extends MainModel
+class AutoBrands extends \yii\db\ActiveRecord
 {
-
-    const PATH = '/userfiles/subcategory/';
+    const PATH = '/userfiles/auto_brands/';
     const IMAGE_ENTITY = 'image';
 
     public $file;
 
     public function behaviors()
     {
-        return ArrayHelper::merge(parent::behaviors(),[
+        return [
             [
                 'class' => FileBehavior::className(),
                 'path' => self::PATH,
                 'entity_db' => self::IMAGE_ENTITY
             ]
-        ]);
+        ];
     }
 
     /**
@@ -44,7 +38,7 @@ class SubCategory extends MainModel
      */
     public static function tableName()
     {
-        return '{{%sub_category}}';
+        return '{{%auto_brands}}';
     }
 
     /**
@@ -53,16 +47,12 @@ class SubCategory extends MainModel
     public function rules()
     {
         return [
-            [['category_id', 'name', 'alias'], 'required'],
-            [['category_id', 'created_at', 'updated_at'], 'integer'],
+            [['name', 'alias'], 'required'],
             [['text'], 'string'],
             [['name'], 'string', 'max' => 512],
             [['alias'], 'string', 'max' => 255],
             [['image'], 'string', 'max' => 36],
             [['alias'], 'unique'],
-            ['alias', 'unique', 'message' =>  'Такой alias уже есть в системе'],
-            ['alias', 'match', 'pattern' => '/[a-zA-Z0-9-]+/', 'message' => 'Кириллица в поле alias запрещена'],
-            [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['category_id' => 'id']],
         ];
     }
 
@@ -73,21 +63,18 @@ class SubCategory extends MainModel
     {
         return [
             'id' => 'ID',
-            'category_id' => 'Category ID',
             'name' => 'Name',
             'text' => 'Text',
             'alias' => 'Alias',
             'image' => 'Image',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCategory()
+    public function getAutoModels()
     {
-        return $this->hasOne(Category::className(), ['id' => 'category_id']);
+        return $this->hasMany(AutoModels::className(), ['brand_id' => 'id']);
     }
 }

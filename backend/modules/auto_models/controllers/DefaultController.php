@@ -1,35 +1,50 @@
 <?php
 
-namespace backend\modules\products\controllers;
+namespace backend\modules\auto_models\controllers;
 
 use backend\controllers\SiteController;
 use common\models\AutoBrands;
-use common\models\Products;
-use common\models\ProductsOptions;
-use common\models\SubCategory;
-use core\repositories\ProductsRepository;
+use common\models\AutoGenerations;
+use common\models\AutoModels;
+use core\repositories\AutoModelsRepository;
 use Yii;
+use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use yii\web\NotFoundHttpException;
 
 /**
- * Default controller for the `products` module
+ * Default controller for the `auto_models` module
  */
 class DefaultController extends SiteController
 {
-
     private $repository;
 
-    public function __construct($id, $module, ProductsRepository $repository, $config = [])
+    public function __construct($id, $module, AutoModelsRepository $repository, $config = [])
     {
         parent::__construct($id, $module, $config);
         $this->repository = $repository;
     }
 
+    public function behaviors()
+    {
+        return ArrayHelper::merge(parent::behaviors(),[
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['generations'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ]
+        ]);
+    }
+
     public function actionAdd($id)
     {
-        $form = new Products();
+        $form = new AutoModels();
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
             try {
                 $this->repository->save($form);
@@ -39,17 +54,9 @@ class DefaultController extends SiteController
                 Yii::$app->session->setFlash('error', $e->getMessage());
             }
         }
-        $subcategory = SubCategory::find()->where(['id' => $id])->with(['category' => function($query){
-            return $query->with(['catalog']);
-        }])->one();
         return $this->render('form', [
             'model' => $form,
-            'catalog' => $subcategory['category']['catalog'],
-            'category' => $subcategory['category'],
-            'subcategory' => $subcategory,
-            'options' => ProductsOptions::find()->asArray()->all(),
-            'productOptions' => [],
-            'autoBrands' => ArrayHelper::map(AutoBrands::find()->asArray()->all(),'id','name')
+            'brand' => AutoBrands::findOne($id)
         ]);
     }
 
@@ -61,12 +68,7 @@ class DefaultController extends SiteController
         $this->loadData($form, Url::previous());
         return $this->render('form', [
             'model' => $form,
-            'catalog' => $form['subcategory']['category']['catalog'],
-            'category' => $form['subcategory']['category'],
-            'subcategory' => $form['subcategory'],
-            'options' => ProductsOptions::find()->asArray()->all(),
-            'productOptions' => ArrayHelper::map($form['productsOptionsVias'], 'option_id', 'value'),
-            'autoBrands' => ArrayHelper::map(AutoBrands::find()->asArray()->all(),'id','name')
+            'brand' => $form['brand']
         ]);
     }
 
@@ -88,12 +90,19 @@ class DefaultController extends SiteController
         $form = $this->repository->get($id);
         return $this->render('form', [
             'model' => $form,
-            'catalog' => $form['subcategory']['category']['catalog'],
-            'category' => $form['subcategory']['category'],
-            'subcategory' => $form['subcategory'],
-            'options' => ProductsOptions::find()->asArray()->all(),
-            'productOptions' => ArrayHelper::map($form['productsOptionsVias'], 'option_id', 'value'),
-            'autoBrands' => ArrayHelper::map(AutoBrands::find()->asArray()->all(),'id','name')
+            'brand' => $form['brand']
+        ]);
+    }
+
+    public function actionGenerations($id)
+    {
+        Url::remember();
+        $model = $this->repository->get($id);
+        echo $model['brand']['name'];
+        return $this->render('generations',[
+            'dataProvider' => $this->findData(AutoGenerations::find()->where(['model_id' => $id])),
+            'brand' => $model['brand'],
+            'model' => $model
         ]);
     }
 }
