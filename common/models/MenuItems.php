@@ -2,7 +2,9 @@
 
 namespace common\models;
 
+use backend\components\LinksBehavior;
 use yii\helpers\ArrayHelper;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "{{%menu_items}}".
@@ -18,9 +20,18 @@ use yii\helpers\ArrayHelper;
  * @property MenuItems $parent
  * @property MenuItems[] $menuItems
  */
-class MenuItems extends \yii\db\ActiveRecord
+class MenuItems extends ActiveRecord
 {
     const NOT_PARENT = null;
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => LinksBehavior::className()
+            ]
+        ];
+    }
 
     /**
      * @inheritdoc
@@ -82,18 +93,6 @@ class MenuItems extends \yii\db\ActiveRecord
     public function getMenuItems()
     {
         return $this->hasMany(MenuItems::className(), ['parent_id' => 'id']);
-    }
-
-    /**
-     * @return array
-     */
-    public function drawDDM()
-    {
-        return ArrayHelper::map(Pages::find()->asArray()->all(), function ($item){
-            return $item['alias'] == 'index' ? str_replace('index','/',$item['alias']) : '/'.$item['alias'];
-        },'name', function (){
-            return 'Страницы';
-        });
     }
 
     public function getTree()
