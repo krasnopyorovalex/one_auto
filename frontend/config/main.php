@@ -54,12 +54,17 @@ return [
             'enableStrictParsing' => true,
             'rules' => [
                 '/' => 'site',
-                'sitemap.xml' => 'sitemap/xml',
-                'send/<action:(write-message|recall|order|subscribe)>' => 'send/<action>',
-                '<controller:(portfolio)>/<id:[\d-]+>' => '<controller>/show',
-                '<alias>' => 'site/page',
-                '<controller:(services|news|articles)>/<alias:[\wd-]+>' => '<controller>/show',
-                'landings/<id:[\d-]+>' => 'landings/show'
+                'send/<action:(order)>' => 'send/<action>',
+                'catalog/<alias:[\wd-]+>' => 'product/show',
+
+                '<alias:[\wd-]+>/page/<page:\d+>' => 'catalog/show',
+                '<alias:[\wd-]+>' => 'catalog/show',
+
+                '<catalog:[\wd-]+>/<category:[\wd-]+>/page/<page:\d+>' => 'category/category',
+                '<catalog:[\wd-]+>/<category:[\wd-]+>' => 'category/category',
+
+                '<catalog:[\wd-]+>/<category:[\wd-]+>/<subcategory:[\wd-]+>/page/<page:\d+>' => 'subcategory/subcategory',
+                '<catalog:[\wd-]+>/<category:[\wd-]+>/<subcategory:[\wd-]+>' => 'subcategory/subcategory'
             ],
         ],
         'view' => [

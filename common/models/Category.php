@@ -98,4 +98,12 @@ class Category extends MainModel
     {
         return $this->hasMany(SubCategory::className(), ['category_id' => 'id']);
     }
+
+    /**
+     * @return array
+     */
+    public function getIdsSubCategories()
+    {
+        return $this->hasMany(SubCategory::className(), ['category_id' => 'id'])->select(['id'])->column();
+    }
 }

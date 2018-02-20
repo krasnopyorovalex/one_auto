@@ -1,0 +1,17 @@
+<ul>
+    {% for category in model.categories %}
+    <li><a href="{{ path('category/category', {'catalog' : model.alias, 'category': category.alias}) }}">{{ category.name }}</a>
+        {% if category.subCategories %}
+            <ul>
+                {% for subCategory in category.subCategories %}
+                <li>
+                    <a href="{{ path('subcategory/subcategory', {'catalog' : model.alias, 'category': category.alias, 'subcategory': subCategory.alias}) }}">
+                        {{ subCategory.name }}2
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </li>
+    {% endfor %}
+</ul>

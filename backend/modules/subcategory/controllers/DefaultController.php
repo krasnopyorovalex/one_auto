@@ -12,6 +12,7 @@ use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use yii\web\NotFoundHttpException;
+use backend\components\FileHelper as FH;
 
 /**
  * Default controller for the `sub_category` module
@@ -62,6 +63,11 @@ class DefaultController extends SiteController
         ]);
     }
 
+    /**
+     * @param $id
+     * @return string
+     * @throws NotFoundHttpException
+     */
     public function actionUpdate($id)
     {
         if(!$form = $this->repository->get($id)){
@@ -108,5 +114,22 @@ class DefaultController extends SiteController
             'category' => $subcategory['category'],
             'subcategory' => $subcategory
         ]);
+    }
+
+    /**
+     * @param $id
+     * @return bool
+     */
+    public function actionRemoveImage($id)
+    {
+        /**
+         * @var $model SubCategory
+         */
+        $model = $this->repository->get($id);
+        if(FH::removeFile($model->image,$model::PATH)){
+            $model->image = '';
+            return $model->save();
+        }
+        return false;
     }
 }

@@ -200,7 +200,7 @@ menu {
     font-weight: 500;
 }    
 .checkbox {
-    display: none!important;
+    /*display: none!important;*/
 }
 .checkbox-custom {
     position: relative;      /* Обязательно задаем, чтобы мы могли абсолютным образом позиционировать псевдоэлемент внютри нашего кастомного чекбокса */
@@ -324,4 +324,25 @@ width: calc(64.66666666666667% - 30px);
 }
 footer .items .menu ul li a  {
     font-size: .9rem;
+}
+.form-group {
+    position: relative;
+}
+.form-group .help-block {
+    position: absolute;
+    left: 0;
+    bottom: -22px;
+}
+.form-group.has-error .checkbox input {
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+#success__message {
+    position: fixed;
+    top: 5%;
+    right: 1%;
+    border: 1px solid #0065B5;
+    border-radius: 3px;
+    padding: 1em;
+    background-color: #EDF0F4;
+    display: none;
 }

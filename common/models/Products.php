@@ -1,6 +1,7 @@
 <?php
 
 namespace common\models;
+
 use backend\components\FileBehavior;
 use yii\helpers\ArrayHelper;
 
@@ -14,10 +15,13 @@ use yii\helpers\ArrayHelper;
  * @property string $alias
  * @property int $price
  * @property string $image
+ * @property string $articul
+ * @property string $maker
  * @property int $created_at
  * @property int $updated_at
  *
  * @property SubCategory $subcategory
+ * @property AutoModels[] $autoModels
  * @property ProductsAutoVia[] $productsAutoVias
  * @property ProductsOptionsVia[] $productsOptionsVias
  * @property ProductsOptions[] $options
@@ -29,7 +33,7 @@ class Products extends MainModel
 
     public $file;
     public $options;
-    public $autoBrandsValues;
+    public $autoModelsValues;
 
     public function behaviors()
     {
@@ -57,15 +61,16 @@ class Products extends MainModel
     public function rules()
     {
         return [
-            [['subcategory_id', 'name', 'alias'], 'required'],
+            [['subcategory_id', 'name', 'alias', 'price', 'articul', 'maker'], 'required'],
             [['subcategory_id', 'price', 'created_at', 'updated_at'], 'integer'],
             [['text'], 'string'],
             [['name'], 'string', 'max' => 512],
-            [['alias'], 'string', 'max' => 255],
+            [['alias', 'maker'], 'string', 'max' => 255],
+            [['articul'], 'string', 'max' => 128],
             [['image'], 'string', 'max' => 36],
             [['alias'], 'unique'],
             [['subcategory_id'], 'exist', 'skipOnError' => true, 'targetClass' => SubCategory::className(), 'targetAttribute' => ['subcategory_id' => 'id']],
-            [['options', 'autoBrandsValues'], 'safe']
+            [['options', 'autoModelsValues'], 'safe']
         ];
     }
 
@@ -82,6 +87,8 @@ class Products extends MainModel
             'alias' => 'Alias',
             'price' => 'Цена',
             'image' => 'Image',
+            'articul' => 'Артикул',
+            'maker' => 'Производитель',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
@@ -106,9 +113,9 @@ class Products extends MainModel
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getAutoBrands()
+    public function getAutoModels()
     {
-        return $this->hasMany(AutoBrands::className(), ['id' => 'auto_brand_id'])->viaTable('{{%products_auto_via}}', ['product_id' => 'id']);
+        return $this->hasMany(AutoModels::className(), ['id' => 'auto_model_id'])->viaTable('{{%products_auto_via}}', ['product_id' => 'id']);
     }
 
     /**
@@ -129,7 +136,7 @@ class Products extends MainModel
 
     public function afterFind()
     {
-        $this->autoBrandsValues = ArrayHelper::getColumn($this['autoBrands'],'id');
+        $this->autoModelsValues = ArrayHelper::getColumn($this['autoModels'],'id');
     }
 
     public function afterSave($insert, $changedAttributes)
@@ -145,11 +152,11 @@ class Products extends MainModel
             }
         }
         $this->unlinkAll('productsAutoVias', true);
-        if($this->autoBrandsValues){
-            foreach ($this->autoBrandsValues as $autoBrand){
+        if($this->autoModelsValues){
+            foreach ($this->autoModelsValues as $autoModel){
                 (new ProductsAutoVia([
                     'product_id' => $this->id,
-                    'auto_brand_id' => $autoBrand
+                    'auto_model_id' => $autoModel
                 ]))->save();
             }
         }

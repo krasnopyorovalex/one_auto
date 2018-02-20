@@ -14,8 +14,8 @@
         <div class="wrapper">
             <div class="header__sections">
                 <div class="logo">
-                    <a href="/">
-                        <img src="img/logo.png" alt="logo">
+                    <a href="{{ app.homeUrl }}">
+                        <img src="/img/logo.png" alt="logo">
                     </a>
                 </div>
                 <!-- /.logo -->
@@ -24,66 +24,31 @@
                         <div class="contact__box-city">
                             <span>Город:</span>
                             <div class="custom__select">
-                                <select name="cities" id="cities">
-                                    <option value="0" selected="">Тюмень</option>
-                                    <option value="1">Москва</option>
-                                    <option value="2">Воронеж</option>
-                                    <option value="3">Симферополь</option>
-                                </select>
+                                <form action="#">
+                                    <select name="cities" id="cities">
+                                        {% for key,value in app.params.subdomains %}
+                                            <option value="{{ key }}.{{ app.request.hostName }}">{{ value.nominative }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </form>
                             </div>
                             <!-- /.custom__select -->
                         </div>
                         <!-- /.contact__box-city -->
                         <div class="contact__box-address">
                             <span>Адрес:</span>
-                            <div class="value">ул. Интернациональная, 121</div>
+                            <div class="value">{{ app.params.address }}</div>
                         </div>
                         <!-- /.contact__box-address -->
                         <div class="contact__box-phone">
-                            <a href="te:+7345288888">+7 (3452) 88-88-88</a>
+                            <a href="te:{{ app.params.phone }}">{{ app.params.phone }}</a>
                         </div>
                         <!-- /.contact__box-phone -->
                     </div>
                     <!-- /.contact__box -->
                     <menu>
-                        <ul>
-                            <li><a href="#">Каталог автозапчастей</a></li>
-                            <li class="active"><a href="#">Запчасти для ТО</a></li>
-                            <li><a href="#">Масла и автохимия</a>
-                                <ul>
-                                    <li><a href="#">Двигатель / комплектующие</a></li>
-                                    <li><a href="#">Охлаждение двигателя</a>
-                                        <ul>
-                                            <li><a href="#">Двигатель / комплектующие</a></li>
-                                            <li><a href="#">Охлаждение двигателя</a></li>
-                                            <li><a href="#">Ходовая / Рулевая</a></li>
-                                            <li><a href="#">Тормозная система</a></li>
-                                            <li><a href="#">Отопление / кондиционер</a></li>
-                                            <li><a href="#">Кузовщина / автостекла</a></li>
-                                            <li><a href="#">Выхлопная система</a></li>
-                                            <li><a href="#">Трансмиссия / сцепление</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="#">Ходовая / Рулевая</a>
-                                        <ul>
-                                            <li><a href="#">Двигатель / комплектующие</a></li>
-                                            <li><a href="#">Охлаждение двигателя</a></li>
-                                            <li><a href="#">Ходовая / Рулевая</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="#">Тормозная система</a></li>
-                                    <li><a href="#">Отопление / кондиционер</a></li>
-                                    <li><a href="#">Кузовщина / автостекла</a></li>
-                                    <li><a href="#">Выхлопная система</a></li>
-                                    <li><a href="#">Трансмиссия / сцепление</a></li>
-                                    <li><a href="#">Оптика</a></li>
-                                    <li><a href="#">Электрика</a></li>
-                                    <li><a href="#">Аксессуары</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="#">Шины и диски</a></li>
-                            <li><a href="#">Контакты</a></li>
-                        </ul>
+                        {{ use('frontend/widgets/Menu/Menu') }}
+                        {{ menu_widget({'sysName': 'menu_head'}) }}
                     </menu>
                 </div>
                 <!-- /.h__contact-menu -->
@@ -93,29 +58,14 @@
         <!-- /.wrapper -->
     </header>
 
-    <section class="search">
-        <div class="wrapper">
-            <div class="search__box">
-                <div class="search__box-items">
-                    <div class="find__by">
-                        <span>Искать по:</span>
-                        <ul>
-                            <li class="active" data-type="articul">артикулу (коду детали)</li>
-                            <li data-type="name">названию</li>
-                        </ul>
-                    </div>
-                    <!-- /.find__by -->
-                    <form action="#">
-                        <input type="text" placeholder="Введите артикул...">
-                        <input type="hidden" value="articul" name="type">
-                        <i class="icon__search" title="Найти"></i>
-                    </form>
-                </div>
-            </div>
-            <!-- /.search__box -->
-        </div>
-    </section>
-    <!-- /.search -->
+    {{ use('frontend/widgets/Search/Search') }}
+    {{ search_widget() }}
+
+    {% if app.session.getFlash('message') %}
+        <legend id="success__message">
+            {{ app.session.getFlash('message') }}
+        </legend>
+    {% endif %}
 
     {{ content| raw }}
 
@@ -123,29 +73,23 @@
         <div class="wrapper">
             <div class="items border">
                 <div class="logo">
-                    <img src="img/logo.png" alt="alt">
+                    <img src="/img/logo.png" alt="alt">
                 </div>
                 <div class="menu">
-                    <ul>
-                        <li><a href="#">Оформление заказа</a></li>
-                        <li><a href="#">Публичная оферт</a></li>
-                        <li><a href="#">О персональных данных</a></li>
-                        <li><a href="#">Контакты</a></li>
-                        <li><a href="#">Оплата и доставка</a></li>
-                    </ul>
+                    {{ menu_widget({'sysName': 'menu_footer'}) }}
                 </div>
                 <div class="contacts">
                     <div class="contacts__box-phone">
-                        <a href="te:+7345288888">+7 (3452) 88-88-88</a>
+                        <a href="te:{{ app.params.phone }}">{{ app.params.phone }}</a>
                     </div>
                     <!-- /.contact__box-phone -->
                     <div class="contacts__street">
-                        ул. Интернациональная, 121
+                        {{ app.params.address }}
                     </div>
                 </div>
             </div>
             <div class="items copyright">
-                <div class="left">© 2017-2018</div>
+                <div class="left">© 2017-{{ now| date('Y') }}</div>
                 <div class="right"><a href="#">Создание и продвижение сайта</a></div>
             </div>
         </div>
