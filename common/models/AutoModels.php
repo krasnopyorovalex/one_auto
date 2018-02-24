@@ -1,6 +1,7 @@
 <?php
 
 namespace common\models;
+use backend\components\FileBehavior;
 
 /**
  * This is the model class for table "{{%auto_models}}".
@@ -9,12 +10,29 @@ namespace common\models;
  * @property int $brand_id
  * @property string $name
  * @property string $alias
+ * @property string $image
  *
  * @property AutoGenerations[] $autoGenerations
  * @property AutoBrands $brand
  */
 class AutoModels extends \yii\db\ActiveRecord
 {
+    const PATH = '/userfiles/auto_models/';
+    const IMAGE_ENTITY = 'image';
+
+    public $file;
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => FileBehavior::class,
+                'path' => self::PATH,
+                'entity_db' => self::IMAGE_ENTITY
+            ]
+        ];
+    }
+
     /**
      * @inheritdoc
      */
@@ -34,7 +52,8 @@ class AutoModels extends \yii\db\ActiveRecord
             [['name'], 'string', 'max' => 512],
             [['alias'], 'string', 'max' => 255],
             [['alias'], 'unique'],
-            [['brand_id'], 'exist', 'skipOnError' => true, 'targetClass' => AutoBrands::className(), 'targetAttribute' => ['brand_id' => 'id']],
+            [['image'], 'string', 'max' => 36],
+            [['brand_id'], 'exist', 'skipOnError' => true, 'targetClass' => AutoBrands::class, 'targetAttribute' => ['brand_id' => 'id']],
         ];
     }
 
@@ -47,7 +66,8 @@ class AutoModels extends \yii\db\ActiveRecord
             'id' => 'ID',
             'brand_id' => 'Brand ID',
             'name' => 'Name',
-            'alias' => 'Alias'
+            'alias' => 'Alias',
+            'image' => 'Image',
         ];
     }
 
@@ -56,7 +76,7 @@ class AutoModels extends \yii\db\ActiveRecord
      */
     public function getAutoGenerations()
     {
-        return $this->hasMany(AutoGenerations::className(), ['model_id' => 'id']);
+        return $this->hasMany(AutoGenerations::class, ['model_id' => 'id']);
     }
 
     /**
@@ -64,6 +84,6 @@ class AutoModels extends \yii\db\ActiveRecord
      */
     public function getBrand()
     {
-        return $this->hasOne(AutoBrands::className(), ['id' => 'brand_id']);
+        return $this->hasOne(AutoBrands::class, ['id' => 'brand_id']);
     }
 }

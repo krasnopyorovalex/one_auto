@@ -1,9 +1,10 @@
 {{ set(this, 'title', model.name) }}
+{{ this.registerMetaTag({'name':'description', 'content': model.name}) }}
 
 <div class="wrapper">
     <div class="breadcrumbs">
         <ul>
-            <li><a href="{{ app.homeUrl }}">Главная</a></li>
+            <li><a href="{{ app.homeUrl }}">{{ app.params['breadcrumbs_main_name'] }}</a></li>
             <li>{{ model.name }}</li>
         </ul>
     </div>
@@ -14,28 +15,25 @@
     <div class="wrapper">
         <div class="items">
             <div class="content__sidebar">
-                {{ use('frontend/widgets/SidebarMenu/SidebarMenu') }}
-                {{ sidebar_menu_widget({'model': model}) }}
+                {#{{ use('frontend/widgets/SidebarMenu/SidebarMenu') }}#}
+                {#{{ sidebar_menu_widget({'model': model.catalog}) }}#}
             </div>
             <!-- /.content__sidebar -->
             <div class="content__body">
                 <h1>{{ model.name }}</h1>
 
-                <div class="items cat__details">
-                    {% for item in model.categories %}
+                <div class="items">
+                    {% for item in model.autoModels %}
                     <div class="item">
-                        <div class="item__cat">
-                            <img src="/userfiles/category/{{ item.image }}" alt="">
-                            <div class="item__cat-name">
-                                <a href="{{ path('category/category', {'catalog' : model.alias, 'category': item.alias}) }}">{{ item.name }}</a>
-                            </div>
+                        <div class="item__cat-auto">
+                            <a href="{{ path('category/category', {'catalog': model.alias, 'category': item.alias}) }}"><img src="/userfiles/auto_models/{{ item.image }}" alt="alt"></a>
+                            <div class="item__cat-model">{{ item.name }}</div>
                         </div>
-                        <!-- /.item_cat -->
+                        <!-- /.item__cat-auto -->
                     </div>
                     <!-- /.item -->
                     {% endfor %}
                 </div>
-                <!-- /.items -->
 
                 <div class="text">
                     {{ model.text| raw }}

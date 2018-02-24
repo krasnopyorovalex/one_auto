@@ -54,11 +54,14 @@ return [
             'enableStrictParsing' => true,
             'rules' => [
                 '/' => 'site',
+                'search' => 'search',
+
+                'robots.txt' => 'robots/txt',
                 'send/<action:(order)>' => 'send/<action>',
                 'catalog/<alias:[\wd-]+>' => 'product/show',
 
-                '<alias:[\wd-]+>/page/<page:\d+>' => 'catalog/show',
-                '<alias:[\wd-]+>' => 'catalog/show',
+                '<alias:[\wd-]+>/page/<page:\d+>' => 'auto-brand/show',
+                '<alias:[\wd-]+>' => 'auto-brand/show',
 
                 '<catalog:[\wd-]+>/<category:[\wd-]+>/page/<page:\d+>' => 'category/category',
                 '<catalog:[\wd-]+>/<category:[\wd-]+>' => 'category/category',

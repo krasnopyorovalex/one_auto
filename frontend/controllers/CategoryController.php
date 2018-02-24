@@ -9,23 +9,24 @@ use yii\web\NotFoundHttpException;
 /**
  * Category controller
  */
-class CategoryController extends SiteController
+class CategoryController extends AutoModelController
 {
 
     /**
+     * @param $catalog
      * @param $category
      * @param int $page
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException
      */
-    public function actionCategory($category, $page = 0)
+    public function actionCategory($catalog, $category, $page = 0)
     {
         if(!$model = Category::find()->where(['alias' => $category])->with(['catalog' => function($query){
             return $query->with(['categories' => function($query){
                 return $query->with(['subCategories']);
             }]);
         }])->one()){
-            throw new NotFoundHttpException('The requested page does not exist.');
+            return parent::actionCategory($catalog, $category, $page = 0);
         }
 
         $query = Products::find()->where(['subcategory_id' => $model->getIdsSubCategories()]);

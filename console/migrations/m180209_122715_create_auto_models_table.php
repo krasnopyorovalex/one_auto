@@ -20,7 +20,8 @@ class m180209_122715_create_auto_models_table extends Migration
             'id' => $this->primaryKey(),
             'brand_id' => $this->integer()->notNull(),
             'name' => $this->string(512)->notNull(),
-            'alias' => $this->string()->notNull()
+            'alias' => $this->string()->notNull(),
+            'image' => $this->string(36)
         ],$tableOptions);
 
         $this->createIndex('{{%idx-auto_models-brand_id}}', '{{%auto_models}}', 'brand_id');

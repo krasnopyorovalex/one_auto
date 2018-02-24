@@ -2,12 +2,12 @@
 
 namespace frontend\controllers;
 
-use common\models\Catalog;
+use common\models\AutoBrands;
 
 /**
- * Catalog controller
+ * AutoBrand controller
  */
-class CatalogController extends SiteController
+class AutoBrandController extends CatalogController
 {
 
     /**
@@ -18,10 +18,11 @@ class CatalogController extends SiteController
      */
     public function actionShow($alias, $page = 0)
     {
-        if(!$model = Catalog::find()->where(['alias' => $alias])->with(['categories'])->one()){
+        if(!$model = AutoBrands::find()->where(['alias' => $alias])->with(['autoModels'])->one()){
             return parent::actionShow($alias);
         }
-        return $this->render('catalog.twig',[
+
+        return $this->render('auto.twig',[
             'model' => $model
         ]);
     }

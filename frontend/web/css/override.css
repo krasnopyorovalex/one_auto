@@ -346,3 +346,6 @@ footer .items .menu ul li a  {
     background-color: #EDF0F4;
     display: none;
 }
+.content__body.search, .content__body.error {
+    width: 100%;
+}

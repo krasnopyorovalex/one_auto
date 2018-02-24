@@ -6,7 +6,6 @@ use common\models\AutoBrands;
 use common\models\Catalog;
 use common\models\Products;
 use common\models\SubCategory;
-use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 
 /**

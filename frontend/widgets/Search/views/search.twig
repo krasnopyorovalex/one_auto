@@ -12,7 +12,7 @@
                 <!-- /.find__by -->
 
                 {% set form = active_form_begin({
-                    'action': path('/search'),
+                    'action': path(url.to('/search')),
                     'method': 'get',
                     'fieldConfig': {
                         'options': {

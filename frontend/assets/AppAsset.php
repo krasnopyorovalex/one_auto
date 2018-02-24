@@ -17,8 +17,7 @@ class AppAsset extends AssetBundle
         'css/override.css'
     ];
     public $js = [
-        'js/app.min.js',
-        'js/paginate.js'
+        'js/app.min.js'
     ];
     public $depends = [
         'yii\web\YiiAsset'

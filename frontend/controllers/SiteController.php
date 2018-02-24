@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\AutoBrands;
 use common\models\Pages;
 use common\models\Subdomains;
 use yii\helpers\ArrayHelper;
@@ -23,8 +24,11 @@ class SiteController extends Controller
     public function actionIndex($alias = 'index')
     {
         $model = Pages::find()->where(['alias' => $alias])->one();
+        $brands = AutoBrands::find()->with(['autoModels'])->asArray()->all();
+
         return $this->render('index.twig',[
-            'model' => $model
+            'model' => $model,
+            'brands' => $brands
         ]);
     }
 

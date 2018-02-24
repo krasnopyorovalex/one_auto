@@ -27,6 +27,7 @@ $this->params['breadcrumbs'][] = $this->context->actions[$this->context->action-
                 <div class="tabbable">
                     <ul class="nav nav-tabs">
                         <li class="active"><a href="#main" data-toggle="tab">Основное</a></li>
+                        <li><a href="#image" data-toggle="tab">Изображение</a></li>
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="main">
@@ -43,6 +44,31 @@ $this->params['breadcrumbs'][] = $this->context->actions[$this->context->action-
                                     <?php if($model->isNewRecord):?>
                                         <?= Html::activeInput('hidden',$model,'brand_id',['value' => $brand->id])?>
                                     <?php endif;?>
+                                </div>
+                            </div>
+
+                            <?= $this->render('@backend/views/blocks/actions_panel')?>
+
+                        </div>
+
+                        <div class="tab-pane" id="image">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <?php if($model->image):?>
+                                        <div class="thumbnail-single">
+                                            <?= Html::img($model::PATH.$model->image)?>
+                                            <?= Html::button(Html::tag('b','', ['class' => 'icon-trash']) . 'Удалить',[
+                                                'class' => 'btn btn-danger btn-labeled btn-sm remove_image'
+                                            ])?>
+                                        </div>
+                                    <?php endif;?>
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <hr>
+                                    <?= $form->field($model, 'file')->fileInput(['accept' => 'image/*']) ?>
                                 </div>
                             </div>
 

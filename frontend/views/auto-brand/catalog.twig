@@ -4,7 +4,6 @@
     <div class="breadcrumbs">
         <ul>
             <li><a href="{{ app.homeUrl }}">{{ app.params['breadcrumbs_main_name'] }}</a></li>
-            <li><a href="{{ path('catalog/show', {'alias': model.catalog.alias}) }}">{{ model.catalog.name }}</a></li>
             <li>{{ model.name }}</li>
         </ul>
     </div>
@@ -16,26 +15,27 @@
         <div class="items">
             <div class="content__sidebar">
                 {{ use('frontend/widgets/SidebarMenu/SidebarMenu') }}
-                {{ sidebar_menu_widget({'model': model.catalog}) }}
+                {{ sidebar_menu_widget({'model': model}) }}
             </div>
             <!-- /.content__sidebar -->
             <div class="content__body">
                 <h1>{{ model.name }}</h1>
 
-                <div class="items">
-                    {{ use('frontend/widgets/ProductsListForCategory/ProductsListForCategory') }}
-                    {{ products_list_for_category_widget({
-                        'items': products
-                    }) }}
+                <div class="items cat__details">
+                    {% for item in model.categories %}
+                    <div class="item">
+                        <div class="item__cat">
+                            <img src="/userfiles/category/{{ item.image }}" alt="">
+                            <div class="item__cat-name">
+                                <a href="{{ path('category/category', {'catalog' : model.alias, 'category': item.alias}) }}">{{ item.name }}</a>
+                            </div>
+                        </div>
+                        <!-- /.item_cat -->
+                    </div>
+                    <!-- /.item -->
+                    {% endfor %}
                 </div>
                 <!-- /.items -->
-
-                {% if count > offset %}
-                    <div class="load__more-btn btn__hover">
-                        <span data-offset="{{ offset }}" data-count="{{ count }}">Показать ещё</span>
-                    </div>
-                    <!-- /.load__more-btn -->
-                {% endif %}
 
                 <div class="text">
                     {{ model.text| raw }}
