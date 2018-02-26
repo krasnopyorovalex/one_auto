@@ -3,14 +3,14 @@
         <div class="item__brand">{{ item.maker }}</div>
         <div class="item__price">{{ item.price| number_format(0, ' ', ' ') }} руб.</div>
         <div class="item__image">
-            <a href="{{ path('product/show', {'alias' : item.alias}) }}">
+            <a href="/catalog/{{ item.alias }}">
                 <img src="/userfiles/{{ item.image ? 'products/' ~ item.image : 'not_photo.jpg' }}" alt="{{ item.name }}">
             </a>
-            <div class="item__availability-btn"><a href="{{ path('product/show', {'alias' : item.alias}) }}">Узнать о наличии</a></div>
+            <div class="item__availability-btn"><a href="/catalog/{{ item.alias }}">Узнать о наличии</a></div>
         </div>
         <!-- /.item__image -->
         <div class="item__name">
-            <a href="{{ path('product/show', {'alias' : item.alias}) }}">{{ item.name }}</a>
+            <a href="/catalog/{{ item.alias }}">{{ item.name }}</a>
         </div>
         <!-- /.item__name -->
     </div>

@@ -53,6 +53,20 @@ return [
             'showScriptName' => false,
             'enableStrictParsing' => true,
             'rules' => [
+                //for main domain
+                $params['server_protocol'] . '<server:[\wd-]+.[\w-]+>' => 'site',
+                $params['server_protocol'] . '<server:[\wd-]+.[\w-]+>/robots.txt' => 'robots/txt',
+                $params['server_protocol'] . '<server:[\wd-]+.[\w-]+>/search' => 'search',
+                $params['server_protocol'] . '<server:[\wd-]+.[\w-]+>/send/<action:(order)>' => 'send/<action>',
+                $params['server_protocol'] . '<server:[\wd-]+.[\w-]+>/catalog/<alias:[\wd-]+>' => 'product/show',
+                $params['server_protocol'] . '<server:[\wd-]+.[\w-]+>/<alias:[\wd-]+>/page/<page:\d+>' => 'auto-brand/show',
+                $params['server_protocol'] . '<server:[\wd-]+.[\w-]+>/<alias:[\wd-]+>' => 'auto-brand/show',
+                $params['server_protocol'] . '<server:[\wd-]+.[\w-]+>/<catalog:[\wd-]+>/<category:[\wd-]+>/page/<page:\d+>' => 'category/category',
+                $params['server_protocol'] . '<server:[\wd-]+.[\w-]+>/<catalog:[\wd-]+>/<category:[\wd-]+>' => 'category/category',
+                $params['server_protocol'] . '<server:[\wd-]+.[\w-]+>/<catalog:[\wd-]+>/<category:[\wd-]+>/<subcategory:[\wd-]+>/page/<page:\d+>' => 'subcategory/subcategory',
+                $params['server_protocol'] . '<server:[\wd-]+.[\w-]+>/<catalog:[\wd-]+>/<category:[\wd-]+>/<subcategory:[\wd-]+>' => 'subcategory/subcategory',
+
+                //for subdomains
                 $params['server_protocol'] . '<subdomain:[\w-]+>.<server:[\wd-]+.[\w-]+>' => 'site',
                 $params['server_protocol'] . '<subdomain:[\w-]+>.<server:[\wd-]+.[\w-]+>/robots.txt' => 'robots/txt',
 
@@ -67,19 +81,6 @@ return [
 
                 $params['server_protocol'] . '<subdomain:[\w-]+>.<server:[\wd-]+.[\w-]+>/<catalog:[\wd-]+>/<category:[\wd-]+>/<subcategory:[\wd-]+>/page/<page:\d+>' => 'subcategory/subcategory',
                 $params['server_protocol'] . '<subdomain:[\w-]+>.<server:[\wd-]+.[\w-]+>/<catalog:[\wd-]+>/<category:[\wd-]+>/<subcategory:[\wd-]+>' => 'subcategory/subcategory',
-
-                //for main domain
-                $params['server_protocol'] . '<server:[\wd-]+.[\w-]+>' => 'site',
-                $params['server_protocol'] . '<server:[\wd-]+.[\w-]+>/robots.txt' => 'robots/txt',
-                $params['server_protocol'] . '<server:[\wd-]+.[\w-]+>/search' => 'search',
-                $params['server_protocol'] . '<server:[\wd-]+.[\w-]+>/send/<action:(order)>' => 'send/<action>',
-                $params['server_protocol'] . '<server:[\wd-]+.[\w-]+>/catalog/<alias:[\wd-]+>' => 'product/show',
-                $params['server_protocol'] . '<server:[\wd-]+.[\w-]+>/<alias:[\wd-]+>/page/<page:\d+>' => 'auto-brand/show',
-                $params['server_protocol'] . '<server:[\wd-]+.[\w-]+>/<alias:[\wd-]+>' => 'auto-brand/show',
-                $params['server_protocol'] . '<server:[\wd-]+.[\w-]+>/<catalog:[\wd-]+>/<category:[\wd-]+>/page/<page:\d+>' => 'category/category',
-                $params['server_protocol'] . '<server:[\wd-]+.[\w-]+>/<catalog:[\wd-]+>/<category:[\wd-]+>' => 'category/category',
-                $params['server_protocol'] . '<server:[\wd-]+.[\w-]+>/<catalog:[\wd-]+>/<category:[\wd-]+>/<subcategory:[\wd-]+>/page/<page:\d+>' => 'subcategory/subcategory',
-                $params['server_protocol'] . '<server:[\wd-]+.[\w-]+>/<catalog:[\wd-]+>/<category:[\wd-]+>/<subcategory:[\wd-]+>' => 'subcategory/subcategory',
             ],
         ],
         'view' => [

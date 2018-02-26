@@ -67,9 +67,9 @@ class SiteController extends Controller
         }
 
         $parts = explode('.',\Yii::$app->request->hostName);
-        $subdomain = array_shift($parts);
+        $part = array_shift($parts);
 
-        if( ! $subdomain = Subdomains::findOne(['domain_name' => $subdomain]) ) {
+        if( ! $subdomain = Subdomains::findOne(['domain_name' => $part]) ) {
             $subdomain = Subdomains::findOne(['domain_name' => \Yii::$app->params['default_subdomain']]);
         }
 
