@@ -3,7 +3,7 @@
 namespace backend\modules\products\controllers;
 
 use backend\controllers\SiteController;
-use common\models\AutoBrands;
+use common\models\AutoModels;
 use common\models\Products;
 use common\models\ProductsOptions;
 use common\models\SubCategory;
@@ -12,6 +12,7 @@ use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use yii\web\NotFoundHttpException;
+use backend\components\FileHelper as FH;
 
 /**
  * Default controller for the `products` module
@@ -49,10 +50,17 @@ class DefaultController extends SiteController
             'subcategory' => $subcategory,
             'options' => ProductsOptions::find()->asArray()->all(),
             'productOptions' => [],
-            'autoBrands' => ArrayHelper::map(AutoBrands::find()->asArray()->all(),'id','name')
+            'autoModels' => ArrayHelper::map(AutoModels::find()->with(['brand'])->asArray()->all(),'id', function ($item){
+                return $item['brand']['name'] . ' - ' . $item['name'];
+            })
         ]);
     }
 
+    /**
+     * @param $id
+     * @return string
+     * @throws NotFoundHttpException
+     */
     public function actionUpdate($id)
     {
         if(!$form = $this->repository->get($id)){
@@ -66,7 +74,9 @@ class DefaultController extends SiteController
             'subcategory' => $form['subcategory'],
             'options' => ProductsOptions::find()->asArray()->all(),
             'productOptions' => ArrayHelper::map($form['productsOptionsVias'], 'option_id', 'value'),
-            'autoBrands' => ArrayHelper::map(AutoBrands::find()->asArray()->all(),'id','name')
+            'autoModels' => ArrayHelper::map(AutoModels::find()->with(['brand'])->asArray()->all(),'id', function ($item){
+                return $item['brand']['name'] . ' - ' . $item['name'];
+            })
         ]);
     }
 
@@ -93,7 +103,27 @@ class DefaultController extends SiteController
             'subcategory' => $form['subcategory'],
             'options' => ProductsOptions::find()->asArray()->all(),
             'productOptions' => ArrayHelper::map($form['productsOptionsVias'], 'option_id', 'value'),
-            'autoBrands' => ArrayHelper::map(AutoBrands::find()->asArray()->all(),'id','name')
+            'autoModels' => ArrayHelper::map(AutoModels::find()->with(['brand'])->asArray()->all(),'id', function ($item){
+                return $item['brand']['name'] . ' - ' . $item['name'];
+            })
         ]);
     }
+
+    /**
+     * @param $id
+     * @return bool
+     */
+    public function actionRemoveImage($id)
+    {
+        /**
+         * @var $model Products
+         */
+        $model = $this->repository->get($id);
+        if(FH::removeFile($model->image,$model::PATH)){
+            $model->image = '';
+            return $model->save();
+        }
+        return false;
+    }
+
 }

@@ -18,6 +18,7 @@ use yii\helpers\ArrayHelper;
  * @property int $created_at
  * @property int $updated_at
  *
+ * @property Products[] $products
  * @property Category $category
  */
 class SubCategory extends MainModel
@@ -81,6 +82,15 @@ class SubCategory extends MainModel
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
+    }
+
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProducts()
+    {
+        return $this->hasMany(Products::className(), ['subcategory_id' => 'id']);
     }
 
     /**

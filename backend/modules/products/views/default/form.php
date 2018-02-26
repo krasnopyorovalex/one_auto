@@ -6,7 +6,7 @@
 /* @var $subcategory common\models\SubCategory*/
 /* @var $options common\models\ProductsOptions*/
 /* @var $productOptions common\models\ProductsOptionsVia*/
-/* @var array $autoBrands common\models\AutoBrands*/
+/* @var array $autoModels common\models\AutoModels*/
 
 use backend\assets\SingleEditorAsset;
 use backend\assets\SelectAsset;
@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->context->actions[$this->context->action-
                         <li class="active"><a href="#main" data-toggle="tab">Основное</a></li>
                         <li><a href="#image" data-toggle="tab">Изображение</a></li>
                         <li><a href="#options" data-toggle="tab">Атрибуты</a></li>
-                        <li><a href="#auto_brands" data-toggle="tab">Привязка запчасти к бренду авто</a></li>
+                        <li><a href="#auto_brands" data-toggle="tab">Привязка запчасти к модели авто</a></li>
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="main">
@@ -50,12 +50,14 @@ $this->params['breadcrumbs'][] = $this->context->actions[$this->context->action-
                                         'class' => 'form-control',
                                         'id' => 'to__generate'
                                     ]) ?>
+                                    <?= $form->field($model, 'maker')->textInput(['autocomplete' => 'off']) ?>
                                     <?php if($model->isNewRecord):?>
                                         <?= Html::activeInput('hidden',$model,'subcategory_id',['value' => $subcategory->id])?>
                                     <?php endif;?>
                                 </div>
                                 <div class="col-md-3">
                                     <?= $form->field($model, 'price')->textInput(['autocomplete' => 'off']) ?>
+                                    <?= $form->field($model, 'articul')->textInput(['autocomplete' => 'off']) ?>
                                 </div>
                             </div>
                             <div class="row">
@@ -121,7 +123,7 @@ $this->params['breadcrumbs'][] = $this->context->actions[$this->context->action-
                             <div class="row">
                                 <div class="col-md-12">
                                     <!-- product auto brands -->
-                                        <?= $form->field($model,'autoBrandsValues')->dropDownList($autoBrands,[
+                                        <?= $form->field($model,'autoModelsValues')->dropDownList($autoModels,[
                                                 'multiple' => 'multiple',
                                                 'class' => 'select'
                                         ])?>

@@ -10,6 +10,7 @@ use Yii;
 use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
+use backend\components\FileHelper as FH;
 
 /**
  * Default controller for the `catalog` module
@@ -82,5 +83,23 @@ class DefaultController extends ModuleController
             'dataProvider' => $this->findData(Category::find()->where(['catalog_id' => $id])),
             'catalog' => $this->repository->get($id)
         ]);
+    }
+
+
+    /**
+     * @param $id
+     * @return bool
+     */
+    public function actionRemoveImage($id)
+    {
+        /**
+         * @var $model Catalog
+         */
+        $model = $this->repository->get($id);
+        if(FH::removeFile($model->image,$model::PATH)){
+            $model->image = '';
+            return $model->save();
+        }
+        return false;
     }
 }

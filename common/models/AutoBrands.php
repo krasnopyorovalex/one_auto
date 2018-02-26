@@ -26,7 +26,7 @@ class AutoBrands extends \yii\db\ActiveRecord
     {
         return [
             [
-                'class' => FileBehavior::className(),
+                'class' => FileBehavior::class,
                 'path' => self::PATH,
                 'entity_db' => self::IMAGE_ENTITY
             ]
@@ -75,6 +75,6 @@ class AutoBrands extends \yii\db\ActiveRecord
      */
     public function getAutoModels()
     {
-        return $this->hasMany(AutoModels::className(), ['brand_id' => 'id']);
+        return $this->hasMany(AutoModels::class, ['brand_id' => 'id']);
     }
 }

@@ -3,7 +3,6 @@
 namespace backend\controllers;
 
 use Yii;
-use yii\data\ActiveDataProvider;
 use backend\interfaces\ModelProviderInterface;
 use yii\web\NotFoundHttpException;
 use backend\components\FileHelper as FH;

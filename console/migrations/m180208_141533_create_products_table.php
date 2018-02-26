@@ -24,6 +24,8 @@ class m180208_141533_create_products_table extends Migration
             'text' => $this->text(),
             'alias' => $this->string()->notNull(),
             'price' => $this->integer()->notNull()->defaultValue(0),
+            'articul' => $this->string(128),
+            'maker' => $this->string(255),
             'image' => $this->string(36),
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull()

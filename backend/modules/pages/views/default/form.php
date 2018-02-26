@@ -30,10 +30,16 @@ $this->params['breadcrumbs'][] = $this->context->actions[$this->context->action-
                         <div class="tab-pane active" id="main">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <?= $form->field($model, 'name')->textInput(['autocomplete' => 'off']) ?>
+                                    <?= $form->field($model, 'name')->textInput(['autocomplete' => 'off', 'id' => 'from__generate']) ?>
                                     <?= $form->field($model, 'title')->textInput(['autocomplete' => 'off']) ?>
                                     <?= $form->field($model, 'description')->textInput(['autocomplete' => 'off']) ?>
-                                    <?= $form->field($model, 'alias')->textInput(['autocomplete' => 'off']) ?>
+                                    <?= $form->field($model, 'alias', [
+                                        'template' => '<div class="form-group">{label}<div class="input-group"><span class="input-group-addon"><i class="icon-pencil"></i></span>{input}{error}{hint}</div></div>'
+                                    ])->textInput([
+                                        'autocomplete' => 'off',
+                                        'class' => 'form-control',
+                                        'id' => 'to__generate'
+                                    ]) ?>
                                     <?= $form->field($model, 'text')->textarea([
                                         'id' => 'editor-full',
                                         'placeholder' => 'Введите текст...'

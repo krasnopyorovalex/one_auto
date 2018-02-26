@@ -7,6 +7,9 @@ use yii\behaviors\TimestampBehavior;
 
 class MainModel extends ActiveRecord
 {
+
+    const PUBLISH = 1;
+
     /**
      * @return array
      */

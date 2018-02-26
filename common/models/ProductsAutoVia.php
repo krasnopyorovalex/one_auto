@@ -8,9 +8,9 @@ use Yii;
  * This is the model class for table "{{%products_auto_via}}".
  *
  * @property int $product_id
- * @property int $auto_brand_id
+ * @property int $auto_model_id
  *
- * @property AutoBrands $autoBrand
+ * @property AutoModels $autoModel
  * @property Products $product
  */
 class ProductsAutoVia extends \yii\db\ActiveRecord
@@ -29,10 +29,10 @@ class ProductsAutoVia extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['product_id', 'auto_brand_id'], 'required'],
-            [['product_id', 'auto_brand_id'], 'integer'],
-            [['product_id', 'auto_brand_id'], 'unique', 'targetAttribute' => ['product_id', 'auto_brand_id']],
-            [['auto_brand_id'], 'exist', 'skipOnError' => true, 'targetClass' => AutoBrands::className(), 'targetAttribute' => ['auto_brand_id' => 'id']],
+            [['product_id', 'auto_model_id'], 'required'],
+            [['product_id', 'auto_model_id'], 'integer'],
+            [['product_id', 'auto_model_id'], 'unique', 'targetAttribute' => ['product_id', 'auto_model_id']],
+            [['auto_model_id'], 'exist', 'skipOnError' => true, 'targetClass' => AutoModels::className(), 'targetAttribute' => ['auto_model_id' => 'id']],
             [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Products::className(), 'targetAttribute' => ['product_id' => 'id']],
         ];
     }
@@ -44,16 +44,16 @@ class ProductsAutoVia extends \yii\db\ActiveRecord
     {
         return [
             'product_id' => 'Product ID',
-            'auto_brand_id' => 'Auto Brand ID',
+            'auto_model_id' => 'Auto Model ID',
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getAutoBrand()
+    public function getAutoModel()
     {
-        return $this->hasOne(AutoBrands::className(), ['id' => 'auto_brand_id']);
+        return $this->hasOne(AutoModels::className(), ['id' => 'auto_model_id']);
     }
 
     /**
