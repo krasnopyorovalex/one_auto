@@ -60,6 +60,11 @@ class DefaultController extends SiteController
         ]);
     }
 
+    /**
+     * @param $id
+     * @return string
+     * @throws NotFoundHttpException
+     */
     public function actionUpdate($id)
     {
         if(!$form = $this->repository->get($id)){
@@ -98,7 +103,7 @@ class DefaultController extends SiteController
     {
         Url::remember();
         $model = $this->repository->get($id);
-        echo $model['brand']['name'];
+
         return $this->render('generations',[
             'dataProvider' => $this->findData(AutoGenerations::find()->where(['model_id' => $id])),
             'brand' => $model['brand'],
