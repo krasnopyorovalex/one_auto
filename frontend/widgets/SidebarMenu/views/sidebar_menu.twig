@@ -1,11 +1,11 @@
 <ul>
     {% for category in model.categories %}
-    <li><a href="{{ model.alias }}/{{ category.alias }}">{{ category.name }}</a>
+    <li><a href="/{{ model.alias }}/{{ category.alias }}">{{ category.name }}</a>
         {% if category.subCategories %}
             <ul>
                 {% for subCategory in category.subCategories %}
                 <li>
-                    <a href="{{ model.alias }}/{{ category.alias }}/{{ subCategory.alias }}">
+                    <a href="/{{ model.alias }}/{{ category.alias }}/{{ subCategory.alias }}">
                         {{ subCategory.name }}
                     </a>
                 </li>
