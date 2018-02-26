@@ -20,7 +20,7 @@ use yii\helpers\ArrayHelper;
  * @property int $created_at
  * @property int $updated_at
  *
- * @property SubCategory $subcategory
+ * @property SubSubCategory $subcategory
  * @property AutoModels[] $autoModels
  * @property ProductsAutoVia[] $productsAutoVias
  * @property ProductsOptionsVia[] $productsOptionsVias
@@ -99,7 +99,7 @@ class Products extends MainModel
      */
     public function getSubcategory()
     {
-        return $this->hasOne(SubCategory::className(), ['id' => 'subcategory_id']);
+        return $this->hasOne(SubSubCategory::class, ['id' => 'subcategory_id']);
     }
 
     /**
@@ -107,7 +107,7 @@ class Products extends MainModel
      */
     public function getProductsAutoVias()
     {
-        return $this->hasMany(ProductsAutoVia::className(), ['product_id' => 'id']);
+        return $this->hasMany(ProductsAutoVia::class, ['product_id' => 'id']);
     }
 
     /**
@@ -115,7 +115,7 @@ class Products extends MainModel
      */
     public function getAutoModels()
     {
-        return $this->hasMany(AutoModels::className(), ['id' => 'auto_model_id'])->viaTable('{{%products_auto_via}}', ['product_id' => 'id']);
+        return $this->hasMany(AutoModels::class, ['id' => 'auto_model_id'])->viaTable('{{%products_auto_via}}', ['product_id' => 'id']);
     }
 
     /**
@@ -123,7 +123,7 @@ class Products extends MainModel
      */
     public function getProductsOptionsVias()
     {
-        return $this->hasMany(ProductsOptionsVia::className(), ['product_id' => 'id']);
+        return $this->hasMany(ProductsOptionsVia::class, ['product_id' => 'id']);
     }
 
     /**
@@ -131,7 +131,7 @@ class Products extends MainModel
      */
     public function getOptions()
     {
-        return $this->hasMany(ProductsOptions::className(), ['id' => 'option_id'])->viaTable('{{%products_options_via}}', ['product_id' => 'id']);
+        return $this->hasMany(ProductsOptions::class, ['id' => 'option_id'])->viaTable('{{%products_options_via}}', ['product_id' => 'id']);
     }
 
     public function afterFind()

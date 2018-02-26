@@ -11,7 +11,7 @@ use Yii;
  * @property int $auto_model_id
  *
  * @property AutoModels $autoModel
- * @property Products $product
+ * @property ProductsOld $product
  */
 class ProductsAutoVia extends \yii\db\ActiveRecord
 {
@@ -33,7 +33,7 @@ class ProductsAutoVia extends \yii\db\ActiveRecord
             [['product_id', 'auto_model_id'], 'integer'],
             [['product_id', 'auto_model_id'], 'unique', 'targetAttribute' => ['product_id', 'auto_model_id']],
             [['auto_model_id'], 'exist', 'skipOnError' => true, 'targetClass' => AutoModels::className(), 'targetAttribute' => ['auto_model_id' => 'id']],
-            [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Products::className(), 'targetAttribute' => ['product_id' => 'id']],
+            [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => ProductsOld::className(), 'targetAttribute' => ['product_id' => 'id']],
         ];
     }
 
@@ -61,6 +61,6 @@ class ProductsAutoVia extends \yii\db\ActiveRecord
      */
     public function getProduct()
     {
-        return $this->hasOne(Products::className(), ['id' => 'product_id']);
+        return $this->hasOne(ProductsOld::className(), ['id' => 'product_id']);
     }
 }

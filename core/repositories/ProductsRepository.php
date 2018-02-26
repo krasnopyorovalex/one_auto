@@ -2,14 +2,14 @@
 
 namespace core\repositories;
 
-use common\models\Products;
+use common\models\ProductsOld;
 use yii\db\ActiveRecord;
 
 class ProductsRepository
 {
     public function get($id): ActiveRecord
     {
-        if (!$product = Products::find()->where(['id' => $id])->with(['autoModels','productsOptionsVias','subcategory' => function($query){
+        if (!$product = ProductsOld::find()->where(['id' => $id])->with(['autoModels','productsOptionsVias','subcategory' => function($query){
             return $query->with(['category' => function($query){
                 return $query->with(['catalog']);
             }]);
@@ -28,7 +28,7 @@ class ProductsRepository
 
     public function remove($id): void
     {
-        if (!Products::findOne($id)->delete()) {
+        if (!ProductsOld::findOne($id)->delete()) {
             throw new \RuntimeException('Removing error.');
         }
     }

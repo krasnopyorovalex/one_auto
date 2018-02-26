@@ -3,7 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\Catalog;
-use common\models\Products;
+use common\models\ProductsOld;
 use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 
@@ -20,7 +20,7 @@ class ProductController extends SiteController
      */
     public function actionShow($alias)
     {
-        if(!$model = Products::find()->where(['alias' => $alias])->with(['options','productsOptionsVias','subcategory' => function($query){
+        if(!$model = ProductsOld::find()->where(['alias' => $alias])->with(['options','productsOptionsVias','subcategory' => function($query){
             return $query->with(['category' => function($query){
                 return $query->with(['catalog']);
             }]);

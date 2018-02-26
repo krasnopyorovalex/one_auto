@@ -31,10 +31,10 @@ class m180208_141533_create_products_table extends Migration
             'updated_at' => $this->integer()->notNull()
         ],$tableOptions);
 
-        $this->createIndex('{{%idx-products-subcategory_id}}', '{{%products}}', 'subcategory_id');
+        $this->createIndex('{{%idx-products-sub_subcategory_id}}', '{{%products}}', 'subcategory_id');
         $this->createIndex('{{%idx-products-alias}}', '{{%products}}', 'alias', true);
 
-        $this->addForeignKey('{{%fk-products-subcategory_id}}', '{{%products}}', 'subcategory_id', '{{%sub_category}}', 'id');
+        $this->addForeignKey('{{%fk-products-category_id}}', '{{%products}}', 'subcategory_id', '{{%sub_sub_category}}', 'id');
     }
 
     /**

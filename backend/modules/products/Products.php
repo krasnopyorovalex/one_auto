@@ -26,6 +26,6 @@ class Products extends Module implements ModelProviderInterface
 
     public function getModel()
     {
-        return \common\models\Products::class;
+        return \common\models\ProductsOld::class;
     }
 }

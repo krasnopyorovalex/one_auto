@@ -28,7 +28,7 @@ class m180208_070155_create_sub_category_table extends Migration
             'updated_at' => $this->integer()->notNull()
         ],$tableOptions);
 
-        $this->createIndex('{{%idx-category-category_id}}', '{{%sub_category}}', 'category_id');
+        $this->createIndex('{{%idx-sub_category-category_id}}', '{{%sub_category}}', 'category_id');
         $this->createIndex('{{%idx-sub_category-alias}}', '{{%sub_category}}', 'alias', true);
 
         $this->addForeignKey('{{%fk-sub_category-category_id}}', '{{%sub_category}}', 'category_id', '{{%category}}', 'id');

@@ -2,9 +2,9 @@
 
 namespace frontend\widgets\Search\form;
 
-use common\models\Products;
+use common\models\ProductsOld;
 
-class FormSearch extends Products
+class FormSearch extends ProductsOld
 {
     const TYPE_ARTICUL = 'articul';
     const TYPE_NAME = 'name';
@@ -24,7 +24,7 @@ class FormSearch extends Products
 
     public function search($params)
     {
-        $query = Products::find();
+        $query = ProductsOld::find();
 
         $this->load($params);
 

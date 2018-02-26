@@ -12,7 +12,7 @@ use Yii;
  * @property string $value
  *
  * @property ProductsOptions $option
- * @property Products $product
+ * @property ProductsOld $product
  */
 class ProductsOptionsVia extends \yii\db\ActiveRecord
 {
@@ -36,7 +36,7 @@ class ProductsOptionsVia extends \yii\db\ActiveRecord
             [['value'], 'trim'],
             [['product_id', 'option_id'], 'unique', 'targetAttribute' => ['product_id', 'option_id']],
             [['option_id'], 'exist', 'skipOnError' => true, 'targetClass' => ProductsOptions::className(), 'targetAttribute' => ['option_id' => 'id']],
-            [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Products::className(), 'targetAttribute' => ['product_id' => 'id']],
+            [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => ProductsOld::className(), 'targetAttribute' => ['product_id' => 'id']],
         ];
     }
 
@@ -65,6 +65,6 @@ class ProductsOptionsVia extends \yii\db\ActiveRecord
      */
     public function getProduct()
     {
-        return $this->hasOne(Products::className(), ['id' => 'product_id']);
+        return $this->hasOne(ProductsOld::className(), ['id' => 'product_id']);
     }
 }

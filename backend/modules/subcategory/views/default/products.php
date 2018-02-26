@@ -4,7 +4,7 @@ use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-/* @var $dataProvider common\models\Products */
+/* @var $dataProvider common\models\ProductsOld */
 /* @var $catalog common\models\Catalog */
 /* @var $category common\models\Category */
 /* @var $subcategory common\models\SubCategory */

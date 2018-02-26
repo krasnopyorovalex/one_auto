@@ -4,7 +4,7 @@ namespace backend\modules\products\controllers;
 
 use backend\controllers\SiteController;
 use common\models\AutoModels;
-use common\models\Products;
+use common\models\ProductsOld;
 use common\models\ProductsOptions;
 use common\models\SubCategory;
 use core\repositories\ProductsRepository;
@@ -30,7 +30,7 @@ class DefaultController extends SiteController
 
     public function actionAdd($id)
     {
-        $form = new Products();
+        $form = new ProductsOld();
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
             try {
                 $this->repository->save($form);
@@ -116,7 +116,7 @@ class DefaultController extends SiteController
     public function actionRemoveImage($id)
     {
         /**
-         * @var $model Products
+         * @var $model ProductsOld
          */
         $model = $this->repository->get($id);
         if(FH::removeFile($model->image,$model::PATH)){

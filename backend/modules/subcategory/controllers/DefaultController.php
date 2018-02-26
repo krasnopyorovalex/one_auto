@@ -4,7 +4,7 @@ namespace backend\modules\subcategory\controllers;
 
 use backend\controllers\SiteController;
 use common\models\Category;
-use common\models\Products;
+use common\models\ProductsOld;
 use common\models\SubCategory;
 use core\repositories\SubCategoryRepository;
 use Yii;
@@ -109,7 +109,7 @@ class DefaultController extends SiteController
         Url::remember();
         $subcategory = $this->repository->get($id);
         return $this->render('products',[
-            'dataProvider' => $this->findData(Products::find()->where(['subcategory_id' => $id])),
+            'dataProvider' => $this->findData(ProductsOld::find()->where(['subcategory_id' => $id])),
             'catalog' => $subcategory['category']['catalog'],
             'category' => $subcategory['category'],
             'subcategory' => $subcategory

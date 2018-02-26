@@ -3,7 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\Category;
-use common\models\Products;
+use common\models\ProductsOld;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -29,7 +29,7 @@ class CategoryController extends AutoModelController
             return parent::actionCategory($catalog, $category, $page = 0);
         }
 
-        $query = Products::find()->where(['subcategory_id' => $model->getIdsSubCategories()]);
+        $query = ProductsOld::find()->where(['subcategory_id' => $model->getIdsSubCategories()]);
         $count = $query->count();
         $products = $query->offset($page)
             ->limit(\Yii::$app->params['per_page'])

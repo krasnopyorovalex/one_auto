@@ -4,7 +4,7 @@ namespace frontend\controllers;
 
 use common\models\AutoBrands;
 use common\models\Catalog;
-use common\models\Products;
+use common\models\ProductsOld;
 use common\models\SubCategory;
 use yii\web\NotFoundHttpException;
 
@@ -30,7 +30,7 @@ class SubcategoryController extends SiteController
             return $query->with(['subCategories']);
         }])->one();
 
-        $query = Products::find()->where(['subcategory_id' => $model['id']]);
+        $query = ProductsOld::find()->where(['subcategory_id' => $model['id']]);
         $count = $query->count();
         $products = $query->offset($page)
             ->limit(\Yii::$app->params['per_page'])
