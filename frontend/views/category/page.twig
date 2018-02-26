@@ -4,7 +4,7 @@
     <div class="breadcrumbs">
         <ul>
             <li><a href="{{ app.homeUrl }}">{{ app.params['breadcrumbs_main_name'] }}</a></li>
-            <li><a href="{{ path('catalog/show', {'alias': model.catalog.alias}) }}">{{ model.catalog.name }}</a></li>
+            <li><a href="/{{ model.catalog.alias }}">{{ model.catalog.name }}</a></li>
             <li>{{ model.name }}</li>
         </ul>
     </div>

@@ -74,12 +74,12 @@
         <div class="items">
             {% for item in brands %}
             <div class="item">
-                <a href="{{ path('auto-brand/show', {'alias': item.alias}) }}">
+                <a href="/{{ item.alias }}">
                     <img src="/userfiles/auto_brands/{{ item.image }}" alt="alt">
                 </a>
                 <ul>
                     {% for autoModel in item.autoModels %}
-                    <li><a href="{{ path('category/category', {'catalog': item.alias, 'category': autoModel.alias}) }}">{{ autoModel.name }}</a></li>
+                    <li><a href="/{{ item.alias }}/{{ autoModel.alias }}">{{ autoModel.name }}</a></li>
                     {% endfor %}
                 </ul>
             </div>

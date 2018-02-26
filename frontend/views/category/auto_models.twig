@@ -4,7 +4,7 @@
     <div class="breadcrumbs">
         <ul>
             <li><a href="{{ app.homeUrl }}">{{ app.params['breadcrumbs_main_name'] }}</a></li>
-            <li><a href="{{ path('auto-brand/show', {'alias': model.brand.alias}) }}">{{ model.brand.name }}</a></li>
+            <li><a href="/{{ model.brand.alias }}">{{ model.brand.name }}</a></li>
             <li>{{ model.name }}</li>
         </ul>
     </div>
