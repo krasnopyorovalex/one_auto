@@ -27,7 +27,7 @@
                         <div class="item__cat">
                             <img src="/userfiles/category/{{ item.image }}" alt="">
                             <div class="item__cat-name">
-                                <a href="{{ path('category/category', {'catalog' : model.alias, 'category': item.alias}) }}">{{ item.name }}</a>
+                                <a href="/{{ model.alias }}/{{ item.alias }}">{{ item.name }}</a>
                             </div>
                         </div>
                         <!-- /.item_cat -->
