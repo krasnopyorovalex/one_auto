@@ -42,7 +42,7 @@ class SiteController extends Controller
         if(!$model = Pages::find()->where(['alias' => $alias])->one()){
             throw new NotFoundHttpException('The requested page does not exist.');
         }
-        return $this->render('page.twig',[
+        return $this->render('info_page.twig',[
             'model' => $model
         ]);
     }
@@ -65,8 +65,14 @@ class SiteController extends Controller
         if (!parent::beforeAction($action)) {
             return false;
         }
-        //$subdomain = Subdomains::findOne(['domain_name' => \Yii::$app->request->hostName]);
-        $subdomain = Subdomains::findOne(['domain_name' => 'moscow']);
+
+        $parts = explode('.',\Yii::$app->request->hostName);
+        $subdomain = array_shift($parts);
+
+        if( ! $subdomain = Subdomains::findOne(['domain_name' => $subdomain]) ) {
+            $subdomain = Subdomains::findOne(['domain_name' => \Yii::$app->params['default_subdomain']]);
+        }
+
         \Yii::$app->params['phone'] = $subdomain->phone;
         \Yii::$app->params['address'] = $subdomain->address;
         \Yii::$app->params['subdomains'] = ArrayHelper::map(Subdomains::find()->asArray()->all(), 'domain_name', function($item){
