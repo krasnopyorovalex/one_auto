@@ -1,7 +1,8 @@
 <?php
+
 /* @var $this yii\web\View */
-/* @var $model common\models\Category */
-/* @var $catalog common\models\Catalog */
+/* @var $auto_model common\models\AutoModels */
+/* @var $model common\models\AutoGenerations */
 
 use backend\assets\SingleEditorAsset;
 use backend\assets\SelectAsset;
@@ -12,7 +13,7 @@ use yii\helpers\Url;
 SingleEditorAsset::register($this);
 SelectAsset::register($this);
 
-$this->params['breadcrumbs'][] = ['label' => $catalog->name, 'url' => Url::toRoute(['/catalog'])];
+$this->params['breadcrumbs'][] = ['label' => $auto_model->name, 'url' => Url::toRoute(['/auto_models'])];
 $this->params['breadcrumbs'][] = ['label' => $this->context->module->params['name'], 'url' => Url::to(Url::previous())];
 $this->params['breadcrumbs'][] = $this->context->actions[$this->context->action->id];
 ?>
@@ -27,7 +28,6 @@ $this->params['breadcrumbs'][] = $this->context->actions[$this->context->action-
                 <div class="tabbable">
                     <ul class="nav nav-tabs">
                         <li class="active"><a href="#main" data-toggle="tab">Основное</a></li>
-                        <li><a href="#image" data-toggle="tab">Изображение</a></li>
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="main">
@@ -42,41 +42,8 @@ $this->params['breadcrumbs'][] = $this->context->actions[$this->context->action-
                                         'id' => 'to__generate'
                                     ]) ?>
                                     <?php if($model->isNewRecord):?>
-                                        <?= Html::activeInput('hidden',$model,'catalog_id',['value' => $catalog->id])?>
+                                        <?= Html::activeInput('hidden',$model,'model_id',['value' => $auto_model->id])?>
                                     <?php endif;?>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <?= $form->field($model, 'text')->textarea([
-                                        'id' => 'editor-full',
-                                        'placeholder' => 'Введите текст...'
-                                    ]) ?>
-                                </div>
-                            </div>
-
-                            <?= $this->render('@backend/views/blocks/actions_panel')?>
-
-                        </div>
-
-                        <div class="tab-pane" id="image">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <?php if($model->image):?>
-                                        <div class="thumbnail-single">
-                                            <?= Html::img($model::PATH.$model->image)?>
-                                            <?= Html::button(Html::tag('b','', ['class' => 'icon-trash']) . 'Удалить',[
-                                                'class' => 'btn btn-danger btn-labeled btn-sm remove_image'
-                                            ])?>
-                                        </div>
-                                    <?php endif;?>
-
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <hr>
-                                    <?= $form->field($model, 'file')->fileInput(['accept' => 'image/*']) ?>
                                 </div>
                             </div>
 

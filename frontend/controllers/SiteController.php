@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use frontend\components\PagesAndCatalogBehavior;
 use common\models\AutoBrands;
 use common\models\Pages;
 use common\models\Subdomains;
@@ -11,9 +12,20 @@ use yii\web\NotFoundHttpException;
 
 /**
  * Site controller
+ *
+ * @mixin PagesAndCatalogBehavior
  */
 class SiteController extends Controller
 {
+    /**
+     * @return array
+     */
+    public function behaviors()
+    {
+        return [
+            'class' => PagesAndCatalogBehavior::class
+        ];
+    }
 
     public $layout = 'main.twig';
 
@@ -37,12 +49,13 @@ class SiteController extends Controller
      * @return string
      * @throws NotFoundHttpException
      */
-    public function actionShow($alias)
+    public function actionPage($alias)
     {
-        if(!$model = Pages::find()->where(['alias' => $alias])->one()){
+        if( ! $model = $this->getCatalogOrPage($alias) ) {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
-        return $this->render('info_page.twig',[
+
+        return $this->render($model['template'], [
             'model' => $model
         ]);
     }

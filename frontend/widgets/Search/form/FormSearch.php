@@ -2,9 +2,9 @@
 
 namespace frontend\widgets\Search\form;
 
-use common\models\ProductsOld;
+use common\models\Products;
 
-class FormSearch extends ProductsOld
+class FormSearch extends Products
 {
     const TYPE_ARTICUL = 'articul';
     const TYPE_NAME = 'name';

@@ -4,7 +4,8 @@ namespace backend\modules\products\controllers;
 
 use backend\controllers\SiteController;
 use common\models\AutoModels;
-use common\models\ProductsOld;
+use common\models\Catalog;
+use common\models\Products;
 use common\models\ProductsOptions;
 use common\models\SubCategory;
 use core\repositories\ProductsRepository;
@@ -30,7 +31,7 @@ class DefaultController extends SiteController
 
     public function actionAdd($id)
     {
-        $form = new ProductsOld();
+        $form = new Products();
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
             try {
                 $this->repository->save($form);
@@ -40,14 +41,10 @@ class DefaultController extends SiteController
                 Yii::$app->session->setFlash('error', $e->getMessage());
             }
         }
-        $subcategory = SubCategory::find()->where(['id' => $id])->with(['category' => function($query){
-            return $query->with(['catalog']);
-        }])->one();
+
         return $this->render('form', [
             'model' => $form,
-            'catalog' => $subcategory['category']['catalog'],
-            'category' => $subcategory['category'],
-            'subcategory' => $subcategory,
+            'category' => Catalog::findOne($id),
             'options' => ProductsOptions::find()->asArray()->all(),
             'productOptions' => [],
             'autoModels' => ArrayHelper::map(AutoModels::find()->with(['brand'])->asArray()->all(),'id', function ($item){
@@ -69,9 +66,7 @@ class DefaultController extends SiteController
         $this->loadData($form, Url::previous());
         return $this->render('form', [
             'model' => $form,
-            'catalog' => $form['subcategory']['category']['catalog'],
-            'category' => $form['subcategory']['category'],
-            'subcategory' => $form['subcategory'],
+            'category' => Catalog::findOne(['id' => $form['category_id']]),
             'options' => ProductsOptions::find()->asArray()->all(),
             'productOptions' => ArrayHelper::map($form['productsOptionsVias'], 'option_id', 'value'),
             'autoModels' => ArrayHelper::map(AutoModels::find()->with(['brand'])->asArray()->all(),'id', function ($item){
@@ -81,8 +76,11 @@ class DefaultController extends SiteController
     }
 
     /**
-     * @param integer $id
-     * @return mixed
+     * @param $id
+     * @return string|\yii\web\Response
+     * @throws \Exception
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
      */
     public function actionDelete($id)
     {
@@ -98,9 +96,7 @@ class DefaultController extends SiteController
         $form = $this->repository->get($id);
         return $this->render('form', [
             'model' => $form,
-            'catalog' => $form['subcategory']['category']['catalog'],
-            'category' => $form['subcategory']['category'],
-            'subcategory' => $form['subcategory'],
+            'category' => Catalog::findOne(['id' => $form['parent_id']]),
             'options' => ProductsOptions::find()->asArray()->all(),
             'productOptions' => ArrayHelper::map($form['productsOptionsVias'], 'option_id', 'value'),
             'autoModels' => ArrayHelper::map(AutoModels::find()->with(['brand'])->asArray()->all(),'id', function ($item){
@@ -116,7 +112,7 @@ class DefaultController extends SiteController
     public function actionRemoveImage($id)
     {
         /**
-         * @var $model ProductsOld
+         * @var $model Products
          */
         $model = $this->repository->get($id);
         if(FH::removeFile($model->image,$model::PATH)){

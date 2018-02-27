@@ -19,6 +19,7 @@ class m180208_065902_create_catalog_table extends Migration
 
         $this->createTable('catalog', [
             'id' => $this->primaryKey(),
+            'parent_id' => $this->integer(),
             'name' => $this->string(512)->notNull(),
             'text' => $this->text(),
             'alias' => $this->string()->notNull(),
@@ -28,6 +29,9 @@ class m180208_065902_create_catalog_table extends Migration
         ], $tableOptions);
 
         $this->createIndex('{{%idx-catalog-alias}}', '{{%catalog}}', 'alias', true);
+        $this->createIndex('idx-catalog-parent_id', '{{%catalog}}', 'parent_id');
+
+        $this->addForeignKey('fk-pages-parent', '{{%catalog}}', 'parent_id', '{{%catalog}}', 'id', 'SET NULL', 'RESTRICT');
     }
 
     /**

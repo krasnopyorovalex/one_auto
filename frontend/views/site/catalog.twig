@@ -1,5 +1,4 @@
 {{ set(this, 'title', model.name) }}
-{{ this.registerMetaTag({'name':'description', 'content': model.name}) }}
 
 <div class="wrapper">
     <div class="breadcrumbs">
@@ -16,24 +15,27 @@
         <div class="items">
             <div class="content__sidebar">
                 {#{{ use('frontend/widgets/SidebarMenu/SidebarMenu') }}#}
-                {#{{ sidebar_menu_widget({'model': model.catalog}) }}#}
+                {#{{ sidebar_menu_widget({'model': model}) }}#}
             </div>
             <!-- /.content__sidebar -->
             <div class="content__body">
                 <h1>{{ model.name }}</h1>
 
-                <div class="items">
-                    {% for item in model.autoModels %}
-                    <div class="item">
-                        <div class="item__cat-auto">
-                            <a href="{{ path('category/category', {'catalog': model.alias, 'category': item.alias}) }}"><img src="/userfiles/auto_models/{{ item.image }}" alt="alt"></a>
-                            <div class="item__cat-model">{{ item.name }}</div>
+                <div class="items cat__details">
+                    {% for item in model.catalogs %}
+                        <div class="item">
+                            <div class="item__cat">
+                                <img src="/userfiles/catalog/{{ item.image }}" alt="">
+                                <div class="item__cat-name">
+                                    <a href="/{{ model.alias }}/{{ item.alias }}">{{ item.name }}</a>
+                                </div>
+                            </div>
+                            <!-- /.item_cat -->
                         </div>
-                        <!-- /.item__cat-auto -->
-                    </div>
-                    <!-- /.item -->
+                        <!-- /.item -->
                     {% endfor %}
                 </div>
+                <!-- /.items -->
 
                 <div class="text">
                     {{ model.text| raw }}

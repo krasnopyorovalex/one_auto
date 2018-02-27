@@ -242,3 +242,21 @@ li.mjs-nestedSortable-collapsed.mjs-nestedSortable-hovering div {
 .form-group .input-group-addon:hover {
     cursor: pointer;
 }
+
+.table tr.level_l td:first-child:before {
+    content: "--- ";
+    padding-left: 1%;
+}
+
+.table tr.level_l_l td:first-child:before {
+    content: "--- ";
+    padding-left: 5%;
+}
+
+.table tr.level_l_l_l td:first-child:before {
+    content: "--- ";
+    padding-left: 9%;
+}
+.table .centered {
+    text-align: center;
+}

@@ -2,10 +2,13 @@
 
 namespace backend\modules\auto_generations;
 
+use backend\interfaces\ModelProviderInterface;
+use yii\base\Module;
+
 /**
  * auto_generations module definition class
  */
-class AutoGenerations extends \yii\base\Module
+class AutoGenerations extends Module implements ModelProviderInterface
 {
     /**
      * @inheritdoc
@@ -18,7 +21,11 @@ class AutoGenerations extends \yii\base\Module
     public function init()
     {
         parent::init();
+        $this->params['name'] = 'Поколения';
+    }
 
-        // custom initialization code goes here
+    public function getModel()
+    {
+        return \common\models\AutoGenerations::class;
     }
 }

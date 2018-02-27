@@ -4,13 +4,13 @@ namespace backend\modules\catalog\controllers;
 
 use backend\controllers\ModuleController;
 use common\models\Catalog;
-use common\models\Category;
+use common\models\Products;
 use core\repositories\CatalogRepository;
 use Yii;
+use backend\components\FileHelper as FH;
 use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
-use backend\components\FileHelper as FH;
 
 /**
  * Default controller for the `catalog` module
@@ -29,15 +29,28 @@ class DefaultController extends ModuleController
     {
         return ArrayHelper::merge(parent::behaviors(),[
             'access' => [
-                'class' => AccessControl::className(),
+                'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => ['categories'],
+                        'actions' => ['list'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
                 ],
             ]
+        ]);
+    }
+
+    public function actionIndex()
+    {
+        return $this->render('index',[
+            'dataProvider' => Catalog::find()->where(['parent_id' => null])->with(['products', 'catalogs' => function($query){
+                return $query->with(['products', 'catalogs' => function($query){
+                    return $query->with(['products', 'catalogs' => function($query){
+                        return $query->with(['catalogs', 'products']);
+                    }]);
+                }]);
+            }])->asArray()->all()
         ]);
     }
 
@@ -76,15 +89,20 @@ class DefaultController extends ModuleController
         return $this->render('form', ['model' => $this->repository->get($id)]);
     }
 
-    public function actionCategories($id)
+    /**
+     * @param int $id
+     * @return string
+     */
+    public function actionList(int $id)
     {
         Url::remember();
-        return $this->render('categories',[
-            'dataProvider' => $this->findData(Category::find()->where(['catalog_id' => $id])),
-            'catalog' => $this->repository->get($id)
+        $products = Products::find()->where(['category_id' => $id])->with(['category']);
+
+        return $this->render('products_list', [
+            'dataProvider' => $this->findData($products),
+            'category' => Catalog::find()->where(['id' => $id])->one()
         ]);
     }
-
 
     /**
      * @param $id

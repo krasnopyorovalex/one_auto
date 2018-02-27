@@ -11,7 +11,7 @@ use Yii;
  * @property string $name
  *
  * @property ProductsOptionsVia[] $productsOptionsVias
- * @property ProductsOld[] $products
+ * @property Products[] $products
  */
 class ProductsOptions extends \yii\db\ActiveRecord
 {
@@ -59,6 +59,6 @@ class ProductsOptions extends \yii\db\ActiveRecord
      */
     public function getProducts()
     {
-        return $this->hasMany(ProductsOld::className(), ['id' => 'product_id'])->viaTable('{{%products_options_via}}', ['option_id' => 'id']);
+        return $this->hasMany(Products::className(), ['id' => 'product_id'])->viaTable('{{%products_options_via}}', ['option_id' => 'id']);
     }
 }

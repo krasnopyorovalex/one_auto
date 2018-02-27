@@ -54,7 +54,24 @@ return [
             'enableStrictParsing' => true,
             'rules' => [
                 //for main domain
-                $params['server_protocol'] . '<server:[\wd-]+.[\w-]+>' => 'site',
+                '/' => 'site',
+                'robots.txt' => 'robots/txt',
+                'search' => 'search',
+                'send/<action:(order)>' => 'send/<action>',
+
+                'catalog/<alias:[\wd-]+>' => 'product/show',
+
+                '<alias:[\wd-]+>/page/<page:\d+>' => 'site/page',
+                '<alias:[\wd-]+>' => 'site/page',
+
+
+                '<catalog:[\wd-]+>/<subcategory:[\wd-]+>/page/<page:\d+>' => 'catalog/show',
+                '<catalog:[\wd-]+>/<subcategory:[\wd-]+>' => 'catalog/show',
+
+                '<catalog:[\wd-]+>/<category:[\wd-]+>/<subcategory:[\wd-]+>/page/<page:\d+>' => 'subcategory/subcategory',
+                '<catalog:[\wd-]+>/<category:[\wd-]+>/<subcategory:[\wd-]+>' => 'subcategory/subcategory',
+
+                /*$params['server_protocol'] . '<server:[\wd-]+.[\w-]+>' => 'site',
                 $params['server_protocol'] . '<server:[\wd-]+.[\w-]+>/robots.txt' => 'robots/txt',
                 $params['server_protocol'] . '<server:[\wd-]+.[\w-]+>/search' => 'search',
                 $params['server_protocol'] . '<server:[\wd-]+.[\w-]+>/send/<action:(order)>' => 'send/<action>',
@@ -80,7 +97,7 @@ return [
                 $params['server_protocol'] . '<subdomain:[\w-]+>.<server:[\wd-]+.[\w-]+>/<catalog:[\wd-]+>/<category:[\wd-]+>' => 'category/category',
 
                 $params['server_protocol'] . '<subdomain:[\w-]+>.<server:[\wd-]+.[\w-]+>/<catalog:[\wd-]+>/<category:[\wd-]+>/<subcategory:[\wd-]+>/page/<page:\d+>' => 'subcategory/subcategory',
-                $params['server_protocol'] . '<subdomain:[\w-]+>.<server:[\wd-]+.[\w-]+>/<catalog:[\wd-]+>/<category:[\wd-]+>/<subcategory:[\wd-]+>' => 'subcategory/subcategory',
+                $params['server_protocol'] . '<subdomain:[\w-]+>.<server:[\wd-]+.[\w-]+>/<catalog:[\wd-]+>/<category:[\wd-]+>/<subcategory:[\wd-]+>' => 'subcategory/subcategory',*/
             ],
         ],
         'view' => [

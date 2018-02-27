@@ -1,9 +1,7 @@
 <?php
 /* @var $this yii\web\View */
-/* @var $model common\models\ProductsOld */
-/* @var $catalog common\models\Catalog */
-/* @var $category common\models\Category*/
-/* @var $subcategory common\models\SubCategory*/
+/* @var $model common\models\Products */
+/* @var $category common\models\Catalog */
 /* @var $options common\models\ProductsOptions*/
 /* @var $productOptions common\models\ProductsOptionsVia*/
 /* @var array $autoModels common\models\AutoModels*/
@@ -17,10 +15,20 @@ use yii\helpers\Url;
 SingleEditorAsset::register($this);
 SelectAsset::register($this);
 
-$this->params['breadcrumbs'][] = ['label' => 'Каталог', 'url' => Url::toRoute(['/catalog'])];
-$this->params['breadcrumbs'][] = ['label' => $catalog->name, 'url' => Url::toRoute(['/catalog/categories/'.$catalog->id])];
-$this->params['breadcrumbs'][] = ['label' => $category->name, 'url' => Url::toRoute(['/category/sub-categories/'.$category->id])];
-$this->params['breadcrumbs'][] = ['label' => $subcategory->name, 'url' => Url::toRoute(['/subcategory/products/'.$subcategory->id])];
+if(isset($category->parent->parent->parent)){
+    $this->params['breadcrumbs'][] = ['label' => $category->parent->parent->parent->name, 'url' => Url::toRoute(['/catalog'])];
+}
+
+if($category->parent->parent){
+    $this->params['breadcrumbs'][] = ['label' => $category->parent->parent->name, 'url' => Url::toRoute(['/catalog'])];
+}
+
+if($category->parent){
+    $this->params['breadcrumbs'][] = ['label' => $category->parent->name, 'url' => Url::toRoute(['/catalog'])];
+}
+
+$this->params['breadcrumbs'][] = ['label' => $category->name, 'url' => Url::toRoute(['/catalog/list/'.$category->id])];
+
 $this->params['breadcrumbs'][] = $this->context->actions[$this->context->action->id];
 ?>
 <div class="row">
@@ -41,7 +49,7 @@ $this->params['breadcrumbs'][] = $this->context->actions[$this->context->action-
                     <div class="tab-content">
                         <div class="tab-pane active" id="main">
                             <div class="row">
-                                <div class="col-md-9">
+                                <div class="col-md-12">
                                     <?= $form->field($model, 'name')->textInput(['autocomplete' => 'off', 'id' => 'from__generate']) ?>
                                     <?= $form->field($model, 'alias', [
                                         'template' => '<div class="form-group">{label}<div class="input-group"><span class="input-group-addon"><i class="icon-pencil"></i></span>{input}{error}{hint}</div></div>'
@@ -50,14 +58,9 @@ $this->params['breadcrumbs'][] = $this->context->actions[$this->context->action-
                                         'class' => 'form-control',
                                         'id' => 'to__generate'
                                     ]) ?>
-                                    <?= $form->field($model, 'maker')->textInput(['autocomplete' => 'off']) ?>
                                     <?php if($model->isNewRecord):?>
-                                        <?= Html::activeInput('hidden',$model,'subcategory_id',['value' => $subcategory->id])?>
+                                        <?= Html::activeInput('hidden',$model,'category_id',['value' => $category->id])?>
                                     <?php endif;?>
-                                </div>
-                                <div class="col-md-3">
-                                    <?= $form->field($model, 'price')->textInput(['autocomplete' => 'off']) ?>
-                                    <?= $form->field($model, 'articul')->textInput(['autocomplete' => 'off']) ?>
                                 </div>
                             </div>
                             <div class="row">
@@ -99,9 +102,15 @@ $this->params['breadcrumbs'][] = $this->context->actions[$this->context->action-
 
                         <div class="tab-pane" id="options">
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-6">
+
+                                    <?= $form->field($model, 'maker')->textInput(['autocomplete' => 'off']) ?>
+                                    <?= $form->field($model, 'price')->textInput(['autocomplete' => 'off']) ?>
+                                    <?= $form->field($model, 'articul')->textInput(['autocomplete' => 'off']) ?>
+
                                     <!-- product options -->
-                                    <?php if($options):?>
+
+                                    <?php /*if($options):?>
                                         <?= Html::beginTag('div', ['class' => 'product_options'])?>
                                         <?php foreach ($options as $o):?>
                                             <?= $form->field($model, 'options['.$o['id'].']')->textInput([
@@ -111,8 +120,13 @@ $this->params['breadcrumbs'][] = $this->context->actions[$this->context->action-
                                             ])->label($o['name'])?>
                                         <?php endforeach;?>
                                         <?= Html::endTag('div')?>
-                                    <?php endif;?>
+                                    <?php endif;*/?>
                                     <!-- product options -->
+                                </div>
+                                <div class="col-md-6">
+                                    <?= $form->field($model, 'original_number')->textInput(['autocomplete' => 'off']) ?>
+                                    <?= $form->field($model, 'barcode')->textInput(['autocomplete' => 'off']) ?>
+                                    <?= $form->field($model, 'balance')->textInput(['autocomplete' => 'off']) ?>
                                 </div>
                             </div>
 

@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->context->actions[$this->context->action-
                     <div class="tab-content">
                         <div class="tab-pane active" id="main">
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-8">
                                     <?= $form->field($model, 'name')->textInput(['autocomplete' => 'off', 'id' => 'from__generate']) ?>
                                     <?= $form->field($model, 'alias', [
                                         'template' => '<div class="form-group">{label}<div class="input-group"><span class="input-group-addon"><i class="icon-pencil"></i></span>{input}{error}{hint}</div></div>'
@@ -39,6 +39,13 @@ $this->params['breadcrumbs'][] = $this->context->actions[$this->context->action-
                                         'class' => 'form-control',
                                         'id' => 'to__generate'
                                     ]) ?>
+                                </div>
+                                <div class="col-md-4">
+                                    <?= $form->field($model, 'parent_id')->dropDownList($model->getTree(), [
+                                        'class' => 'select-search',
+                                        'data-width' => '100%',
+                                        'prompt' => 'Не выбрано'
+                                    ])?>
                                 </div>
                             </div>
                             <div class="row">

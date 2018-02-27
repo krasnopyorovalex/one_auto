@@ -2,26 +2,41 @@
 
 namespace frontend\controllers;
 
-use common\models\Catalog;
+use frontend\components\CatalogAndBrandsBehavior;
+use yii\web\NotFoundHttpException;
 
 /**
  * Catalog controller
+ *
+ * @mixin CatalogAndBrandsBehavior
  */
 class CatalogController extends SiteController
 {
 
     /**
-     * @param $alias
+     * @return array
+     */
+    public function behaviors()
+    {
+        return [
+            'class' => CatalogAndBrandsBehavior::class
+        ];
+    }
+
+    /**
+     * @param $catalog
+     * @param $subcategory
      * @param int $page
      * @return string
-     * @throws \yii\web\NotFoundHttpException
+     * @throws NotFoundHttpException
      */
-    public function actionShow($alias, $page = 0)
+    public function actionShow($catalog, $subcategory, $page = 0)
     {
-        if(!$model = Catalog::find()->where(['alias' => $alias])->with(['categories'])->one()){
-            return parent::actionShow($alias);
+        if( ! $model = $this->getCatalogOrBrand($subcategory, $page) ) {
+            throw new NotFoundHttpException('The requested page does not exist.');
         }
-        return $this->render('catalog.twig',[
+
+        return $this->render($model['template'], [
             'model' => $model
         ]);
     }

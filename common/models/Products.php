@@ -9,20 +9,22 @@ use yii\helpers\ArrayHelper;
  * This is the model class for table "{{%products}}".
  *
  * @property int $id
- * @property int $subcategory_id
+ * @property int $category_id
  * @property string $name
  * @property string $text
  * @property string $alias
  * @property int $price
  * @property string $image
  * @property string $articul
+ * @property string $balance
+ * @property string $barcode
  * @property string $maker
  * @property int $created_at
  * @property int $updated_at
  *
- * @property SubSubCategory $subcategory
- * @property AutoModels[] $autoModels
+ * @property Catalog $category
  * @property ProductsAutoVia[] $productsAutoVias
+ * @property AutoModels[] $autoModels
  * @property ProductsOptionsVia[] $productsOptionsVias
  * @property ProductsOptions[] $options
  */
@@ -61,15 +63,16 @@ class Products extends MainModel
     public function rules()
     {
         return [
-            [['subcategory_id', 'name', 'alias', 'price', 'articul', 'maker'], 'required'],
-            [['subcategory_id', 'price', 'created_at', 'updated_at'], 'integer'],
+            [['category_id', 'name', 'alias', 'price', 'articul', 'maker'], 'required'],
+            [['category_id', 'price', 'created_at', 'updated_at'], 'integer'],
             [['text'], 'string'],
             [['name'], 'string', 'max' => 512],
             [['alias', 'maker'], 'string', 'max' => 255],
-            [['articul'], 'string', 'max' => 128],
+            [['articul', 'original_number'], 'string', 'max' => 128],
+            [['barcode', 'balance'], 'string', 'max' => 64],
             [['image'], 'string', 'max' => 36],
             [['alias'], 'unique'],
-            [['subcategory_id'], 'exist', 'skipOnError' => true, 'targetClass' => SubCategory::className(), 'targetAttribute' => ['subcategory_id' => 'id']],
+            [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Catalog::class, 'targetAttribute' => ['category_id' => 'id']],
             [['options', 'autoModelsValues'], 'safe']
         ];
     }
@@ -81,25 +84,30 @@ class Products extends MainModel
     {
         return [
             'id' => 'ID',
-            'subcategory_id' => 'Subcategory ID',
-            'name' => 'Name',
-            'text' => 'Text',
+            'category_id' => 'Category ID',
+            'name' => 'Наименование продукта',
+            'text' => 'Текст',
             'alias' => 'Alias',
             'price' => 'Цена',
             'image' => 'Image',
+            'file' => 'Изображение',
             'articul' => 'Артикул',
+            'original_number' => 'Оригинальный номер',
             'maker' => 'Производитель',
+            'balance' => 'Остаток',
+            'barcode' => 'Штрих-код',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
+            'autoModelsValues' => 'Привязка товара к авто'
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getSubcategory()
+    public function getCategory()
     {
-        return $this->hasOne(SubSubCategory::class, ['id' => 'subcategory_id']);
+        return $this->hasOne(Catalog::class, ['id' => 'category_id']);
     }
 
     /**

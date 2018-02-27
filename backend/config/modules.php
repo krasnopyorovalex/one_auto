@@ -12,12 +12,6 @@ return [
     'catalog' => [
         'class' => 'backend\modules\catalog\Catalog',
     ],
-    'category' => [
-        'class' => 'backend\modules\category\Category',
-    ],
-    'subcategory' => [
-        'class' => 'backend\modules\subcategory\SubCategory',
-    ],
     'products' => [
         'class' => 'backend\modules\products\Products',
     ],

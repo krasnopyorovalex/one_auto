@@ -2,7 +2,7 @@
 
 namespace frontend\widgets\FormOrder;
 
-use frontend\models\FormOrder as Model;
+use frontend\widgets\FormOrder\form\FormOrder as Model;
 use yii\base\Widget;
 
 class FormOrder extends Widget

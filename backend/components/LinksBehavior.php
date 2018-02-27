@@ -2,6 +2,7 @@
 
 namespace backend\components;
 
+use common\models\Catalog;
 use yii\base\Behavior;
 use yii\base\Model;
 use yii\helpers\ArrayHelper;
@@ -34,7 +35,11 @@ class LinksBehavior extends Behavior
              * @var $model Model
              */
             $model = \Yii::$app->getModule($key)->getModel();
-            $this->eachModuleItems($model::find()->select(['id', 'name','alias'])->all(), $key, $value);
+            $query = $model::find()->select(['id', 'name','alias']);
+            if($key == 'catalog'){
+                $query->andWhere(['parent_id' => null]);
+            }
+            $this->eachModuleItems($query->all(), $key, $value);
         }
         return ArrayHelper::map($this->links, 'link', 'name', 'module');
     }
@@ -63,16 +68,10 @@ class LinksBehavior extends Behavior
             'module' => $value
         ]);
 
-        if( method_exists($item,'getCategories') && ($categories = $item->getCategories()->all()) ){
-            array_map(function ($category) use ($value, $link) {
-                return $this->eachCatalog($category, $value, $link);
-            }, $categories);
-        }
-
-        if( method_exists($item,'getSubCategories') && ($subCategories = $item->getSubCategories()->asArray()->all()) ){
-            array_map(function ($subCategory) use ($value, $link) {
-                return $this->eachCatalog($subCategory, $value, $link);
-            }, $subCategories);
+        if( $item->catalogs ){
+            array_map(function ($item) use ($value, $link) {
+                return $this->eachCatalog($item, $value, $link);
+            }, $item->catalogs);
         }
     }
 
