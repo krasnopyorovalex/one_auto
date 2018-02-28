@@ -2,8 +2,6 @@
 /* @var $this yii\web\View */
 /* @var $model common\models\Products */
 /* @var $category common\models\Catalog */
-/* @var $options common\models\ProductsOptions*/
-/* @var $productOptions common\models\ProductsOptionsVia*/
 /* @var array $autoModels common\models\AutoModels*/
 
 use backend\assets\SingleEditorAsset;
@@ -108,20 +106,6 @@ $this->params['breadcrumbs'][] = $this->context->actions[$this->context->action-
                                     <?= $form->field($model, 'price')->textInput(['autocomplete' => 'off']) ?>
                                     <?= $form->field($model, 'articul')->textInput(['autocomplete' => 'off']) ?>
 
-                                    <!-- product options -->
-
-                                    <?php /*if($options):?>
-                                        <?= Html::beginTag('div', ['class' => 'product_options'])?>
-                                        <?php foreach ($options as $o):?>
-                                            <?= $form->field($model, 'options['.$o['id'].']')->textInput([
-                                                'value' => isset($productOptions[$o['id']])
-                                                    ? $productOptions[$o['id']]
-                                                    : ''
-                                            ])->label($o['name'])?>
-                                        <?php endforeach;?>
-                                        <?= Html::endTag('div')?>
-                                    <?php endif;*/?>
-                                    <!-- product options -->
                                 </div>
                                 <div class="col-md-6">
                                     <?= $form->field($model, 'original_number')->textInput(['autocomplete' => 'off']) ?>

@@ -1,13 +1,25 @@
 <ul>
-    {% for category in model.categories %}
-    <li><a href="/{{ model.alias }}/{{ category.alias }}">{{ category.name }}</a>
-        {% if category.subCategories %}
+    {% set query = (autoBrand ? '/auto-' ~ autoBrand.alias : '') ~ (autoModel ? '/' ~ autoModel.alias : '') %}
+    {% for category in model.catalogs %}
+    <li><a href="/{{ model.alias }}/{{ category.alias }}{{ query }}">{{ category.name }}</a>
+        {% if category.catalogs %}
             <ul>
-                {% for subCategory in category.subCategories %}
+                {% for subCategory in category.catalogs %}
                 <li>
-                    <a href="/{{ model.alias }}/{{ category.alias }}/{{ subCategory.alias }}">
+                    <a href="/{{ model.alias }}/{{ category.alias }}/{{ subCategory.alias }}{{ query }}">
                         {{ subCategory.name }}
                     </a>
+                    {% if subCategory.catalogs %}
+                        <ul>
+                            {% for subSubCategory in subCategory.catalogs %}
+                                <li>
+                                    <a href="/{{ model.alias }}/{{ category.alias }}/{{ subCategory.alias }}/{{ subSubCategory.alias }}{{ query }}">
+                                        {{ subSubCategory.name }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
                 </li>
                 {% endfor %}
             </ul>

@@ -15,9 +15,6 @@ return [
     'products' => [
         'class' => 'backend\modules\products\Products',
     ],
-    'products_options' => [
-        'class' => 'backend\modules\products_options\ProductOptions',
-    ],
     'auto_brands' => [
         'class' => 'backend\modules\auto_brands\AutoBrands',
     ],

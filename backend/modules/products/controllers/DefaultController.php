@@ -45,8 +45,6 @@ class DefaultController extends SiteController
         return $this->render('form', [
             'model' => $form,
             'category' => Catalog::findOne($id),
-            'options' => ProductsOptions::find()->asArray()->all(),
-            'productOptions' => [],
             'autoModels' => ArrayHelper::map(AutoModels::find()->with(['brand'])->asArray()->all(),'id', function ($item){
                 return $item['brand']['name'] . ' - ' . $item['name'];
             })
@@ -67,8 +65,6 @@ class DefaultController extends SiteController
         return $this->render('form', [
             'model' => $form,
             'category' => Catalog::findOne(['id' => $form['category_id']]),
-            'options' => ProductsOptions::find()->asArray()->all(),
-            'productOptions' => ArrayHelper::map($form['productsOptionsVias'], 'option_id', 'value'),
             'autoModels' => ArrayHelper::map(AutoModels::find()->with(['brand'])->asArray()->all(),'id', function ($item){
                 return $item['brand']['name'] . ' - ' . $item['name'];
             })
@@ -97,8 +93,6 @@ class DefaultController extends SiteController
         return $this->render('form', [
             'model' => $form,
             'category' => Catalog::findOne(['id' => $form['parent_id']]),
-            'options' => ProductsOptions::find()->asArray()->all(),
-            'productOptions' => ArrayHelper::map($form['productsOptionsVias'], 'option_id', 'value'),
             'autoModels' => ArrayHelper::map(AutoModels::find()->with(['brand'])->asArray()->all(),'id', function ($item){
                 return $item['brand']['name'] . ' - ' . $item['name'];
             })

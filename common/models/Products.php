@@ -25,8 +25,6 @@ use yii\helpers\ArrayHelper;
  * @property Catalog $category
  * @property ProductsAutoVia[] $productsAutoVias
  * @property AutoModels[] $autoModels
- * @property ProductsOptionsVia[] $productsOptionsVias
- * @property ProductsOptions[] $options
  */
 class Products extends MainModel
 {
@@ -34,14 +32,13 @@ class Products extends MainModel
     const IMAGE_ENTITY = 'image';
 
     public $file;
-    public $options;
     public $autoModelsValues;
 
     public function behaviors()
     {
         return ArrayHelper::merge(parent::behaviors(),[
             [
-                'class' => FileBehavior::className(),
+                'class' => FileBehavior::class,
                 'path' => self::PATH,
                 'entity_db' => self::IMAGE_ENTITY
             ]
@@ -73,7 +70,7 @@ class Products extends MainModel
             [['image'], 'string', 'max' => 36],
             [['alias'], 'unique'],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Catalog::class, 'targetAttribute' => ['category_id' => 'id']],
-            [['options', 'autoModelsValues'], 'safe']
+            [['autoModelsValues'], 'safe']
         ];
     }
 
@@ -126,22 +123,6 @@ class Products extends MainModel
         return $this->hasMany(AutoModels::class, ['id' => 'auto_model_id'])->viaTable('{{%products_auto_via}}', ['product_id' => 'id']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getProductsOptionsVias()
-    {
-        return $this->hasMany(ProductsOptionsVia::class, ['product_id' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getOptions()
-    {
-        return $this->hasMany(ProductsOptions::class, ['id' => 'option_id'])->viaTable('{{%products_options_via}}', ['product_id' => 'id']);
-    }
-
     public function afterFind()
     {
         $this->autoModelsValues = ArrayHelper::getColumn($this['autoModels'],'id');
@@ -149,16 +130,6 @@ class Products extends MainModel
 
     public function afterSave($insert, $changedAttributes)
     {
-        if($this->options){
-            $this->unlinkAll('options', true);
-            foreach ($this->options as $key => $value){
-                (new ProductsOptionsVia([
-                    'product_id' => $this->id,
-                    'option_id' => $key,
-                    'value' => $value
-                ]))->save();
-            }
-        }
         $this->unlinkAll('productsAutoVias', true);
         if($this->autoModelsValues){
             foreach ($this->autoModelsValues as $autoModel){

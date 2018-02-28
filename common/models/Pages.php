@@ -17,7 +17,7 @@ namespace common\models;
 class Pages extends MainModel
 {
 
-    public $template = 'info_page.twig';
+    public $template = 'page.twig';
 
     /**
      * @inheritdoc

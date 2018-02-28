@@ -28,6 +28,8 @@ class Catalog extends MainModel
     public $template = 'catalog.twig';
     public $file;
 
+    private $tree = [];
+
     public function behaviors()
     {
         return ArrayHelper::merge(parent::behaviors(),[
@@ -72,7 +74,7 @@ class Catalog extends MainModel
     {
         return [
             'id' => 'ID',
-            'parent_id' => 'Parent ID',
+            'parent_id' => 'Родительская категория',
             'name' => 'Name',
             'text' => 'Text',
             'alias' => 'Alias',
@@ -108,14 +110,29 @@ class Catalog extends MainModel
     }
 
     /**
+     * @param array $items
+     * @param string $step
      * @return array
      */
-    public function getTree(): array
+    public function getTree($items = [], $step = '*'): array
     {
-        $query = self::find();
-        if(!$this->isNewRecord){
-            $query->where(['<>','id',$this->id]);
+        if( ! $items ){
+            $catalogs = Catalog::find()->where(['parent_id' => null])->with(['catalogs']);
+            if( ! $this->isNewRecord ) {
+                $catalogs->andWhere(['<>','id',$this->id]);
+            }
+            $items = $catalogs->all();
         }
-        return ArrayHelper::map($query->asArray()->all(), 'id','name');
+
+        foreach ($items as $catalog) {
+            array_push($this->tree, [
+                'id' => $catalog['id'],
+                'name' => $step . $catalog['name']
+            ]);
+            if(isset($catalog->catalogs) && $catalog->catalogs){
+                $this->getTree($catalog->catalogs, $step.'*');
+            }
+        }
+        return ArrayHelper::map($this->tree,'id','name');
     }
 }

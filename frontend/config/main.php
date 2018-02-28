@@ -61,15 +61,36 @@ return [
 
                 'catalog/<alias:[\wd-]+>' => 'product/show',
 
-                '<alias:[\wd-]+>/page/<page:\d+>' => 'site/page',
+                'auto-<brand:[\wd-]+>' => 'auto/brand',
+                'auto-<brand:[\wd-]+>/<model:[\wd-]+>' => 'auto/model',
+                'auto-<brand:[\wd-]+>/<model:[\wd-]+>/<generation:[\wd-]+>' => 'auto/generation',
+
                 '<alias:[\wd-]+>' => 'site/page',
 
+                [
+                    'pattern' => '<catalog:[\wd-]+>/<category:[\wd-]+>/auto-<brand:[\wd-]+>/<model:[\wd-]+>/<page:\d+>',
+                    'route' => 'auto-catalog/for-brand',
+                    'defaults' => ['model' => '', 'page' => 0]
+                ],
 
-                '<catalog:[\wd-]+>/<subcategory:[\wd-]+>/page/<page:\d+>' => 'catalog/show',
-                '<catalog:[\wd-]+>/<subcategory:[\wd-]+>' => 'catalog/show',
+                [
+                    'pattern' => '<catalog:[\wd-]+>/<category:[\wd-]+>/<page:\d+>',
+                    'route' => 'catalog/show',
+                    'defaults' => ['page' => 0]
+                ],
 
-                '<catalog:[\wd-]+>/<category:[\wd-]+>/<subcategory:[\wd-]+>/page/<page:\d+>' => 'subcategory/subcategory',
-                '<catalog:[\wd-]+>/<category:[\wd-]+>/<subcategory:[\wd-]+>' => 'subcategory/subcategory',
+                [
+                    'pattern' => '<catalog:[\wd-]+>/<category:[\wd-]+>/<subcategory:[\wd-]+>/<page:\d+>',
+                    'route' => 'catalog/show-sub-category',
+                    'defaults' => ['page' => 0]
+                ],
+
+                [
+                    'pattern' => '<catalog:[\wd-]+>/<category:[\wd-]+>/<subcategory:[\wd-]+>/<subsubcategory:[\wd-]+>/<page:\d+>',
+                    'route' => 'catalog/show-sub-sub-category',
+                    'defaults' => ['page' => 0]
+                ],
+
 
                 /*$params['server_protocol'] . '<server:[\wd-]+.[\w-]+>' => 'site',
                 $params['server_protocol'] . '<server:[\wd-]+.[\w-]+>/robots.txt' => 'robots/txt',

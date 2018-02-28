@@ -5,7 +5,7 @@
     <div class="breadcrumbs">
         <ul>
             <li><a href="{{ app.homeUrl }}">{{ app.params['breadcrumbs_main_name'] }}</a></li>
-            <li><a href="/{{ model.parent.alias }}">{{ model.parent.name }}</a></li>
+            <li><a href="{{ path('site/page', {'alias': model.parent.alias}) }}">{{ model.parent.name }}</a></li>
             <li>{{ model.name }}</li>
         </ul>
     </div>
@@ -16,27 +16,26 @@
     <div class="wrapper">
         <div class="items">
             <div class="content__sidebar">
-                {#{{ use('frontend/widgets/SidebarMenu/SidebarMenu') }}#}
-                {#{{ sidebar_menu_widget({'model': model}) }}#}
+                {{ use('frontend/widgets/SidebarMenu/SidebarMenu') }}
+                {{ sidebar_menu_widget({'model': model}) }}
             </div>
             <!-- /.content__sidebar -->
             <div class="content__body">
                 <h1>{{ model.name }}</h1>
 
+                {{ use('frontend/widgets/AutoBrands/AutoBrands') }}
+                {{ auto_brands_widget() }}
+
                 <div class="items">
                     {{ use('frontend/widgets/ProductsListForCategory/ProductsListForCategory') }}
                     {{ products_list_for_category_widget({
-                        'items': model.products
+                        'items': products
                     }) }}
                 </div>
                 <!-- /.items -->
 
-                {% if count > offset %}
-                    <div class="load__more-btn btn__hover">
-                        <span data-offset="{{ offset }}" data-count="{{ count }}">Показать ещё</span>
-                    </div>
-                    <!-- /.load__more-btn -->
-                {% endif %}
+                {{ use('frontend/widgets/PaginateBtn/PaginateBtn') }}
+                {{ paginate_btn_widget({'count': count}) }}
 
                 <div class="text">
                     {{ model.text| raw }}

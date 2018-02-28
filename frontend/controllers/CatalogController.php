@@ -2,42 +2,97 @@
 
 namespace frontend\controllers;
 
-use frontend\components\CatalogAndBrandsBehavior;
+use common\models\Catalog;
 use yii\web\NotFoundHttpException;
+use frontend\components\ProductsBehavior;
 
 /**
- * Catalog controller
+ * CatalogBrand controller
  *
- * @mixin CatalogAndBrandsBehavior
+ * @mixin ProductsBehavior
  */
 class CatalogController extends SiteController
 {
-
     /**
      * @return array
      */
     public function behaviors()
     {
         return [
-            'class' => CatalogAndBrandsBehavior::class
+            'class' => ProductsBehavior::class
         ];
     }
 
     /**
-     * @param $catalog
-     * @param $subcategory
+     * @param $category
      * @param int $page
-     * @return string
+     * @return mixed
      * @throws NotFoundHttpException
      */
-    public function actionShow($catalog, $subcategory, $page = 0)
+    public function actionShow($category, $page = 0)
     {
-        if( ! $model = $this->getCatalogOrBrand($subcategory, $page) ) {
+        /**
+         * @var $model Catalog
+         */
+        if( ! $model = Catalog::find()->where(['alias' => $category])->with(['parent'])->limit(1)->one() ) {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
 
-        return $this->render($model['template'], [
-            'model' => $model
-        ]);
+        $this->getProducts($model, $page);
+
+        if(\Yii::$app->request->isPost){
+            return $this->json();
+        }
+
+        return $this->html('category.twig');
     }
+
+    /**
+     * @param $subcategory
+     * @param int $page
+     * @return mixed
+     * @throws NotFoundHttpException
+     */
+    public function actionShowSubCategory($subcategory, $page = 0)
+    {
+        /**
+         * @var $model Catalog
+         */
+        if( ! $model = Catalog::find()->where(['alias' => $subcategory])->with(['parent'])->limit(1)->one() ) {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
+        $this->getProducts($model, $page);
+
+        if(\Yii::$app->request->isPost){
+            return $this->json();
+        }
+
+        return $this->html('sub_category.twig');
+    }
+
+    /**
+     * @param $subsubcategory
+     * @param int $page
+     * @return mixed
+     * @throws NotFoundHttpException
+     */
+    public function actionShowSubSubCategory($subsubcategory, $page = 0)
+    {
+        /**
+         * @var $model Catalog
+         */
+        if( ! $model = Catalog::find()->where(['alias' => $subsubcategory])->with(['parent'])->limit(1)->one() ) {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
+        $this->getProducts($model, $page);
+
+        if(\Yii::$app->request->isPost){
+            return $this->json();
+        }
+
+        return $this->html('sub_sub_category.twig');
+    }
+
 }

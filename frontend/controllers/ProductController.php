@@ -2,9 +2,7 @@
 
 namespace frontend\controllers;
 
-use common\models\Catalog;
-use common\models\ProductsOld;
-use yii\helpers\ArrayHelper;
+use common\models\Products;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -20,21 +18,12 @@ class ProductController extends SiteController
      */
     public function actionShow($alias)
     {
-        if(!$model = ProductsOld::find()->where(['alias' => $alias])->with(['options','productsOptionsVias','subcategory' => function($query){
-            return $query->with(['category' => function($query){
-                return $query->with(['catalog']);
-            }]);
-        }])->asArray()->one()){
+        if( ! $model = Products::find()->where(['alias' => $alias])->with(['category'])->limit(1)->one() ){
             throw new NotFoundHttpException('The requested page does not exist.');
         }
 
-        $model['catalog'] = Catalog::find()->where(['id' => $model['subcategory']['category']['catalog']['id']])->with(['categories' => function($query){
-            return $query->with(['subCategories']);
-        }])->one();
-
-        return $this->render('page.twig',[
-            'model' => $model,
-            'options' => ArrayHelper::map($model['productsOptionsVias'],'option_id','value')
+        return $this->render('page.twig', [
+            'model' => $model
         ]);
     }
 }

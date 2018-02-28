@@ -1,0 +1,34 @@
+{{ set(this, 'title', model.name) }}
+
+<div class="wrapper">
+    <div class="breadcrumbs">
+        <ul>
+            <li><a href="{{ app.homeUrl }}">{{ app.params['breadcrumbs_main_name'] }}</a></li>
+            <li><a href="{{ path('auto/brand', {'brand': model.brand.alias}) }}">{{ model.brand.name }}</a></li>
+            <li>{{ model.name }}</li>
+        </ul>
+    </div>
+    <!-- /.breadcrumbs -->
+</div>
+
+<section class="content">
+    <div class="wrapper">
+        <div class="items">
+            <div class="content__sidebar">
+                {{ use('frontend/widgets/SidebarMenu/SidebarMenu') }}
+                {{ sidebar_menu_widget({'autoBrand': model.brand, 'autoModel': model}) }}
+            </div>
+            <!-- /.content__sidebar -->
+            <div class="content__body">
+                <h1>{{ model.name }}</h1>
+
+                {{ use('frontend/widgets/FormOrder/FormOrder') }}
+                {{ form_order_widget() }}
+
+            </div>
+            <!-- /.content__body -->
+        </div>
+        <!-- /.items -->
+    </div>
+</section>
+<!-- /.content -->

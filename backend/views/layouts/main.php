@@ -47,7 +47,6 @@ AppAsset::register($this);
                             <li><a href="<?= \yii\helpers\Url::toRoute(['/subdomains/default/index'])?>"><i class="icon-earth"></i> <span>Поддомены</span></a></li>
                             <li><a href="<?= \yii\helpers\Url::toRoute(['/catalog/default/index'])?>"><i class="icon-folder5"></i> <span>Каталог</span></a></li>
                             <li><a href="<?= \yii\helpers\Url::toRoute(['/auto_brands/default/index'])?>"><i class=" icon-car"></i> <span>Авто</span></a></li>
-                            <li><a href="<?= \yii\helpers\Url::toRoute(['/products_options/default/index'])?>"><i class="icon-list-numbered"></i> <span>Атрибуты продукции</span></a></li>
                         </ul>
                     </div>
                 </div>

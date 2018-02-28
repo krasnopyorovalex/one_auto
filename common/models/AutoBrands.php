@@ -21,6 +21,7 @@ class AutoBrands extends \yii\db\ActiveRecord
     const IMAGE_ENTITY = 'image';
 
     public $file;
+    public $template = 'auto_brand.twig';
 
     public function behaviors()
     {
