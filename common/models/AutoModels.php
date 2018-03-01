@@ -21,6 +21,7 @@ class AutoModels extends \yii\db\ActiveRecord
     const IMAGE_ENTITY = 'image';
 
     public $file;
+    private $type = 'model';
 
     public function behaviors()
     {
@@ -85,5 +86,13 @@ class AutoModels extends \yii\db\ActiveRecord
     public function getBrand()
     {
         return $this->hasOne(AutoBrands::class, ['id' => 'brand_id']);
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 }

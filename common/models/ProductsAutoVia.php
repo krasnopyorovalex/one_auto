@@ -15,7 +15,6 @@ use yii\db\ActiveRecord;
  */
 class ProductsAutoVia extends ActiveRecord
 {
-    private const AUTO_BRAND = 'auto';
     private const AUTO_MODEL = 'model';
     private const AUTO_GENERATION = 'generation';
 
@@ -38,7 +37,7 @@ class ProductsAutoVia extends ActiveRecord
             [['type'], 'string', 'max' => 512],
             [['product_id', 'type', 'auto_id'], 'unique', 'targetAttribute' => ['product_id', 'type', 'auto_id']],
             [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Products::class, 'targetAttribute' => ['product_id' => 'id']],
-            ['type', 'in', 'range' => [self::AUTO_BRAND, self::AUTO_MODEL, self::AUTO_GENERATION]],
+            ['type', 'in', 'range' => [self::AUTO_MODEL, self::AUTO_GENERATION]],
         ];
     }
 

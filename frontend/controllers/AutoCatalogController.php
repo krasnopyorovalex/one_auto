@@ -3,13 +3,15 @@
 namespace frontend\controllers;
 
 use common\models\Catalog;
-use frontend\components\ProductsWithAutoBehavior;
+use common\models\Products;
+use common\models\ProductsAutoVia;
+use frontend\components\ProductsBehavior;
 use yii\web\NotFoundHttpException;
 
 /**
  * AutoCatalog controller
  *
- * @mixin ProductsWithAutoBehavior
+ * @mixin ProductsBehavior
  */
 class AutoCatalogController extends SiteController
 {
@@ -20,7 +22,7 @@ class AutoCatalogController extends SiteController
     public function behaviors()
     {
         return [
-            'class' => ProductsWithAutoBehavior::class
+            'class' => ProductsBehavior::class
         ];
     }
 
@@ -30,18 +32,79 @@ class AutoCatalogController extends SiteController
      * @param $model
      * @param $generation
      * @param int $page
+     * @return mixed
      * @throws NotFoundHttpException
      */
     public function actionProductsWithAuto($category, $brand, $model, $generation, $page = 0)
     {
         /**
-         * @var $model Catalog
+         * @var $catalog Catalog
          */
-        if( ! $model = Catalog::find()->where(['alias' => $category])->with(['parent'])->limit(1)->one() ) {
+        if( ! $catalog = Catalog::find()->where(['alias' => $category])->with(['parent', 'catalogs'])->limit(1)->one() ) {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
 
-        $this->getProductsWithAuto($category, $brand, $model, $generation, $page);
+        $this->getProducts($catalog, $page, $brand, $model, $generation);
+
+        if(\Yii::$app->request->isPost){
+            return $this->json();
+        }
+
+        return $this->html('category_with_auto.twig');
+    }
+
+    /**
+     * @param $subcategory
+     * @param $brand
+     * @param $model
+     * @param $generation
+     * @param int $page
+     * @return mixed
+     * @throws NotFoundHttpException
+     */
+    public function actionProductsWithAutoSubcategory($subcategory, $brand, $model, $generation, $page = 0)
+    {
+        /**
+         * @var $catalog Catalog
+         */
+        if( ! $catalog = Catalog::find()->where(['alias' => $subcategory])->with(['parent', 'catalogs'])->limit(1)->one() ) {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
+        $this->getProducts($catalog, $page, $brand, $model, $generation);
+
+        if(\Yii::$app->request->isPost){
+            return $this->json();
+        }
+
+        return $this->html('category_with_auto_sub.twig');
+    }
+
+    /**
+     * @param $subsubcategory
+     * @param $brand
+     * @param $model
+     * @param $generation
+     * @param int $page
+     * @return mixed
+     * @throws NotFoundHttpException
+     */
+    public function actionProductsWithAutoSubSubcategory($subsubcategory, $brand, $model, $generation, $page = 0)
+    {
+        /**
+         * @var $catalog Catalog
+         */
+        if( ! $catalog = Catalog::find()->where(['alias' => $subsubcategory])->with(['parent', 'catalogs'])->limit(1)->one() ) {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
+        $this->getProducts($catalog, $page, $brand, $model, $generation);
+
+        if(\Yii::$app->request->isPost){
+            return $this->json();
+        }
+
+        return $this->html('category_with_auto_sub_sub.twig');
     }
 
 }

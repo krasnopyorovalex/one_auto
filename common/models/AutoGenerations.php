@@ -14,6 +14,9 @@ namespace common\models;
  */
 class AutoGenerations extends \yii\db\ActiveRecord
 {
+
+    private $type = 'generation';
+
     /**
      * @inheritdoc
      */
@@ -56,5 +59,13 @@ class AutoGenerations extends \yii\db\ActiveRecord
     public function getModel()
     {
         return $this->hasOne(AutoModels::className(), ['id' => 'model_id']);
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 }
