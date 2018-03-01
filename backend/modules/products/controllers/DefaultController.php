@@ -44,10 +44,7 @@ class DefaultController extends SiteController
 
         return $this->render('form', [
             'model' => $form,
-            'category' => Catalog::findOne($id),
-            'autoModels' => ArrayHelper::map(AutoModels::find()->with(['brand'])->asArray()->all(),'id', function ($item){
-                return $item['brand']['name'] . ' - ' . $item['name'];
-            })
+            'category' => Catalog::findOne($id)
         ]);
     }
 
@@ -64,10 +61,7 @@ class DefaultController extends SiteController
         $this->loadData($form, Url::previous());
         return $this->render('form', [
             'model' => $form,
-            'category' => Catalog::findOne(['id' => $form['category_id']]),
-            'autoModels' => ArrayHelper::map(AutoModels::find()->with(['brand'])->asArray()->all(),'id', function ($item){
-                return $item['brand']['name'] . ' - ' . $item['name'];
-            })
+            'category' => Catalog::findOne(['id' => $form['category_id']])
         ]);
     }
 
@@ -92,10 +86,7 @@ class DefaultController extends SiteController
         $form = $this->repository->get($id);
         return $this->render('form', [
             'model' => $form,
-            'category' => Catalog::findOne(['id' => $form['parent_id']]),
-            'autoModels' => ArrayHelper::map(AutoModels::find()->with(['brand'])->asArray()->all(),'id', function ($item){
-                return $item['brand']['name'] . ' - ' . $item['name'];
-            })
+            'category' => Catalog::findOne(['id' => $form['category_id']])
         ]);
     }
 

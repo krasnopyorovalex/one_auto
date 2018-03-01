@@ -3,6 +3,7 @@
 namespace common\models;
 
 use backend\components\FileBehavior;
+use backend\components\MakeListAutoBehavior;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -24,7 +25,8 @@ use yii\helpers\ArrayHelper;
  *
  * @property Catalog $category
  * @property ProductsAutoVia[] $productsAutoVias
- * @property AutoModels[] $autoModels
+ *
+ * @mixin MakeListAutoBehavior
  */
 class Products extends MainModel
 {
@@ -32,7 +34,7 @@ class Products extends MainModel
     const IMAGE_ENTITY = 'image';
 
     public $file;
-    public $autoModelsValues;
+    public $bindingAutoList;
 
     public function behaviors()
     {
@@ -41,6 +43,9 @@ class Products extends MainModel
                 'class' => FileBehavior::class,
                 'path' => self::PATH,
                 'entity_db' => self::IMAGE_ENTITY
+            ],
+            [
+                'class' => MakeListAutoBehavior::class
             ]
         ]);
     }
@@ -70,7 +75,7 @@ class Products extends MainModel
             [['image'], 'string', 'max' => 36],
             [['alias'], 'unique'],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Catalog::class, 'targetAttribute' => ['category_id' => 'id']],
-            [['autoModelsValues'], 'safe']
+            [['bindingAutoList'], 'safe']
         ];
     }
 
@@ -93,6 +98,7 @@ class Products extends MainModel
             'maker' => 'Производитель',
             'balance' => 'Остаток',
             'barcode' => 'Штрих-код',
+            'bindingAutoList' => 'Выберите из списка модель, поколение',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'autoModelsValues' => 'Привязка товара к авто'
@@ -115,30 +121,29 @@ class Products extends MainModel
         return $this->hasMany(ProductsAutoVia::class, ['product_id' => 'id']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getAutoModels()
-    {
-        return $this->hasMany(AutoModels::class, ['id' => 'auto_model_id'])->viaTable('{{%products_auto_via}}', ['product_id' => 'id']);
-    }
-
     public function afterFind()
     {
-        $this->autoModelsValues = ArrayHelper::getColumn($this['autoModels'],'id');
+        parent::afterFind();
+        if($this->productsAutoVias){
+            $this->bindingAutoList = $this->transformListAutoSelectedAfterFind($this->productsAutoVias);
+        }
     }
 
     public function afterSave($insert, $changedAttributes)
     {
-        $this->unlinkAll('productsAutoVias', true);
-        if($this->autoModelsValues){
-            foreach ($this->autoModelsValues as $autoModel){
-                (new ProductsAutoVia([
-                    'product_id' => $this->id,
-                    'auto_model_id' => $autoModel
-                ]))->save();
-            }
-        }
         parent::afterSave($insert, $changedAttributes);
+        $this->unlinkAll('productsAutoVias', true);
+
+        if($this->bindingAutoList){
+            $autos = $this->transformListAutoSelectedToSave($this->bindingAutoList);
+            array_map(function ($item) {
+                $key = key($item);
+                return (new ProductsAutoVia([
+                    'product_id' => $this->id,
+                    'type' => strval($key),
+                    'auto_id' => intval($item[$key])
+                ]))->save();
+            }, $autos);
+        }
     }
 }

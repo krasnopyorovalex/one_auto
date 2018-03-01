@@ -9,7 +9,7 @@ class ProductsRepository
 {
     public function get($id): ActiveRecord
     {
-        if (!$product = Products::find()->where(['id' => $id])->with(['autoModels'])->one()) {
+        if (!$product = Products::find()->where(['id' => $id])->limit(1)->one()) {
             throw new NotFoundException('Product is not found.');
         }
         return $product;

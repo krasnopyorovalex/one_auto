@@ -68,9 +68,9 @@ return [
                 '<alias:[\wd-]+>' => 'site/page',
 
                 [
-                    'pattern' => '<catalog:[\wd-]+>/<category:[\wd-]+>/auto-<brand:[\wd-]+>/<model:[\wd-]+>/<page:\d+>',
-                    'route' => 'auto-catalog/for-brand',
-                    'defaults' => ['model' => '', 'page' => 0]
+                    'pattern' => '<catalog:[\wd-]+>/<category:[\wd-]+>/auto-<brand:[\wd-]+>/<model:[\wd-]+>/<generation:[\wd-]+>/<page:\d+>',
+                    'route' => 'auto-catalog/products-with-auto',
+                    'defaults' => ['model' => '', 'generation' => '', 'page' => 0]
                 ],
 
                 [

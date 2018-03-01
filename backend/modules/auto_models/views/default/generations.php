@@ -42,6 +42,6 @@ $this->params['breadcrumbs'][] = $model->name;
             ],
         ],
     ]);
-    echo Html::tag('div', Html::a('Добавить' . Html::tag('i','',['class' => 'icon-add position-right']), Url::toRoute(["/auto_generations/add/".$brand->id]), [
+    echo Html::tag('div', Html::a('Добавить' . Html::tag('i','',['class' => 'icon-add position-right']), Url::toRoute(["/auto_generations/add/".$model->id]), [
         'class' => 'btn bg-blue white'
     ]));?>

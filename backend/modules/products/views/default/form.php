@@ -2,16 +2,15 @@
 /* @var $this yii\web\View */
 /* @var $model common\models\Products */
 /* @var $category common\models\Catalog */
-/* @var array $autoModels common\models\AutoModels*/
 
 use backend\assets\SingleEditorAsset;
-use backend\assets\SelectAsset;
+use backend\assets\SelectBootstrapAsset;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
 SingleEditorAsset::register($this);
-SelectAsset::register($this);
+SelectBootstrapAsset::register($this);
 
 if(isset($category->parent->parent->parent)){
     $this->params['breadcrumbs'][] = ['label' => $category->parent->parent->parent->name, 'url' => Url::toRoute(['/catalog'])];
@@ -40,9 +39,9 @@ $this->params['breadcrumbs'][] = $this->context->actions[$this->context->action-
                 <div class="tabbable">
                     <ul class="nav nav-tabs">
                         <li class="active"><a href="#main" data-toggle="tab">Основное</a></li>
-                        <li><a href="#image" data-toggle="tab">Изображение</a></li>
                         <li><a href="#options" data-toggle="tab">Атрибуты</a></li>
-                        <li><a href="#auto_brands" data-toggle="tab">Привязка запчасти к модели авто</a></li>
+                        <li><a href="#auto_brands" data-toggle="tab">Привязка товара к авто</a></li>
+                        <li><a href="#image" data-toggle="tab">Изображение</a></li>
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="main">
@@ -120,12 +119,16 @@ $this->params['breadcrumbs'][] = $this->context->actions[$this->context->action-
                         <div class="tab-pane" id="auto_brands">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <!-- product auto brands -->
-                                        <?= $form->field($model,'autoModelsValues')->dropDownList($autoModels,[
+                                    <!-- product auto -->
+                                        <?= $form->field($model,'bindingAutoList',[
+                                                'options' => [
+                                                        'class' => 'multi-select-full'
+                                                ]
+                                        ])->dropDownList($model->makeListAuto(),[
                                                 'multiple' => 'multiple',
-                                                'class' => 'select'
+                                                'class' => 'multiselect-filtering'
                                         ])?>
-                                    <!-- product auto brands -->
+                                    <!-- product auto -->
                                 </div>
                             </div>
 

@@ -2,19 +2,23 @@
 
 namespace common\models;
 
-use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "{{%products_auto_via}}".
  *
  * @property int $product_id
- * @property int $auto_model_id
+ * @property string $type
+ * @property int $auto_id
  *
- * @property AutoModels $autoModel
  * @property Products $product
  */
-class ProductsAutoVia extends \yii\db\ActiveRecord
+class ProductsAutoVia extends ActiveRecord
 {
+    private const AUTO_BRAND = 'auto';
+    private const AUTO_MODEL = 'model';
+    private const AUTO_GENERATION = 'generation';
+
     /**
      * @inheritdoc
      */
@@ -29,11 +33,12 @@ class ProductsAutoVia extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['product_id', 'auto_model_id'], 'required'],
-            [['product_id', 'auto_model_id'], 'integer'],
-            [['product_id', 'auto_model_id'], 'unique', 'targetAttribute' => ['product_id', 'auto_model_id']],
-            [['auto_model_id'], 'exist', 'skipOnError' => true, 'targetClass' => AutoModels::className(), 'targetAttribute' => ['auto_model_id' => 'id']],
-            [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Products::className(), 'targetAttribute' => ['product_id' => 'id']],
+            [['product_id', 'type', 'auto_id'], 'required'],
+            [['product_id', 'auto_id'], 'integer'],
+            [['type'], 'string', 'max' => 512],
+            [['product_id', 'type', 'auto_id'], 'unique', 'targetAttribute' => ['product_id', 'type', 'auto_id']],
+            [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Products::class, 'targetAttribute' => ['product_id' => 'id']],
+            ['type', 'in', 'range' => [self::AUTO_BRAND, self::AUTO_MODEL, self::AUTO_GENERATION]],
         ];
     }
 
@@ -44,16 +49,9 @@ class ProductsAutoVia extends \yii\db\ActiveRecord
     {
         return [
             'product_id' => 'Product ID',
-            'auto_model_id' => 'Auto Model ID',
+            'type' => 'Type',
+            'auto_id' => 'Auto ID',
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getAutoModel()
-    {
-        return $this->hasOne(AutoModels::className(), ['id' => 'auto_model_id']);
     }
 
     /**
@@ -61,6 +59,6 @@ class ProductsAutoVia extends \yii\db\ActiveRecord
      */
     public function getProduct()
     {
-        return $this->hasOne(Products::className(), ['id' => 'product_id']);
+        return $this->hasOne(Products::class, ['id' => 'product_id']);
     }
 }
