@@ -134,7 +134,10 @@ class ProductsBehavior extends Behavior
             ]);
         }, $this->conditions);
 
-        return $query->asArray()->distinct('product_id')->all();
+        $results = $query->asArray()->distinct('product_id')->all();
+        return !empty($results)
+            ? $results
+            : [['product_id' => 0]];
     }
 
     /**
