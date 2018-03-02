@@ -31,25 +31,17 @@
             <div class="content__body">
                 <h1>{{ model.name }}</h1>
 
+                {% if model.productsOriginalNumbers %}
                 <div class="origin__numbers">
                     <div>
                         <div class="title">Оригинальные номера:</div>
-                        <a href="#">026903015C,</a>
-                        <a href="#">034903015M,</a>
-                        <a href="#">034903016E,</a>
-                        <a href="#">049903027A,</a>
-                        <a href="#">025903023E,</a>
-                        <a href="#">034903015K,</a>
-                        <a href="#">025903023, </a>
-                        <a href="#">034903015D,</a>
-                        <a href="#">035903017AX</a>
-                        <a href="#">025903023D,</a>
-                        <a href="#">026903017BX</a>
-                        <a href="#">035903023B,</a>
-                        <a href="#">073903023A</a>
+                        {% for item in model.productsOriginalNumbers %}
+                        <a href="{{ path('original-number/show', {'number': item.number}) }}">{{ item.number }}</a>
+                        {% endfor %}
                     </div>
                 </div>
                 <!-- /.origin__numbers -->
+                {% endif %}
 
                 <div class="item__row">
                     <div class="item__col-left">

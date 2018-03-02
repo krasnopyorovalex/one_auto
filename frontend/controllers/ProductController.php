@@ -18,11 +18,11 @@ class ProductController extends SiteController
      */
     public function actionShow($alias)
     {
-        if( ! $model = Products::find()->where(['alias' => $alias])->with(['category'])->limit(1)->one() ){
+        if( ! $model = Products::find()->where(['alias' => $alias])->with(['category', 'productsOriginalNumbers'])->limit(1)->one() ){
             throw new NotFoundHttpException('The requested page does not exist.');
         }
 
-        return $this->render('page.twig', [
+        return $this->render('product.twig', [
             'model' => $model
         ]);
     }

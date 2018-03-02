@@ -25,7 +25,6 @@ class m180208_141533_create_products_table extends Migration
             'alias' => $this->string()->notNull(),
             'price' => $this->integer()->notNull()->defaultValue(0),
             'articul' => $this->string(128),
-            'original_number' => $this->string(128),
             'balance' => $this->string(64),
             'barcode' => $this->string(64),
             'maker' => $this->string(255),

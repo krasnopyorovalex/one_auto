@@ -5,12 +5,14 @@
 
 use backend\assets\SingleEditorAsset;
 use backend\assets\SelectBootstrapAsset;
+use backend\assets\TagsInputAsset;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
 SingleEditorAsset::register($this);
 SelectBootstrapAsset::register($this);
+TagsInputAsset::register($this);
 
 if(isset($category->parent->parent->parent)){
     $this->params['breadcrumbs'][] = ['label' => $category->parent->parent->parent->name, 'url' => Url::toRoute(['/catalog'])];
@@ -54,6 +56,13 @@ $this->params['breadcrumbs'][] = $this->context->actions[$this->context->action-
                                         'autocomplete' => 'off',
                                         'class' => 'form-control',
                                         'id' => 'to__generate'
+                                    ]) ?>
+                                    <?= $form->field($model, 'originalNumbers')->textInput([
+                                        'autocomplete' => 'off',
+                                        'class' => 'form-control tags-input',
+                                        'value' => is_array($model->originalNumbers)
+                                            ? implode(',', $model->originalNumbers)
+                                            : $model->originalNumbers
                                     ]) ?>
                                     <?php if($model->isNewRecord):?>
                                         <?= Html::activeInput('hidden',$model,'category_id',['value' => $category->id])?>
@@ -107,7 +116,6 @@ $this->params['breadcrumbs'][] = $this->context->actions[$this->context->action-
 
                                 </div>
                                 <div class="col-md-6">
-                                    <?= $form->field($model, 'original_number')->textInput(['autocomplete' => 'off']) ?>
                                     <?= $form->field($model, 'barcode')->textInput(['autocomplete' => 'off']) ?>
                                     <?= $form->field($model, 'balance')->textInput(['autocomplete' => 'off']) ?>
                                 </div>

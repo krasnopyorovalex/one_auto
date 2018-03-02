@@ -17,6 +17,8 @@ use yii\web\NotFoundHttpException;
  */
 class SiteController extends Controller
 {
+    public $layout = 'main.twig';
+
     /**
      * @return array
      */
@@ -26,8 +28,6 @@ class SiteController extends Controller
             'class' => PagesAndCatalogBehavior::class
         ];
     }
-
-    public $layout = 'main.twig';
 
     /**
      * @param string $alias

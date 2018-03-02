@@ -25,6 +25,8 @@ use yii\helpers\ArrayHelper;
  *
  * @property Catalog $category
  * @property ProductsAutoVia[] $productsAutoVias
+ * @property ProductsOriginalNumbers[] $productsOriginalNumbers
+ * @property ProductsOriginalNumbers[] $productsOriginalNumbersValues
  *
  * @mixin MakeListAutoBehavior
  */
@@ -35,6 +37,7 @@ class Products extends MainModel
 
     public $file;
     public $bindingAutoList;
+    public $originalNumbers;
 
     public function behaviors()
     {
@@ -70,12 +73,12 @@ class Products extends MainModel
             [['text'], 'string'],
             [['name'], 'string', 'max' => 512],
             [['alias', 'maker'], 'string', 'max' => 255],
-            [['articul', 'original_number'], 'string', 'max' => 128],
+            [['articul'], 'string', 'max' => 128],
             [['barcode', 'balance'], 'string', 'max' => 64],
             [['image'], 'string', 'max' => 36],
             [['alias'], 'unique'],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Catalog::class, 'targetAttribute' => ['category_id' => 'id']],
-            [['bindingAutoList'], 'safe']
+            [['bindingAutoList', 'originalNumbers'], 'safe']
         ];
     }
 
@@ -94,11 +97,11 @@ class Products extends MainModel
             'image' => 'Image',
             'file' => 'Изображение',
             'articul' => 'Артикул',
-            'original_number' => 'Оригинальный номер',
             'maker' => 'Производитель',
             'balance' => 'Остаток',
             'barcode' => 'Штрих-код',
             'bindingAutoList' => 'Выберите из списка модель, поколение',
+            'originalNumbers' => 'Оригинальные номера',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'autoModelsValues' => 'Привязка товара к авто'
@@ -116,6 +119,22 @@ class Products extends MainModel
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getProductsOriginalNumbers()
+    {
+        return $this->hasMany(ProductsOriginalNumbers::class, ['product_id' => 'id']);
+    }
+
+    /**
+     * @return array
+     */
+    public function getProductsOriginalNumbersValues()
+    {
+        return $this->hasMany(ProductsOriginalNumbers::class, ['product_id' => 'id'])->select('number')->column();
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getProductsAutoVias()
     {
         return $this->hasMany(ProductsAutoVia::class, ['product_id' => 'id']);
@@ -127,13 +146,16 @@ class Products extends MainModel
         if($this->productsAutoVias){
             $this->bindingAutoList = $this->transformListAutoSelectedAfterFind($this->productsAutoVias);
         }
+        if ($this->productsOriginalNumbersValues){
+            $this->originalNumbers = implode(',', $this->productsOriginalNumbersValues);
+        }
     }
 
     public function afterSave($insert, $changedAttributes)
     {
         parent::afterSave($insert, $changedAttributes);
-        $this->unlinkAll('productsAutoVias', true);
 
+        $this->unlinkAll('productsAutoVias', true);
         if($this->bindingAutoList){
             $autos = $this->transformListAutoSelectedToSave($this->bindingAutoList);
             array_map(function ($item) {
@@ -144,6 +166,17 @@ class Products extends MainModel
                     'auto_id' => intval($item[$key])
                 ]))->save();
             }, $autos);
+        }
+
+        $this->unlinkAll('productsOriginalNumbers', true);
+        if($this->originalNumbers){
+            $this->originalNumbers = explode(',', $this->originalNumbers);
+            array_map(function ($item) {
+                return (new ProductsOriginalNumbers([
+                    'product_id' => $this->id,
+                    'number' => strval($item)
+                ]))->save();
+            }, $this->originalNumbers);
         }
     }
 }
