@@ -7,12 +7,12 @@
             <li><a href="{{ app.homeUrl }}">{{ app.params['breadcrumbs_main_name'] }}</a></li>
             <li><a href="{{ path('site/page', {'alias': model.catalog.alias}) }}">{{ model.catalog.name }}</a></li>
             <li><a href="{{ path('catalog/show', {
-                    'catalog': model.parent.parent.parent.alias,
+                    'catalog': model.catalog.alias,
                     'category': model.parent.parent.alias,
                     'page': 0
                 }) }}">{{ model.parent.parent.name }}</a></li>
             <li><a href="{{ path('catalog/show-sub-category', {
-                    'catalog': model.parent.parent.parent.alias,
+                    'catalog': model.catalog.alias,
                     'category': model.parent.parent.alias,
                     'subcategory': model.parent.alias,
                     'page': 0
