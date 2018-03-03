@@ -20,6 +20,7 @@ class m180208_141533_create_products_table extends Migration
         $this->createTable('products', [
             'id' => $this->primaryKey(),
             'category_id' => $this->integer()->notNull(),
+            'maker_id' => $this->integer(),
             'name' => $this->string(512)->notNull(),
             'text' => $this->text(),
             'alias' => $this->string()->notNull(),
@@ -27,7 +28,6 @@ class m180208_141533_create_products_table extends Migration
             'articul' => $this->string(128),
             'balance' => $this->string(64),
             'barcode' => $this->string(64),
-            'maker' => $this->string(255),
             'image' => $this->string(36),
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull()
@@ -36,7 +36,8 @@ class m180208_141533_create_products_table extends Migration
         $this->createIndex('{{%idx-products-category_id}}', '{{%products}}', 'category_id');
         $this->createIndex('{{%idx-products-alias}}', '{{%products}}', 'alias', true);
 
-        $this->addForeignKey('{{%fk-products-category_id}}', '{{%products}}', 'category_id', '{{%catalog}}', 'id');
+        $this->addForeignKey('{{%fk-products-category_id}}', '{{%products}}', 'category_id', '{{%catalog_categories}}', 'id');
+        $this->addForeignKey('{{%fk-products-maker_id}}', '{{%products}}', 'maker_id', '{{%makers}}', 'id', 'SET NULL', 'RESTRICT');
     }
 
     /**

@@ -3,11 +3,10 @@
 namespace backend\modules\products\controllers;
 
 use backend\controllers\SiteController;
-use common\models\AutoModels;
 use common\models\Catalog;
+use common\models\CatalogCategories;
+use common\models\Makers;
 use common\models\Products;
-use common\models\ProductsOptions;
-use common\models\SubCategory;
 use core\repositories\ProductsRepository;
 use Yii;
 use yii\helpers\ArrayHelper;
@@ -44,7 +43,8 @@ class DefaultController extends SiteController
 
         return $this->render('form', [
             'model' => $form,
-            'category' => Catalog::findOne($id)
+            'catalogCategory' => CatalogCategories::findOne($id),
+            'makers' => ArrayHelper::map(Makers::find()->asArray()->all(),'id','name')
         ]);
     }
 
@@ -61,7 +61,8 @@ class DefaultController extends SiteController
         $this->loadData($form, Url::previous());
         return $this->render('form', [
             'model' => $form,
-            'category' => Catalog::findOne(['id' => $form['category_id']])
+            'catalogCategory' => CatalogCategories::findOne(['id' => $form['category_id']]),
+            'makers' => ArrayHelper::map(Makers::find()->asArray()->all(),'id','name')
         ]);
     }
 
@@ -86,7 +87,8 @@ class DefaultController extends SiteController
         $form = $this->repository->get($id);
         return $this->render('form', [
             'model' => $form,
-            'category' => Catalog::findOne(['id' => $form['category_id']])
+            'catalogCategory' => CatalogCategories::findOne(['id' => $form['category_id']]),
+            'makers' => ArrayHelper::map(Makers::find()->asArray()->all(),'id','name')
         ]);
     }
 

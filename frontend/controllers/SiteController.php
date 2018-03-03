@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\Catalog;
 use frontend\components\PagesAndCatalogBehavior;
 use common\models\AutoBrands;
 use common\models\Pages;

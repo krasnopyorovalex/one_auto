@@ -15,11 +15,11 @@ use yii\helpers\ArrayHelper;
  * @property string $text
  * @property string $alias
  * @property int $price
- * @property string $image
  * @property string $articul
  * @property string $balance
  * @property string $barcode
- * @property string $maker
+ * @property int $maker_id
+ * @property string $image
  * @property int $created_at
  * @property int $updated_at
  *
@@ -27,6 +27,7 @@ use yii\helpers\ArrayHelper;
  * @property ProductsAutoVia[] $productsAutoVias
  * @property ProductsOriginalNumbers[] $productsOriginalNumbers
  * @property ProductsOriginalNumbers[] $productsOriginalNumbersValues
+ * @property Makers $maker
  *
  * @mixin MakeListAutoBehavior
  */
@@ -68,17 +69,19 @@ class Products extends MainModel
     public function rules()
     {
         return [
-            [['category_id', 'name', 'alias', 'price', 'articul', 'maker'], 'required'],
+            [['category_id', 'name', 'alias', 'price', 'articul', 'maker_id'], 'required'],
             [['category_id', 'price', 'created_at', 'updated_at'], 'integer'],
             [['text'], 'string'],
             [['name'], 'string', 'max' => 512],
-            [['alias', 'maker'], 'string', 'max' => 255],
+            [['alias'], 'string', 'max' => 255],
             [['articul'], 'string', 'max' => 128],
             [['barcode', 'balance'], 'string', 'max' => 64],
             [['image'], 'string', 'max' => 36],
             [['alias'], 'unique'],
-            [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Catalog::class, 'targetAttribute' => ['category_id' => 'id']],
-            [['bindingAutoList', 'originalNumbers'], 'safe']
+            [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => CatalogCategories::class, 'targetAttribute' => ['category_id' => 'id']],
+            [['bindingAutoList', 'originalNumbers'], 'safe'],
+            [['articul', 'barcode', 'balance', 'alias', 'name'], 'trim'],
+            [['maker_id'], 'exist', 'skipOnError' => true, 'targetClass' => Makers::class, 'targetAttribute' => ['maker_id' => 'id']],
         ];
     }
 
@@ -97,14 +100,14 @@ class Products extends MainModel
             'image' => 'Image',
             'file' => 'Изображение',
             'articul' => 'Артикул',
-            'maker' => 'Производитель',
             'balance' => 'Остаток',
             'barcode' => 'Штрих-код',
             'bindingAutoList' => 'Выберите из списка модель, поколение',
             'originalNumbers' => 'Оригинальные номера',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
-            'autoModelsValues' => 'Привязка товара к авто'
+            'autoModelsValues' => 'Привязка товара к авто',
+            'maker_id' => 'Производители',
         ];
     }
 
@@ -113,7 +116,7 @@ class Products extends MainModel
      */
     public function getCategory()
     {
-        return $this->hasOne(Catalog::class, ['id' => 'category_id']);
+        return $this->hasOne(CatalogCategories::class, ['id' => 'category_id']);
     }
 
     /**
@@ -138,6 +141,14 @@ class Products extends MainModel
     public function getProductsAutoVias()
     {
         return $this->hasMany(ProductsAutoVia::class, ['product_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getMaker()
+    {
+        return $this->hasOne(Makers::class, ['id' => 'maker_id']);
     }
 
     public function afterFind()

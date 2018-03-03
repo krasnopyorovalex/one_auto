@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\CatalogCategories;
 use common\models\Products;
 use yii\web\NotFoundHttpException;
 
@@ -23,7 +24,8 @@ class ProductController extends SiteController
         }
 
         return $this->render('product.twig', [
-            'model' => $model
+            'model' => $model,
+            'sidebarMenuLinks' => CatalogCategories::find()->where(['catalog_id' => $model['category']['catalog_id']])->asArray()->all()
         ]);
     }
 }

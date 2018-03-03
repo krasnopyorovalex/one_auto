@@ -242,20 +242,45 @@ li.mjs-nestedSortable-collapsed.mjs-nestedSortable-hovering div {
 .form-group .input-group-addon:hover {
     cursor: pointer;
 }
-
+.table tr td {
+    position: relative;
+}
 .table tr.level_l td:first-child:before {
-    content: "--- ";
-    padding-left: 1%;
+    content: "*** ";
+    padding-left: 2%;
+}
+.table tr.level_l td:first-child:after {
+    content: "----------";
+    position: absolute;
+    top: 26%;
+    left: 1%;
+    -moz-transform: rotate(90deg); /* Для Firefox */
+    -ms-transform: rotate(90deg); /* Для IE */
+    -webkit-transform: rotate(90deg); /* Для Safari, Chrome, iOS */
+    -o-transform: rotate(90deg); /* Для Opera */
+    transform: rotate(90deg);
 }
 
 .table tr.level_l_l td:first-child:before {
-    content: "--- ";
-    padding-left: 5%;
+    content: "*** ";
+    padding-left: 9%;
+}
+
+.table tr.level_l_l td:first-child:after {
+    content: "-----------";
+    position: absolute;
+    top: 25%;
+    left: 7%;
+    -moz-transform: rotate(90deg); /* Для Firefox */
+    -ms-transform: rotate(90deg); /* Для IE */
+    -webkit-transform: rotate(90deg); /* Для Safari, Chrome, iOS */
+    -o-transform: rotate(90deg); /* Для Opera */
+    transform: rotate(90deg);
 }
 
 .table tr.level_l_l_l td:first-child:before {
     content: "--- ";
-    padding-left: 9%;
+    padding-left: 12%;
 }
 .table .centered {
     text-align: center;

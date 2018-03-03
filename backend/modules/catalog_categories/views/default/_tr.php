@@ -15,10 +15,10 @@ use yii\helpers\Url;
             'data-original-title' => 'Редактировать'
         ]);?>
         <?php if($model['parent_id']):?>
-            <?= Html::a(Html::tag('i','',['class' => 'icon-list2']), Url::toRoute(['default/list', 'id' => $model['id']]),[
-                'rel' => 'tooltip',
-                'data-original-title' => 'Перейти к списку товаров'
-            ]);?>
+        <?= Html::a(Html::tag('i','',['class' => 'icon-list2']), Url::toRoute(['default/list', 'id' => $model['id']]),[
+            'rel' => 'tooltip',
+            'data-original-title' => 'Перейти к списку товаров'
+        ]);?>
         <?php endif;?>
         <?= Html::a(Html::tag('i','',['class' => 'icon-trash']), Url::toRoute(['default/delete', 'id' => $model['id']]),[
             'rel' => 'tooltip',
@@ -26,8 +26,8 @@ use yii\helpers\Url;
         ]);?>
     </td>
 </tr>
-<?php if ($model['catalogs']): ?>
-    <?php foreach ($model['catalogs'] as $child):?>
+<?php if ($model['catalogCategories']): ?>
+    <?php foreach ($model['catalogCategories'] as $child):?>
         <?= $this->render('_tr', ['model' => $child, 'className' => isset($className) ? $className.'_l' : ''])?>
     <?php endforeach;?>
 <?php endif; ?>

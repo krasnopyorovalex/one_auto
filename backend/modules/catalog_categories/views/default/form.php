@@ -1,13 +1,15 @@
 <?php
 /* @var $this yii\web\View */
-/* @var $model common\models\Catalog */
+/* @var $model common\models\CatalogCategories */
 
 use backend\assets\SingleEditorAsset;
+use backend\assets\SelectAsset;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
 SingleEditorAsset::register($this);
+SelectAsset::register($this);
 
 $this->params['breadcrumbs'][] = ['label' => $this->context->module->params['name'], 'url' => Url::toRoute(['/'.$this->context->module->id])];
 $this->params['breadcrumbs'][] = $this->context->actions[$this->context->action->id];
@@ -37,6 +39,16 @@ $this->params['breadcrumbs'][] = $this->context->actions[$this->context->action-
                                         'class' => 'form-control',
                                         'id' => 'to__generate'
                                     ]) ?>
+                                    <?php if($model->isNewRecord):?>
+                                        <?= Html::activeInput('hidden',$model,'catalog_id',['value' => Yii::$app->request->get('catalog_id')])?>
+                                    <?php endif;?>
+                                </div>
+                                <div class="col-md-4">
+                                    <?= $form->field($model, 'parent_id')->dropDownList($model->getTree(), [
+                                        'class' => 'select-search',
+                                        'data-width' => '100%',
+                                        'prompt' => 'Не выбрано'
+                                    ])?>
                                 </div>
                             </div>
                             <div class="row">

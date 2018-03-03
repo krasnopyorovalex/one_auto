@@ -62,6 +62,7 @@ return [
                 'catalog/<alias:[\wd-]+>' => 'product/show',
 
                 'original-number/<number:[\wd-]+>' => 'original-number/show',
+                'maker/<alias:[\wd-]+>' => 'maker/show',
 
                 'auto-<brand:[\wd-]+>' => 'auto/brand',
                 'auto-<brand:[\wd-]+>/<model:[\wd-]+>' => 'auto/model',

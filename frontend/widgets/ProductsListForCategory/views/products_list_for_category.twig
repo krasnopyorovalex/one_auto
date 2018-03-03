@@ -1,6 +1,6 @@
 {% for item in model %}
     <div class="item">
-        <div class="item__brand">{{ item.maker }}</div>
+        <div class="item__brand">{{ item.maker.name }}</div>
         <div class="item__price">{{ item.price| number_format(0, ' ', ' ') }} руб.</div>
         <div class="item__image">
             <a href="/catalog/{{ item.alias }}">

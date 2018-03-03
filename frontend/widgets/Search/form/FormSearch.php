@@ -3,6 +3,7 @@
 namespace frontend\widgets\Search\form;
 
 use common\models\Products;
+use common\models\ProductsOriginalNumbers;
 
 class FormSearch extends Products
 {
@@ -24,7 +25,7 @@ class FormSearch extends Products
 
     public function search($params)
     {
-        $query = ProductsOld::find();
+        $query = Products::find();
 
         $this->load($params);
 
@@ -37,8 +38,12 @@ class FormSearch extends Products
                 'name' => $this->keyword
             ]);
         } else {
+            $ids = ProductsOriginalNumbers::find()->select('product_id')->where(['number' => $this->keyword])->column();
+
             $query->andFilterWhere([
-                'articul' => $this->keyword
+                'id' => !empty($ids)
+                    ? $ids
+                    : [0]
             ]);
         }
 

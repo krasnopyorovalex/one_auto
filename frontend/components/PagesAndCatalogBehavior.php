@@ -24,11 +24,10 @@ class PagesAndCatalogBehavior extends Behavior
             ->one();
 
         return $model ?? Catalog::find()
-                ->where([
-                    'alias' => $alias,
-                    'parent_id' => null
-                ])
-                ->with(['catalogs'])
+                ->where(['alias' => $alias])
+                ->with(['catalogCategories' => function($query){
+                    return $query->where(['parent_id' => null]);
+                }])
                 ->limit(1)
                 ->one();
     }

@@ -1,18 +1,19 @@
 <?php
 
-namespace backend\modules\products;
+namespace backend\modules\makers;
+
 use backend\interfaces\ModelProviderInterface;
 use yii\base\Module;
 
 /**
- * products module definition class
+ * makers module definition class
  */
-class Products extends Module implements ModelProviderInterface
+class Makers extends Module implements ModelProviderInterface
 {
     /**
      * @inheritdoc
      */
-    public $controllerNamespace = 'backend\modules\products\controllers';
+    public $controllerNamespace = 'backend\modules\makers\controllers';
 
     /**
      * @inheritdoc
@@ -20,12 +21,12 @@ class Products extends Module implements ModelProviderInterface
     public function init()
     {
         parent::init();
-        $this->params['name'] = 'Продукция';
+        $this->params['name'] = 'Производители';
         // custom initialization code goes here
     }
 
     public function getModel()
     {
-        return \common\models\Products::class;
+        return \common\models\Makers::class;
     }
 }

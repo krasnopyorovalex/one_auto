@@ -1,29 +1,28 @@
 <ul>
-    {% set query = (autoBrand ? '/auto-' ~ autoBrand.alias : '') ~ (autoModel ? '/' ~ autoModel.alias : '') %}
-    {% for category in model.catalogs %}
-    <li><a href="/{{ model.alias }}/{{ category.alias }}{{ query }}">{{ category.name }}</a>
-        {% if category.catalogs %}
-            <ul>
-                {% for subCategory in category.catalogs %}
-                <li>
-                    <a href="/{{ model.alias }}/{{ category.alias }}/{{ subCategory.alias }}{{ query }}">
-                        {{ subCategory.name }}
-                    </a>
-                    {% if subCategory.catalogs %}
-                        <ul>
-                            {% for subSubCategory in subCategory.catalogs %}
-                                <li>
-                                    <a href="/{{ model.alias }}/{{ category.alias }}/{{ subCategory.alias }}/{{ subSubCategory.alias }}{{ query }}">
-                                        {{ subSubCategory.name }}
-                                    </a>
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    {% endif %}
-                </li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-    </li>
+    {% for category in model['roots'] %}
+        <li><a href="/{{ catalog }}/{{ category.alias }}{{ queryParams }}">{{ category.name }}</a>
+            {% if model['roots'][category.id] %}
+                <ul>
+                    {% for subCategory in model['in'][category.id] %}
+                        <li>
+                            <a href="/{{catalog }}/{{ category.alias }}/{{ subCategory.alias }}{{ queryParams }}">
+                                {{ subCategory.name }}
+                            </a>
+                            {% if model['in'][subCategory.id] %}
+                                <ul>
+                                    {% for subSubCategory in model['in'][subCategory.id] %}
+                                        <li>
+                                            <a href="/{{ catalog }}/{{ category.alias }}/{{ subCategory.alias }}/{{ subSubCategory.alias }}{{ queryParams }}">
+                                                {{ subSubCategory.name }}
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </li>
     {% endfor %}
 </ul>

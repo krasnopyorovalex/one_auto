@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\Catalog;
+use common\models\CatalogCategories;
 use common\models\Products;
 use common\models\ProductsAutoVia;
 use frontend\components\ProductsBehavior;
@@ -38,9 +39,9 @@ class AutoCatalogController extends SiteController
     public function actionProductsWithAuto($category, $brand, $model, $generation, $page = 0)
     {
         /**
-         * @var $catalog Catalog
+         * @var $catalog CatalogCategories
          */
-        if( ! $catalog = Catalog::find()->where(['alias' => $category])->with(['parent', 'catalogs'])->limit(1)->one() ) {
+        if( ! $catalog = CatalogCategories::find()->where(['alias' => $category])->with(['catalogCategories'])->limit(1)->one() ) {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
 
@@ -65,9 +66,9 @@ class AutoCatalogController extends SiteController
     public function actionProductsWithAutoSubcategory($subcategory, $brand, $model, $generation, $page = 0)
     {
         /**
-         * @var $catalog Catalog
+         * @var $catalog CatalogCategories
          */
-        if( ! $catalog = Catalog::find()->where(['alias' => $subcategory])->with(['parent', 'catalogs'])->limit(1)->one() ) {
+        if( ! $catalog = CatalogCategories::find()->where(['alias' => $subcategory])->with(['parent', 'catalogCategories'])->limit(1)->one() ) {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
 
@@ -92,9 +93,9 @@ class AutoCatalogController extends SiteController
     public function actionProductsWithAutoSubSubcategory($subsubcategory, $brand, $model, $generation, $page = 0)
     {
         /**
-         * @var $catalog Catalog
+         * @var $catalog CatalogCategories
          */
-        if( ! $catalog = Catalog::find()->where(['alias' => $subsubcategory])->with(['parent', 'catalogs'])->limit(1)->one() ) {
+        if( ! $catalog = CatalogCategories::find()->where(['alias' => $subsubcategory])->with(['parent', 'catalogCategories'])->limit(1)->one() ) {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
 

@@ -1,21 +1,17 @@
 <?php
-
 /* @var $this yii\web\View */
-/* @var $auto_model common\models\AutoModels */
-/* @var $model common\models\AutoGenerations */
+/* @var $model common\models\Makers */
 
 use backend\assets\SingleEditorAsset;
 use backend\assets\SelectAsset;
 use yii\bootstrap\ActiveForm;
-use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 
 SingleEditorAsset::register($this);
 SelectAsset::register($this);
 
-$this->params['breadcrumbs'][] = ['label' => 'Бренды авто', 'url' => Url::toRoute(['/auto_brands'])];
-$this->params['breadcrumbs'][] = ['label' => $auto_model->brand->name, 'url' => Url::toRoute(['/auto_brands/models/'.$auto_model->brand->id])];
-$this->params['breadcrumbs'][] = ['label' => $auto_model->name, 'url' => Url::to(Url::previous())];
+$this->params['breadcrumbs'][] = ['label' => $this->context->module->params['name'], 'url' => Url::toRoute(['/'.$this->context->module->id])];
 $this->params['breadcrumbs'][] = $this->context->actions[$this->context->action->id];
 ?>
 <div class="row">
@@ -42,9 +38,6 @@ $this->params['breadcrumbs'][] = $this->context->actions[$this->context->action-
                                         'class' => 'form-control',
                                         'id' => 'to__generate'
                                     ]) ?>
-                                    <?php if($model->isNewRecord):?>
-                                        <?= Html::activeInput('hidden',$model,'model_id',['value' => $auto_model->id])?>
-                                    <?php endif;?>
                                 </div>
                             </div>
 

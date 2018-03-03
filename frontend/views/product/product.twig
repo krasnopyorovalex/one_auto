@@ -4,16 +4,16 @@
     <div class="breadcrumbs">
         <ul>
             <li><a href="{{ app.homeUrl }}">{{ app.params['breadcrumbs_main_name'] }}</a></li>
-            {% if model.category.parent.parent.parent.name %}
-                <li><a href="/{{ model.category.parent.parent.parent.alias }}">{{ model.category.parent.parent.parent.name }}</a></li>
+            {% if model.category.catalog %}
+                <li><a href="/{{ model.category.catalog.alias }}">{{ model.category.catalog.name }}</a></li>
             {% endif %}
             {% if model.category.parent.parent %}
-                <li><a href="/{{ model.category.parent.parent.parent.alias }}/{{ model.category.parent.parent.alias }}">{{ model.category.parent.parent.name }}</a></li>
+                <li><a href="/{{ model.category.catalog.alias }}/{{ model.category.parent.parent.alias }}">{{ model.category.parent.parent.name }}</a></li>
             {% endif %}
             {% if model.category.parent %}
-                <li><a href="/{{ model.category.parent.parent.parent.alias }}/{{ model.category.parent.parent.alias }}/{{ model.category.parent.alias }}">{{ model.category.parent.name }}</a></li>
+                <li><a href="/{{ model.category.catalog.alias }}/{{ model.category.parent.parent.alias }}/{{ model.category.parent.alias }}">{{ model.category.parent.name }}</a></li>
             {% endif %}
-            <li><a href="/{{ model.category.parent.parent.parent.alias }}/{{ model.category.parent.parent.alias }}/{{ model.category.parent.alias }}/{{ model.category.alias }}">{{ model.category.name }}</a></li>
+            <li><a href="/{{ model.category.catalog.alias }}/{{ model.category.parent.parent.alias }}/{{ model.category.parent.alias }}/{{ model.category.alias }}">{{ model.category.name }}</a></li>
             <li>{{ model.name }}</li>
         </ul>
     </div>
@@ -25,7 +25,7 @@
         <div class="items">
             <div class="content__sidebar">
                 {{ use('frontend/widgets/SidebarMenu/SidebarMenu') }}
-                {{ sidebar_menu_widget({'model': model.category}) }}
+                {{ sidebar_menu_widget({'model': model.category.catalog.catalogCategories}) }}
             </div>
             <!-- /.content__sidebar -->
             <div class="content__body">
@@ -48,10 +48,10 @@
                         <img src="/userfiles/{{ model.image ? 'products/' ~ model.image : 'not_photo.jpg' }}" alt="alt">
                     </div>
                     <div class="item__col-right">
-                        <div class="name">{{ model.maker }}</div>
+                        <div class="name">{{ model.maker.name }}</div>
                         <div class="desc">
                             <ul>
-                                <li><span>Производитель:</span>	<b>{{ model.maker }}</b></li>
+                                <li class="maker"><span>Производитель:</span>	<b><a href="{{ path('maker/show', {'alias': model.maker.alias }) }}">{{ model.maker.name }}</a></b></li>
                                 <li><span>Артикул:</span> <b>{{ model.articul }}</b></li>
                                 <li><span>Остаток:</span> <b>{{ model.balance }}</b></li>
                                 <li><span>Штрих-код:</span> <b>{{ model.barcode }}</b></li>

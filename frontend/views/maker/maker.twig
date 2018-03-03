@@ -4,7 +4,6 @@
     <div class="breadcrumbs">
         <ul>
             <li><a href="{{ app.homeUrl }}">{{ app.params['breadcrumbs_main_name'] }}</a></li>
-            <li><a href="{{ path('auto/brand', {'brand': model.brand.alias}) }}">{{ model.brand.name }}</a></li>
             <li>{{ model.name }}</li>
         </ul>
     </div>
@@ -22,17 +21,13 @@
             <div class="content__body">
                 <h1>{{ model.name }}</h1>
 
-                <div class="auto__names">
-                    <ul>
-                        {% for generation in model.autoGenerations %}
-                            <li><a href="{{ path('auto/generation', {
-                                    'brand': model.brand.alias,
-                                    'model': model.alias,
-                                    'generation': generation.alias
-                                }) }}">{{ generation.name }}</a></li>
-                        {% endfor %}
-                    </ul>
+                <div class="items">
+                    {{ use('frontend/widgets/ProductsListForCategory/ProductsListForCategory') }}
+                    {{ products_list_for_category_widget({
+                        'items': model.products
+                    }) }}
                 </div>
+                <!-- /.items -->
 
                 {{ use('frontend/widgets/FormOrder/FormOrder') }}
                 {{ form_order_widget() }}

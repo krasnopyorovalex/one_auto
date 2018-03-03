@@ -15,17 +15,17 @@
         <div class="items">
             <div class="content__sidebar">
                 {{ use('frontend/widgets/SidebarMenu/SidebarMenu') }}
-                {{ sidebar_menu_widget({'model': model}) }}
+                {{ sidebar_menu_widget() }}
             </div>
             <!-- /.content__sidebar -->
             <div class="content__body">
                 <h1>{{ model.name }}</h1>
 
                 <div class="items cat__details">
-                    {% for item in model.catalogs %}
+                    {% for item in model.catalogCategories %}
                         <div class="item">
                             <div class="item__cat">
-                                <img src="/userfiles/catalog/{{ item.image }}" alt="">
+                                <img src="/userfiles/categories/{{ item.image }}" alt="">
                                 <div class="item__cat-name">
                                     <a href="/{{ model.alias }}/{{ item.alias }}">{{ item.name }}</a>
                                 </div>

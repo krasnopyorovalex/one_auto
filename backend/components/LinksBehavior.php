@@ -36,9 +36,6 @@ class LinksBehavior extends Behavior
              */
             $model = \Yii::$app->getModule($key)->getModel();
             $query = $model::find()->select(['id', 'name','alias']);
-            if($key == 'catalog'){
-                $query->andWhere(['parent_id' => null]);
-            }
             $this->eachModuleItems($query->all(), $key, $value);
         }
         return ArrayHelper::map($this->links, 'link', 'name', 'module');
@@ -68,10 +65,10 @@ class LinksBehavior extends Behavior
             'module' => $value
         ]);
 
-        if( $item->catalogs ){
+        if( $item->catalogCategories ){
             array_map(function ($item) use ($value, $link) {
                 return $this->eachCatalog($item, $value, $link);
-            }, $item->catalogs);
+            }, $item->catalogCategories);
         }
     }
 

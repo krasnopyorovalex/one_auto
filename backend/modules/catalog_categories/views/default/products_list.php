@@ -5,22 +5,21 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 
 /* @var $dataProvider common\models\Products */
-/* @var $category common\models\Catalog */
+/* @var $catalogCategory common\models\CatalogCategories */
 /* @var $this yii\web\View */
 
-if(isset($category->parent->parent->parent)){
-    $this->params['breadcrumbs'][] = ['label' => $category->parent->parent->parent->name, 'url' => Url::toRoute(['/catalog'])];
+$this->params['breadcrumbs'][] = ['label' => 'Каталог', 'url' => Url::toRoute(['/catalog'])];
+$this->params['breadcrumbs'][] = ['label' => $catalogCategory->catalog->name, 'url' => Url::toRoute(['/catalog_categories/cat-list/'.$catalogCategory->catalog->id])];
+
+if($catalogCategory->parent->parent){
+    $this->params['breadcrumbs'][] = ['label' => $catalogCategory->parent->parent->name, 'url' => Url::toRoute(['/catalog_categories/cat-list/'.$catalogCategory->catalog->id])];
 }
 
-if($category->parent->parent){
-    $this->params['breadcrumbs'][] = ['label' => $category->parent->parent->name, 'url' => Url::toRoute(['/catalog'])];
+if($catalogCategory->parent){
+    $this->params['breadcrumbs'][] = ['label' => $catalogCategory->parent->name, 'url' => Url::toRoute(['/catalog_categories/cat-list/'.$catalogCategory->catalog->id])];
 }
 
-if($category->parent){
-    $this->params['breadcrumbs'][] = ['label' => $category->parent->name, 'url' => Url::toRoute(['/catalog'])];
-}
-
-$this->params['breadcrumbs'][] = $category->name;
+$this->params['breadcrumbs'][] = $catalogCategory->name;
 
 ?>
 
@@ -46,19 +45,19 @@ $this->params['breadcrumbs'][] = $category->name;
                         'class' => 'icon-pencil',
                         'data-popup' => 'tooltip',
                         'data-original-title' => 'Редактировать запись'
-                    ]), str_replace('catalog','products',$url));
+                    ]), str_replace('catalog_categories','products',$url));
                 },
                 'delete' => function($url){
                     return Html::a(Html::tag('i','',[
                         'class' => 'icon-trash',
                         'data-popup' => 'tooltip',
                         'data-original-title' => 'Удалить запись'
-                    ]), str_replace('catalog','products',$url));
+                    ]), str_replace('catalog_categories','products',$url));
                 }
             ],
         ],
     ],
 ]);
-echo Html::tag('div', Html::a('Добавить' . Html::tag('i','',['class' => 'icon-add position-right']), Url::toRoute(["/products/add/".$category->id]), [
+echo Html::tag('div', Html::a('Добавить' . Html::tag('i','',['class' => 'icon-add position-right']), Url::toRoute(["/products/add/".$catalogCategory->id]), [
     'class' => 'btn bg-blue white'
 ]));?>

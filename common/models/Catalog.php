@@ -3,14 +3,12 @@
 namespace common\models;
 
 use backend\components\FileBehavior;
-use yii\db\ActiveQuery;
 use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "{{%catalog}}".
  *
  * @property int $id
- * @property int $parent_id
  * @property string $name
  * @property string $text
  * @property string $alias
@@ -18,6 +16,7 @@ use yii\helpers\ArrayHelper;
  * @property int $created_at
  * @property int $updated_at
  *
+ * @property CatalogCategories[] $catalogCategories
  */
 class Catalog extends MainModel
 {
@@ -27,8 +26,6 @@ class Catalog extends MainModel
 
     public $template = 'catalog.twig';
     public $file;
-
-    private $tree = [];
 
     public function behaviors()
     {
@@ -57,13 +54,12 @@ class Catalog extends MainModel
         return [
             [['name', 'alias'], 'required'],
             [['text'], 'string'],
-            [['parent_id', 'created_at', 'updated_at'], 'integer'],
+            [['created_at', 'updated_at'], 'integer'],
             [['name'], 'string', 'max' => 512],
             [['image'], 'string', 'max' => 36],
             [['alias'], 'string', 'max' => 255],
             ['alias', 'unique', 'message' =>  'Такой alias уже есть в системе'],
-            ['alias', 'match', 'pattern' => '/[a-zA-Z0-9-]+/', 'message' => 'Кириллица в поле alias запрещена'],
-            [['parent_id'], 'exist', 'skipOnError' => true, 'targetClass' => Catalog::class, 'targetAttribute' => ['parent_id' => 'id']],
+            ['alias', 'match', 'pattern' => '/[a-zA-Z0-9-]+/', 'message' => 'Кириллица в поле alias запрещена']
         ];
     }
 
@@ -74,7 +70,6 @@ class Catalog extends MainModel
     {
         return [
             'id' => 'ID',
-            'parent_id' => 'Родительская категория',
             'name' => 'Name',
             'text' => 'Text',
             'alias' => 'Alias',
@@ -88,51 +83,16 @@ class Catalog extends MainModel
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getParent(): ActiveQuery
+    public function getCatalogCategories()
     {
-        return $this->hasOne(Catalog::class, ['id' => 'parent_id']);
+        return $this->hasMany(CatalogCategories::class, ['catalog_id' => 'id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCatalogs(): ActiveQuery
+    public function getCatalogCategoriesRoot()
     {
-        return $this->hasMany(Catalog::class, ['parent_id' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getProducts(): ActiveQuery
-    {
-        return $this->hasMany(Products::class, ['category_id' => 'id']);
-    }
-
-    /**
-     * @param array $items
-     * @param string $step
-     * @return array
-     */
-    public function getTree($items = [], $step = '*'): array
-    {
-        if( ! $items ){
-            $catalogs = Catalog::find()->where(['parent_id' => null])->with(['catalogs']);
-            if( ! $this->isNewRecord ) {
-                $catalogs->andWhere(['<>','id',$this->id]);
-            }
-            $items = $catalogs->all();
-        }
-
-        foreach ($items as $catalog) {
-            array_push($this->tree, [
-                'id' => $catalog['id'],
-                'name' => $step . $catalog['name']
-            ]);
-            if(isset($catalog->catalogs) && $catalog->catalogs){
-                $this->getTree($catalog->catalogs, $step.'*');
-            }
-        }
-        return ArrayHelper::map($this->tree,'id','name');
+        return $this->hasMany(CatalogCategories::class, ['catalog_id' => 'id', 'parent_id' => null]);
     }
 }

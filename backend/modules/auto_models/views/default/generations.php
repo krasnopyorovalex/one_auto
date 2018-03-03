@@ -9,7 +9,8 @@ use yii\helpers\Url;
 /* @var $model common\models\AutoModels */
 /* @var $this yii\web\View */
 
-$this->params['breadcrumbs'][] = ['label' => $brand->name, 'url' => Url::toRoute(['/auto_brands'])];
+$this->params['breadcrumbs'][] = ['label' => 'Бренды авто', 'url' => Url::toRoute(['/auto_brands'])];
+$this->params['breadcrumbs'][] = ['label' => $brand->name, 'url' => Url::toRoute(['/auto_brands/models/'.$brand->id])];
 $this->params['breadcrumbs'][] = $model->name;
 ?>
 

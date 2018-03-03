@@ -5,11 +5,10 @@ namespace frontend\components;
 use common\models\AutoBrands;
 use common\models\AutoGenerations;
 use common\models\AutoModels;
-use common\models\Catalog;
+use common\models\CatalogCategories;
 use common\models\Products;
 use common\models\ProductsAutoVia;
 use yii\base\Behavior;
-use yii\db\Query;
 
 /**
  * Class ProductsBehavior
@@ -23,20 +22,19 @@ class ProductsBehavior extends Behavior
     private $conditions = [];
 
     /**
-     * @param Catalog $catalog
+     * @param CatalogCategories $catalog
      * @param $page
      * @param null $brand
      * @param null $model
      * @param null $generation
      */
-    public function getProducts(Catalog $catalog, $page, $brand = null, $model = null, $generation = null)
+    public function getProducts(CatalogCategories $catalog, $page, $brand = null, $model = null, $generation = null)
     {
         $this->model = $catalog;
         array_push($this->ids, $catalog->id);
-        $this->getCatalogs($catalog['catalogs']);
+        $this->getCatalogCategories($catalog->catalogCategories);
 
         $query = Products::find()->where(['category_id' => $this->ids]);
-        $count = clone $query;
 
         if( $productIds = $this->getProductsWithAuto($brand, $model, $generation) ) {
             $ids = array_map(function ($id) {
@@ -46,14 +44,13 @@ class ProductsBehavior extends Behavior
             $query->andWhere(['id' => $ids]);
         }
 
+        $products = $query->limit(\Yii::$app->params['per_page'])->offset($page)->asArray()->all();
+
         $this->data = [
-            'products' => $query
-                ->limit(\Yii::$app->params['per_page'])
-                ->offset($page)
-                ->asArray()
-                ->all(),
-            'count' => $count->count(),
-            'offset' => $page + \Yii::$app->params['per_page']
+            'products' => $products,
+            'count' => count($products),
+            'offset' => $page + \Yii::$app->params['per_page'],
+            'sidebarMenuLinks' => $catalog['catalog']['catalogCategories']
         ];
     }
 
@@ -77,20 +74,20 @@ class ProductsBehavior extends Behavior
         return $this->owner->render($template, [
             'model' => $this->model,
             'products' => $this->data['products'],
-            'count' => $this->data['count']
+            'count' => $this->data['count'],
+            'sidebarMenuLinks' => $this->data['sidebarMenuLinks']
         ]);
     }
 
     /**
-     * @param $catalogs
+     * @param $catalogCategories
      */
-    private function getCatalogs($catalogs): void
+    private function getCatalogCategories($catalogCategories): void
     {
-        foreach ($catalogs as $catalog)
-        {
-            array_push($this->ids, $catalog->id);
-            if( $catalogs = $catalog->catalogs ){
-                $this->getCatalogs($catalogs);
+        foreach ($catalogCategories as $catalogCategory) {
+            array_push($this->ids, $catalogCategory->id);
+            if($catalogCategory->catalogCategories){
+                $this->getCatalogCategories($catalogCategory->catalogCategories);
             }
         }
     }

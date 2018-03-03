@@ -1,10 +1,12 @@
 <?php
 /* @var $this yii\web\View */
 /* @var $model common\models\Products */
-/* @var $category common\models\Catalog */
+/* @var $catalogCategory common\models\Catalog */
+/* @var array $makers common\models\Makers */
 
 use backend\assets\SingleEditorAsset;
 use backend\assets\SelectBootstrapAsset;
+use backend\assets\SelectAsset;
 use backend\assets\TagsInputAsset;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
@@ -13,20 +15,19 @@ use yii\helpers\Url;
 SingleEditorAsset::register($this);
 SelectBootstrapAsset::register($this);
 TagsInputAsset::register($this);
+SelectAsset::register($this);
 
-if(isset($category->parent->parent->parent)){
-    $this->params['breadcrumbs'][] = ['label' => $category->parent->parent->parent->name, 'url' => Url::toRoute(['/catalog'])];
+$this->params['breadcrumbs'][] = ['label' => 'Каталог', 'url' => Url::toRoute(['/catalog'])];
+
+if($catalogCategory->parent->parent){
+    $this->params['breadcrumbs'][] = ['label' => $catalogCategory->parent->parent->name, 'url' => Url::toRoute(['/catalog_categories/cat-list/'.$catalogCategory->catalog->id])];
 }
 
-if($category->parent->parent){
-    $this->params['breadcrumbs'][] = ['label' => $category->parent->parent->name, 'url' => Url::toRoute(['/catalog'])];
+if($catalogCategory->parent){
+    $this->params['breadcrumbs'][] = ['label' => $catalogCategory->parent->name, 'url' => Url::toRoute(['/catalog_categories/cat-list/'.$catalogCategory->catalog->id])];
 }
 
-if($category->parent){
-    $this->params['breadcrumbs'][] = ['label' => $category->parent->name, 'url' => Url::toRoute(['/catalog'])];
-}
-
-$this->params['breadcrumbs'][] = ['label' => $category->name, 'url' => Url::toRoute(['/catalog/list/'.$category->id])];
+$this->params['breadcrumbs'][] = ['label' => $catalogCategory->name, 'url' => Url::toRoute(['/catalog_categories/cat-list/'.$catalogCategory->catalog->id])];
 
 $this->params['breadcrumbs'][] = $this->context->actions[$this->context->action->id];
 ?>
@@ -48,7 +49,7 @@ $this->params['breadcrumbs'][] = $this->context->actions[$this->context->action-
                     <div class="tab-content">
                         <div class="tab-pane active" id="main">
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-8">
                                     <?= $form->field($model, 'name')->textInput(['autocomplete' => 'off', 'id' => 'from__generate']) ?>
                                     <?= $form->field($model, 'alias', [
                                         'template' => '<div class="form-group">{label}<div class="input-group"><span class="input-group-addon"><i class="icon-pencil"></i></span>{input}{error}{hint}</div></div>'
@@ -57,6 +58,19 @@ $this->params['breadcrumbs'][] = $this->context->actions[$this->context->action-
                                         'class' => 'form-control',
                                         'id' => 'to__generate'
                                     ]) ?>
+                                    <?php if($model->isNewRecord):?>
+                                        <?= Html::activeInput('hidden',$model,'category_id',['value' => $catalogCategory->id])?>
+                                    <?php endif;?>
+                                </div>
+                                <div class="col-md-4">
+                                    <?= $form->field($model, 'maker_id')->dropDownList($makers, [
+                                                'prompt' => 'Не выбрано',
+                                                'class' => 'select-search'
+                                    ]) ?>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
                                     <?= $form->field($model, 'originalNumbers')->textInput([
                                         'autocomplete' => 'off',
                                         'class' => 'form-control tags-input',
@@ -64,9 +78,6 @@ $this->params['breadcrumbs'][] = $this->context->actions[$this->context->action-
                                             ? implode(',', $model->originalNumbers)
                                             : $model->originalNumbers
                                     ]) ?>
-                                    <?php if($model->isNewRecord):?>
-                                        <?= Html::activeInput('hidden',$model,'category_id',['value' => $category->id])?>
-                                    <?php endif;?>
                                 </div>
                             </div>
                             <div class="row">
@@ -109,11 +120,8 @@ $this->params['breadcrumbs'][] = $this->context->actions[$this->context->action-
                         <div class="tab-pane" id="options">
                             <div class="row">
                                 <div class="col-md-6">
-
-                                    <?= $form->field($model, 'maker')->textInput(['autocomplete' => 'off']) ?>
                                     <?= $form->field($model, 'price')->textInput(['autocomplete' => 'off']) ?>
                                     <?= $form->field($model, 'articul')->textInput(['autocomplete' => 'off']) ?>
-
                                 </div>
                                 <div class="col-md-6">
                                     <?= $form->field($model, 'barcode')->textInput(['autocomplete' => 'off']) ?>
