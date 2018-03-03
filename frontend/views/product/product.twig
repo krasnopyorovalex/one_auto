@@ -25,7 +25,10 @@
         <div class="items">
             <div class="content__sidebar">
                 {{ use('frontend/widgets/SidebarMenu/SidebarMenu') }}
-                {{ sidebar_menu_widget({'model': model.category.catalog.catalogCategories}) }}
+                {{ sidebar_menu_widget({
+                    'model': model.category.catalog.catalogCategories,
+                    'catalogAlias': model.category.catalog.alias
+                }) }}
             </div>
             <!-- /.content__sidebar -->
             <div class="content__body">

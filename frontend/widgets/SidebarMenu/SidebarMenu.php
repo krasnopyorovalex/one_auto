@@ -8,8 +8,7 @@ use yii\base\Widget;
 class SidebarMenu extends Widget
 {
     public $model = null;
-    public $autoBrand = null;
-    public $autoModel = null;
+    public $catalogAlias = null;
 
     public function run()
     {
@@ -17,18 +16,18 @@ class SidebarMenu extends Widget
         $queryParams = $request->get('brand') ? '/auto-' . $request->get('brand') : '';
         $queryParams .= $request->get('model') ? '/' . $request->get('model') : '';
         $queryParams .= $request->get('generation') ? '/' . $request->get('generation') : '';
-        $catalogAlias = $request->get('catalog');
+        $this->catalogAlias = $this->catalogAlias ?? $request->get('catalog');
 
         if( ! $this->model ) {
             $catalog = Catalog::find()->where(['is_main' => 1])->with(['catalogCategories'])->limit(1)->one();
             $this->model = $catalog['catalogCategories'];
-            $catalogAlias = $catalog['alias'];
+            $this->catalogAlias = $catalog['alias'];
         }
 
         return $this->render('sidebar_menu.twig', [
             'model' => $this->reOrder(),
             'queryParams' => $queryParams,
-            'catalog' => $catalogAlias
+            'catalog' => $this->catalogAlias
         ]);
     }
 
