@@ -6,7 +6,7 @@ use yii\base\BootstrapInterface;
 
 class SetUp implements BootstrapInterface
 {
-    public function bootstrap($app): void
+    public function bootstrap($app)
     {
 
     }
