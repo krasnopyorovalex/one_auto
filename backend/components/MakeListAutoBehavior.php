@@ -14,7 +14,7 @@ use yii\helpers\ArrayHelper;
 class MakeListAutoBehavior extends Behavior
 {
 
-    private const DELIMITER = '_';
+    const DELIMITER = '_';
 
     /**
      * @var array

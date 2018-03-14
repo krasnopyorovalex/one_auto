@@ -8,7 +8,6 @@ class m130524_201442_init extends Migration
     {
         $tableOptions = null;
         if ($this->db->driverName === 'mysql') {
-            // http://stackoverflow.com/questions/766809/whats-the-difference-between-utf8-general-ci-and-utf8-unicode-ci
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
 
@@ -28,9 +27,9 @@ class m130524_201442_init extends Migration
         $this->insert('user', [
             'username' => 'root',
             'auth_key' => '',
-            'password_hash' => '$2y$13$j.tEAnMIlFbtHqpyfXaewezbmPkh02NTfVH8dgJTWbJjl30ac8wmC',
+            'password_hash' => '$2y$13$PN0BF7BDcTrQKn6gnNNd.ee2o3ETAfMPu69NzE4wxWioVK5JvjAKe',
             'password_reset_token' => '',
-            'email' => 'info@krasber.ru',
+            'email' => 'info@one-auto.ru',
             'status' => 10,
             'created_at' => time(),
             'updated_at' => time()
