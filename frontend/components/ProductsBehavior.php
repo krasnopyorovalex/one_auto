@@ -82,7 +82,7 @@ class ProductsBehavior extends Behavior
     /**
      * @param $catalogCategories
      */
-    private function getCatalogCategories($catalogCategories): void
+    private function getCatalogCategories($catalogCategories)
     {
         foreach ($catalogCategories as $catalogCategory) {
             array_push($this->ids, $catalogCategory->id);
@@ -140,7 +140,7 @@ class ProductsBehavior extends Behavior
     /**
      * @param $rows
      */
-    private function loadConditions($rows): void
+    private function loadConditions($rows)
     {
         array_map(function ($condition) {
             return array_push($this->conditions, [
