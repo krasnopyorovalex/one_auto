@@ -27,7 +27,7 @@
                                 <form action="#">
                                     <select name="cities" id="cities">
                                         {% for key,value in app.params.subdomains %}
-                                            <option value="{{ key }}.{{ app.request.hostName }}">{{ value.nominative }}</option>
+                                            <option value="{{ key }}.{{ app.params['site_domain'] }}">{{ value.nominative }}</option>
                                         {% endfor %}
                                     </select>
                                 </form>
