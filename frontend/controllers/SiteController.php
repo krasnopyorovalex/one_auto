@@ -90,7 +90,7 @@ class SiteController extends Controller
             $subdomain = Subdomains::findOne(['is_main' => Subdomains::IS_MAIN]);
         }
 
-        print_r($subdomain);
+        print_r($chunk);
 
         \Yii::$app->params['phone'] = $subdomain->phone;
         \Yii::$app->params['address'] = $subdomain->address;
