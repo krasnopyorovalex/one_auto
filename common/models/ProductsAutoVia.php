@@ -15,8 +15,8 @@ use yii\db\ActiveRecord;
  */
 class ProductsAutoVia extends ActiveRecord
 {
-    private const AUTO_MODEL = 'model';
-    private const AUTO_GENERATION = 'generation';
+    const AUTO_MODEL = 'model';
+    const AUTO_GENERATION = 'generation';
 
     /**
      * @inheritdoc
