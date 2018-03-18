@@ -82,9 +82,7 @@ class SiteController extends Controller
         }
 
         $chunks = explode('.',\Yii::$app->request->hostName);
-
-        $subdomain = Subdomains::findOne(['domain_name' => array_shift($chunks)]);
-        if( count($chunks) == 2 && ! $subdomain ) {
+        if( ! ($subdomain = Subdomains::findOne(['domain_name' => array_shift($chunks)])) && count($chunks) == 2) {
             throw new NotFoundHttpException('The requested page does not exist.');
         } else {
             $subdomain = Subdomains::findOne(['domain_name' => \Yii::$app->params['default_subdomain']]);
