@@ -19,6 +19,8 @@ use yii\helpers\Json;
  */
 class Subdomains extends MainModel
 {
+    const IS_MAIN = 1;
+
     public $casesItems = [
         'nominative' => 'Именительный(кто, что?)',
         'genitive' => 'Родительный(кого, чего?)',

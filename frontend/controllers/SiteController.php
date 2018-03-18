@@ -87,7 +87,7 @@ class SiteController extends Controller
             \Yii::$app->response->setStatusCode(404);
             \Yii::$app->end();
         } else {
-            $subdomain = Subdomains::findOne(['domain_name' => \Yii::$app->params['default_subdomain']]);
+            $subdomain = Subdomains::findOne(['is_main' => Subdomains::IS_MAIN]);
         }
 
         \Yii::$app->params['phone'] = $subdomain->phone;
