@@ -84,7 +84,7 @@ class SiteController extends Controller
         $chunks = explode('.',\Yii::$app->request->hostName);
         $chunk = array_shift($chunks);
 
-        $subdomain = Subdomains::find()->where(['domain_name' => $chunk])->one();
+        $subdomain = Subdomains::findOne(['domain_name' => $chunk]);
         if( count($chunks) == 2 && ! $subdomain ) {
             \Yii::$app->response->setStatusCode(404);
             \Yii::$app->end();
