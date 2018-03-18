@@ -84,7 +84,8 @@ class SiteController extends Controller
         $chunks = explode('.',\Yii::$app->request->hostName);
         $chunk = array_shift($chunks);
         if( ! ($subdomain = Subdomains::findOne(['domain_name' => $chunk])) && count($chunks) == 2) {
-            \Yii::$app->end(404);
+            \Yii::$app->response->setStatusCode(404);
+            \Yii::$app->end();
         } else {
             $subdomain = Subdomains::findOne(['domain_name' => \Yii::$app->params['default_subdomain']]);
         }
