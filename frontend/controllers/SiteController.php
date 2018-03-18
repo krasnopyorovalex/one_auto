@@ -91,6 +91,7 @@ class SiteController extends Controller
         }
 
         print_r($chunk);
+        print_r(count($chunks));
 
         \Yii::$app->params['phone'] = $subdomain->phone;
         \Yii::$app->params['address'] = $subdomain->address;
