@@ -21,7 +21,9 @@
         "yiisoft/yii2-twig": "2.0.4",
         "yiisoft/yii2-imagine": "~2.0.0",
         "intervention/image": "2.3.11",
-        "bower-asset/jquery": "2.2.*@stable"
+        "bower-asset/jquery": "2.2.*@stable",
+        "electrolinux/phpquery": "0.9.6",
+        "guzzlehttp/guzzle": "~6.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
