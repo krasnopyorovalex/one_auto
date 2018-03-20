@@ -35,6 +35,7 @@ class ProductsBehavior extends Behavior
         $this->getCatalogCategories($catalog->catalogCategories);
 
         $query = Products::find()->where(['category_id' => $this->ids]);
+        $count = clone $query;
 
         if( $productIds = $this->getProductsWithAuto($brand, $model, $generation) ) {
             $ids = array_map(function ($id) {
@@ -48,7 +49,7 @@ class ProductsBehavior extends Behavior
 
         $this->data = [
             'products' => $products,
-            'count' => count($products),
+            'count' => $count->count(),
             'offset' => $page + \Yii::$app->params['per_page'],
             'sidebarMenuLinks' => $catalog['catalog']['catalogCategories']
         ];

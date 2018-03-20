@@ -6,10 +6,14 @@ use common\models\AutoBrands;
 use common\models\AutoGenerations;
 use common\models\AutoModels;
 use common\models\CatalogCategories;
+use common\models\Makers;
 use common\models\Products;
+use common\models\ProductsAutoVia;
+use common\models\ProductsOriginalNumbers;
 use GuzzleHttp\Client;
 use yii\console\Controller;
 use yii\helpers\Console;
+use yii\helpers\Html;
 use yii\helpers\Inflector;
 
 class ParserController extends Controller
@@ -41,25 +45,21 @@ class ParserController extends Controller
 
     public function actionStart()
     {
+        $start = microtime(true);
         $this->stdout('Начало выполнения грабежа данных:'.PHP_EOL, Console::FG_YELLOW);
 
         $this->saveToDbMakers();
-        //$this->saveToDbAutos();
-        //$this->saveToDbCategories();
-        //$this->createLinksProducts();
+        $this->saveToDbAutos();
+        $this->saveToDbCategories();
+
+        $this->createLinksProducts();
+
+        $finish = microtime(true);
+
+        $delta = ($finish - $start) / 60;
 
         $this->stdout('Всё выполнено шоколадно. Поздравляю!'.PHP_EOL, Console::FG_BLUE);
-    }
-
-    private function saveToDbMakers()
-    {
-        $body = self::$client->request('GET', 'https://detalika.ru/proizvoditeli')->getBody();
-        $document = \phpQuery::newDocumentHTML($body);
-
-        $pagLinks = $document->find('.pagination a');
-        foreach ($pagLinks as $pagLink) {
-            echo pq($pagLink)->text() . PHP_EOL;
-        }
+        $this->stdout('Затраченное время: ' . round($delta, 2) . ' мин' .PHP_EOL, Console::FG_BLUE);
     }
 
     private function createLinksProducts()
@@ -72,12 +72,16 @@ class ParserController extends Controller
                 foreach ($category['nodes'] as $subCategory) {
                     if(isset($subCategory['nodes']) && $subCategory['nodes']) {
                         foreach ($subCategory['nodes'] as $subSubCategory) {
-                            $this->catalogCategoryId = $subSubCategory['id'];
-                            $this->createLinksProductsWithAuto($subSubCategory['alias']);
+                            if($currentId = CatalogCategories::findOne(['alias' => Inflector::slug($subSubCategory['oldText'])])) {
+                                $this->catalogCategoryId = $currentId['id'];
+                                $this->createLinksProductsWithAuto($subSubCategory['alias']);
+                            }
                         }
                     } else {
-                        $this->catalogCategoryId = $subCategory['id'];
-                        $this->createLinksProductsWithAuto($subCategory['alias']);
+                        if($currentId = CatalogCategories::findOne(['alias' => Inflector::slug($subCategory['oldText'])])){
+                            $this->catalogCategoryId = $currentId['id'];
+                            $this->createLinksProductsWithAuto($subCategory['alias']);
+                        }
                     }
                 }
                 break;
@@ -97,12 +101,12 @@ class ParserController extends Controller
                 $url = self::BASE_URL . '/zapchasti/na-' . $autoBrand['alias'] . '/'. $autoModel['alias'] . '?detailsCategorieAlias=' . $alias;
                 $this->parseListProductsPage($url, 'model', $autoModel['id']);
 
-//                foreach ($autoModel['autoGenerations'] as $autoGeneration) {
-//
-//                    $url = self::BASE_URL . '/zapchasti/na-' . $autoBrand['alias'] . '/'. $autoModel['alias'] . '/' . $autoGeneration['alias']. '/' . $alias;
-//                    //$this->stdout('Info: '.$url . PHP_EOL, Console::FG_GREEN);
-//                    break;
-//                }
+                foreach ($autoModel['autoGenerations'] as $autoGeneration) {
+
+                    $url = self::BASE_URL . '/zapchasti/na-' . $autoBrand['alias'] . '/'. $autoModel['alias'] . '/' . $autoGeneration['alias']. '/' . $alias;
+                    $this->parseListProductsPage($url, 'generation', $autoGeneration['id']);
+                    //break;
+                }
 
                 break;
             }
@@ -112,19 +116,24 @@ class ParserController extends Controller
 
     private function parseListProductsPage($url, $type, $id)
     {
-        $body = self::$client->request('GET', $url)->getBody();
-        $document = \phpQuery::newDocumentHTML($body);
+        if( ($request = self::$client->request('GET', $url, ['allow_redirects' => false])) && ($request->getStatusCode() == 200) ) {
+            $body = $request->getBody();
+            $document = \phpQuery::newDocumentHTML($body);
 
-        $linksProducts = $document->find('.unique-numbers-list .detail-container a.detail');
+            $linksProducts = $document->find('.unique-numbers-list .detail-container a.detail');
+            foreach ($linksProducts as $linksProduct) {
+                if($link = pq($linksProduct)->attr('href')) {
 
-        foreach ($linksProducts as $linksProduct) {
-            if($link = pq($linksProduct)->attr('href')) {
-                $this->saveToDbProduct(self::BASE_URL . $link, $type, $id);
+                    $this->stdout('---- Ссылка продукта '.self::BASE_URL . $link . PHP_EOL, Console::FG_GREEN);
+
+                    $this->saveToDbProduct(self::BASE_URL . $link, $type, $id);
+                }
             }
         }
     }
 
-    private function saveToDbProduct($link, $type, $id) {
+    private function saveToDbProduct($link, $type, $autoId)
+    {
         $body = self::$client->request('GET', $link)->getBody();
         $document = \phpQuery::newDocumentHTML($body);
 
@@ -136,8 +145,54 @@ class ParserController extends Controller
         $newProduct->name = $document->find('h1')->text();
         $newProduct->alias = Inflector::slug($newProduct->name);
         $newProduct->category_id = $this->catalogCategoryId;
+        $newProduct->price = intval($document->find('.price-value')->text());
 
-        exit();
+        if($image = $document->find('.product-image')->attr('src')){
+            $newImage = explode('/', $image);
+            $newImage = explode('.', end($newImage));
+            $newImageName = md5($newImage[0] . microtime()) . '.' . $newImage[1];
+
+            if(copy(self::BASE_URL . $image, \Yii::getAlias('@frontend/web/userfiles/products/') . $newImageName)){
+                $newProduct->image = $newImageName;
+            }
+        }
+
+        $maker = $document->find('table.detail-view tr td[itemprop=brand]')->text();
+        if( ! $findMaker = Makers::findOne(['name' => $maker])){
+            $newMaker = new Makers();
+            $newMaker->alias = Inflector::slug($maker);
+            $newMaker->name = $maker;
+            $newMaker->save();
+
+            $newProduct->maker_id = $newMaker->id;
+        } else {
+            $newProduct->maker_id = $findMaker->id;
+        }
+
+        $newProduct->articul = $document->find('table.detail-view tr:eq(1) td')->text();
+        $newProduct->balance = $document->find('table.detail-view tr:eq(3) td')->text();
+        $newProduct->barcode = $document->find('table.detail-view tr:eq(4) td')->text();
+        $newProduct->text = Html::tag('p',$document->find('div[itemprop=description]')->text());
+        if( ! $newProduct->save() ) {
+            print_r($newProduct->getErrors());
+        }
+
+        if($newProduct->id && ($originNumbers = $document->find('.original-numbers-container a')) ) {
+            foreach ($originNumbers as $originNumber) {
+                $newOriginNumber = new ProductsOriginalNumbers();
+                $newOriginNumber->product_id = $newProduct->id;
+                $newOriginNumber->number = pq($originNumber)->text();
+                $newOriginNumber->save();
+            }
+        }
+
+        if($newProduct->id) {
+            $productsAutoVia = new ProductsAutoVia();
+            $productsAutoVia->product_id = $newProduct->id;
+            $productsAutoVia->type = $type;
+            $productsAutoVia->auto_id = $autoId;
+            $productsAutoVia->save();
+        }
     }
 
     private function saveToDbAutos()
@@ -157,13 +212,18 @@ class ParserController extends Controller
             $newBrand->alias = str_replace('/zapchasti/na-', '', $page);
             $newBrand->save();
 
-            foreach ($document->find('.field-carsmodelalias .models-list .item a') as $model) {
+            foreach ($document->find('.field-carsmodelalias .models-list .item') as $model) {
+                $alias = pq($model)->attr('val');
+                if(strstr($alias, '/')) {
+                    $chunks = explode('/',$alias);
+                    $alias = array_shift($chunks);
+                }
                 $newModel = new AutoModels();
-                $newModel->name = pq($model)->text();
-                $newModel->alias = Inflector::slug($newModel->name);
+                $newModel->name = pq($model)->attr('text');
+                $newModel->alias = $alias;
                 $newModel->brand_id = $newBrand->id;
                 $newModel->save();
-                $this->saveToDbGenerationsFromUrl(self::BASE_URL . pq($model)->attr('href'), $newModel->id);
+                $this->saveToDbGenerationsFromUrl(self::BASE_URL . pq($model)->find('a')->attr('href'), $newModel->id);
             }
 
             $this->stdout('Info: Бренд ' . $newBrand->name . ' сохранён успешно' . PHP_EOL, Console::FG_GREEN);
@@ -179,10 +239,10 @@ class ParserController extends Controller
         $body = self::$client->request('GET', $url)->getBody();
         $document = \phpQuery::newDocumentHTML($body);
 
-        foreach ($document->find('.field-carsgenerationalias .models-list .item a') as $generation) {
+        foreach ($document->find('.field-carsgenerationalias .models-list .item') as $generation) {
             $newGeneration = new AutoGenerations();
-            $newGeneration->name = pq($generation)->find('b')->text();
-            $newGeneration->alias = Inflector::slug($newGeneration->name);
+            $newGeneration->name = pq($generation)->attr('text');
+            $newGeneration->alias = pq($generation)->attr('val');
             $newGeneration->model_id = $modelId;
             $newGeneration->save();
         }
@@ -229,4 +289,27 @@ class ParserController extends Controller
             }
         }
     }
+
+    private function saveToDbMakers()
+    {
+        $body = self::$client->request('GET', 'https://detalika.ru/proizvoditeli')->getBody();
+        $document = \phpQuery::newDocumentHTML($body);
+
+        $pagLinks = $document->find('.grid-view .pagination a');
+        foreach ($pagLinks as $pagLink) {
+            $body = self::$client->request('GET', self::BASE_URL . pq($pagLink)->attr('href'))->getBody();
+            $document = \phpQuery::newDocumentHTML($body);
+
+            foreach ($document->find('table.table tbody tr td:first-child() > a') as $maker) {
+                $alias = Inflector::slug(pq($maker)->text());
+                if( ! Makers::findOne(['alias' => $alias])) {
+                    $newMaker = new Makers();
+                    $newMaker->name = pq($maker)->text();
+                    $newMaker->alias = $alias;
+                    $newMaker->save();
+                }
+            }
+        }
+    }
+
 }

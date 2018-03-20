@@ -29,12 +29,12 @@ $this->params['breadcrumbs'][] = $catalogCategory->name;
     'columns' => [
         'name',
         'alias',
-        [
-            'header' => 'Обновлен',
-            'value' => function ($model) {
-                return Yii::$app->formatter->asDate($model->updated_at);
-            },
-        ],
+//        [
+//            'header' => 'Обновлен',
+//            'value' => function ($model) {
+//                return Yii::$app->formatter->asDate($model->updated_at);
+//            },
+//        ],
         [
             'class' => 'yii\grid\ActionColumn',
             'header' => 'Действия',
