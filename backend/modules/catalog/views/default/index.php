@@ -12,7 +12,6 @@ $this->params['breadcrumbs'][] = $this->context->module->params['name'];
 
     <?php echo GridView::widget([
         'dataProvider' => $dataProvider,
-        'summary' => false,
         'tableOptions' => ['class' => 'table responsive'],
         'columns' => [
             'name',

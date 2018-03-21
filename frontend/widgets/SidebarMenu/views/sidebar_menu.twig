@@ -1,7 +1,7 @@
 <ul>
     {% for category in model['roots'] %}
         <li><a href="/{{ catalog }}/{{ category.alias }}{{ queryParams }}">{{ category.name }}</a>
-            {% if model['roots'][category.id] %}
+            {% if model['in'][category.id] %}
                 <ul>
                     {% for subCategory in model['in'][category.id] %}
                         <li>

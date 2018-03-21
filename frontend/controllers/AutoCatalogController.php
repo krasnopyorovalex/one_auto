@@ -44,7 +44,6 @@ class AutoCatalogController extends SiteController
         if( ! $catalog = CatalogCategories::find()->where(['alias' => $category])->with(['catalogCategories'])->limit(1)->one() ) {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
-
         $this->getProducts($catalog, $page, $brand, $model, $generation);
 
         if(\Yii::$app->request->isPost){
@@ -72,6 +71,7 @@ class AutoCatalogController extends SiteController
             throw new NotFoundHttpException('The requested page does not exist.');
         }
 
+        $page = is_numeric($model) ? $model : $page;
         $this->getProducts($catalog, $page, $brand, $model, $generation);
 
         if(\Yii::$app->request->isPost){
@@ -99,6 +99,7 @@ class AutoCatalogController extends SiteController
             throw new NotFoundHttpException('The requested page does not exist.');
         }
 
+        $page = is_numeric($generation) ? $generation : (is_numeric($model) ? $model : $page);
         $this->getProducts($catalog, $page, $brand, $model, $generation);
 
         if(\Yii::$app->request->isPost){

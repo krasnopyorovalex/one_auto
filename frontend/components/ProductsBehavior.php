@@ -35,7 +35,6 @@ class ProductsBehavior extends Behavior
         $this->getCatalogCategories($catalog->catalogCategories);
 
         $query = Products::find()->where(['category_id' => $this->ids]);
-        $count = clone $query;
 
         if( $productIds = $this->getProductsWithAuto($brand, $model, $generation) ) {
             $ids = array_map(function ($id) {
@@ -45,7 +44,9 @@ class ProductsBehavior extends Behavior
             $query->andWhere(['id' => $ids]);
         }
 
-        $products = $query->limit(\Yii::$app->params['per_page'])->offset($page)->asArray()->all();
+        $count = clone $query;
+
+        $products = $query->with(['maker'])->limit(\Yii::$app->params['per_page'])->offset($page)->asArray()->all();
 
         $this->data = [
             'products' => $products,
@@ -87,8 +88,8 @@ class ProductsBehavior extends Behavior
     {
         foreach ($catalogCategories as $catalogCategory) {
             array_push($this->ids, $catalogCategory->id);
-            if($catalogCategory->catalogCategories){
-                $this->getCatalogCategories($catalogCategory->catalogCategories);
+            if($catalogCategories = $catalogCategory->catalogCategories){
+                $this->getCatalogCategories($catalogCategories);
             }
         }
     }

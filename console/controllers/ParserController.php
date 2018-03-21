@@ -6,6 +6,7 @@ use common\models\AutoBrands;
 use common\models\AutoGenerations;
 use common\models\AutoModels;
 use common\models\CatalogCategories;
+use common\models\Helpfull;
 use common\models\Makers;
 use common\models\Products;
 use common\models\ProductsAutoVia;
@@ -48,9 +49,10 @@ class ParserController extends Controller
         $start = microtime(true);
         $this->stdout('Начало выполнения грабежа данных:'.PHP_EOL, Console::FG_YELLOW);
 
-        $this->saveToDbMakers();
-        $this->saveToDbAutos();
-        $this->saveToDbCategories();
+//        $this->createTable();
+//        $this->saveToDbMakers();
+//        $this->saveToDbAutos();
+//        $this->saveToDbCategories();
 
         $this->createLinksProducts();
 
@@ -64,29 +66,44 @@ class ParserController extends Controller
 
     private function createLinksProducts()
     {
-        $categories = file_get_contents(\Yii::getAlias('@console/data/categories_01.json'));
-        $data = json_decode($categories, true);
+        $data = Helpfull::findAll(['parent_id' => null]);
 
-        foreach ($data['data'] as $category) {
-            if(isset($category['nodes']) && $category['nodes']) {
-                foreach ($category['nodes'] as $subCategory) {
-                    if(isset($subCategory['nodes']) && $subCategory['nodes']) {
-                        foreach ($subCategory['nodes'] as $subSubCategory) {
-                            if($currentId = CatalogCategories::findOne(['alias' => Inflector::slug($subSubCategory['oldText'])])) {
+        foreach ($data as $category) {
+
+            if(isset($category->helpfulls) && $category->helpfulls && ! $category->is_complete) {
+                foreach ($category->helpfulls as $subCategory) {
+
+                    if(isset($subCategory->helpfulls) && $subCategory->helpfulls && ! $subCategory->is_complete) {
+                        foreach ($subCategory->helpfulls as $subSubCategory) {
+
+                            $helpFull = Helpfull::findOne(['alias' => $subSubCategory['alias']]);
+
+                            if( ($currentId = CatalogCategories::findOne(['alias' => $subSubCategory['alias']])) && ! $helpFull->is_complete) {
                                 $this->catalogCategoryId = $currentId['id'];
                                 $this->createLinksProductsWithAuto($subSubCategory['alias']);
+
+                                $helpFull->is_complete = 1;
+                                $helpFull->save();
                             }
                         }
                     } else {
-                        if($currentId = CatalogCategories::findOne(['alias' => Inflector::slug($subCategory['oldText'])])){
+                        if($currentId = CatalogCategories::findOne(['alias' => $subCategory['alias']])){
                             $this->catalogCategoryId = $currentId['id'];
                             $this->createLinksProductsWithAuto($subCategory['alias']);
                         }
                     }
+
+                    $helpFull = Helpfull::findOne(['alias' => $subCategory['alias']]);
+                    $helpFull->is_complete = 1;
+                    $helpFull->save();
+
                 }
-                break;
             }
-            break;
+
+            $helpFull = Helpfull::findOne(['alias' => $category['alias']]);
+            $helpFull->is_complete = 1;
+            $helpFull->save();
+
         }
     }
 
@@ -105,12 +122,13 @@ class ParserController extends Controller
 
                     $url = self::BASE_URL . '/zapchasti/na-' . $autoBrand['alias'] . '/'. $autoModel['alias'] . '/' . $autoGeneration['alias']. '/' . $alias;
                     $this->parseListProductsPage($url, 'generation', $autoGeneration['id']);
-                    //break;
-                }
+                    \phpQuery::unloadDocuments();
 
-                break;
+                }
+                \phpQuery::unloadDocuments();
+
             }
-            break;
+
         }
     }
 
@@ -119,6 +137,8 @@ class ParserController extends Controller
         if( ($request = self::$client->request('GET', $url, ['allow_redirects' => false])) && ($request->getStatusCode() == 200) ) {
             $body = $request->getBody();
             $document = \phpQuery::newDocumentHTML($body);
+
+            $this->stdout('Info: Ссылка списка продуктов ' . $url . PHP_EOL, Console::FG_GREEN);
 
             $linksProducts = $document->find('.unique-numbers-list .detail-container a.detail');
             foreach ($linksProducts as $linksProduct) {
@@ -137,7 +157,14 @@ class ParserController extends Controller
         $body = self::$client->request('GET', $link)->getBody();
         $document = \phpQuery::newDocumentHTML($body);
 
-        if(Products::findOne(['alias' => Inflector::slug($document->find('h1')->text())])){
+        if($productExists = Products::findOne(['alias' => Inflector::slug($document->find('h1')->text())])){
+
+            $productsAutoVia = new ProductsAutoVia();
+            $productsAutoVia->product_id = $productExists->id;
+            $productsAutoVia->type = $type;
+            $productsAutoVia->auto_id = $autoId;
+            $productsAutoVia->save();
+
             return;
         }
 
@@ -145,7 +172,7 @@ class ParserController extends Controller
         $newProduct->name = $document->find('h1')->text();
         $newProduct->alias = Inflector::slug($newProduct->name);
         $newProduct->category_id = $this->catalogCategoryId;
-        $newProduct->price = intval($document->find('.price-value')->text());
+        $newProduct->price = intval(str_replace(' ', '', $document->find('.price-value')->text()));
 
         if($image = $document->find('.product-image')->attr('src')){
             $newImage = explode('/', $image);
@@ -257,7 +284,7 @@ class ParserController extends Controller
             if( ! $newCategory = CatalogCategories::findOne(['alias' => Inflector::slug($category['alias'])]) ) {
                 $newCategory = new CatalogCategories();
                 $newCategory->name = $category['oldText'];
-                $newCategory->alias = Inflector::slug($category['alias']);
+                $newCategory->alias = $category['alias'];
                 $newCategory->catalog_id = $this->catalogId;
                 $newCategory->save();
             } else {
@@ -270,7 +297,7 @@ class ParserController extends Controller
                 foreach ($category['nodes'] as $subCategory) {
                     $newSubCategory = new CatalogCategories();
                     $newSubCategory->name = $subCategory['oldText'];
-                    $newSubCategory->alias = Inflector::slug($newSubCategory->name);
+                    $newSubCategory->alias = $subCategory['alias'];
                     $newSubCategory->catalog_id = $this->catalogId;
                     $newSubCategory->parent_id = $newCategory->id;
                     $newSubCategory->save();
@@ -279,7 +306,7 @@ class ParserController extends Controller
                         foreach ($subCategory['nodes'] as $subSubCategory) {
                             $newSubSubCategory = new CatalogCategories();
                             $newSubSubCategory->name = $subSubCategory['oldText'];
-                            $newSubSubCategory->alias = Inflector::slug($newSubSubCategory->name);
+                            $newSubSubCategory->alias = $subSubCategory['alias'];
                             $newSubSubCategory->catalog_id = $this->catalogId;
                             $newSubSubCategory->parent_id = $newSubCategory->id;
                             $newSubSubCategory->save();
@@ -307,6 +334,41 @@ class ParserController extends Controller
                     $newMaker->name = pq($maker)->text();
                     $newMaker->alias = $alias;
                     $newMaker->save();
+                }
+            }
+        }
+    }
+
+    public function createTable ()
+    {
+        $categories = file_get_contents(\Yii::getAlias('@console/data/categories_01.json'));
+        $data = json_decode($categories, true);
+
+        foreach ($data['data'] as $category) {
+            if( ! $newCategory = Helpfull::findOne(['alias' => Inflector::slug($category['alias'])]) ) {
+                $newCategory = new Helpfull();
+                $newCategory->name = $category['oldText'];
+                $newCategory->alias = $category['alias'];
+                $newCategory->save();
+            }
+
+            if(isset($category['nodes']) && $category['nodes']){
+                foreach ($category['nodes'] as $subCategory) {
+                    $newSubCategory = new Helpfull();
+                    $newSubCategory->name = $subCategory['oldText'];
+                    $newSubCategory->alias = $subCategory['alias'];
+                    $newSubCategory->parent_id = $newCategory->id;
+                    $newSubCategory->save();
+
+                    if(isset($subCategory['nodes']) && $subCategory['nodes']) {
+                        foreach ($subCategory['nodes'] as $subSubCategory) {
+                            $newSubSubCategory = new Helpfull();
+                            $newSubSubCategory->name = $subSubCategory['oldText'];
+                            $newSubSubCategory->alias = $subSubCategory['alias'];
+                            $newSubSubCategory->parent_id = $newSubCategory->id;
+                            $newSubSubCategory->save();
+                        }
+                    }
                 }
             }
         }
