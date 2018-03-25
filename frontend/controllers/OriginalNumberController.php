@@ -31,7 +31,9 @@ class OriginalNumberController extends SiteController
      */
     public function actionShow($number)
     {
-        if( ! $model = ProductsOriginalNumbers::find()->where(['number' => $number])->with(['product'])->asArray()->all() ){
+        if( ! $model = ProductsOriginalNumbers::find()->where(['number' => $number])->with(['product' => function($query){
+            return $query->with(['maker']);
+        }])->asArray()->all() ){
             throw new NotFoundHttpException('The requested page does not exist.');
         }
 
