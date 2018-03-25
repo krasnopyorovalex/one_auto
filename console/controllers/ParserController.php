@@ -70,23 +70,22 @@ class ParserController extends Controller
 
         foreach ($data as $category) {
 
-            if(isset($category->helpfulls) && $category->helpfulls && ! $category->is_complete) {
+            if(isset($category->helpfulls) && $category->helpfulls && $category->is_complete == 0) {
                 foreach ($category->helpfulls as $subCategory) {
 
-                    if(isset($subCategory->helpfulls) && $subCategory->helpfulls && ! $subCategory->is_complete) {
+                    if(isset($subCategory->helpfulls) && $subCategory->helpfulls && $subCategory->is_complete == 0 ) {
                         foreach ($subCategory->helpfulls as $subSubCategory) {
 
-                            $helpFull = Helpfull::findOne(['alias' => $subSubCategory['alias']]);
-
-                            if( ($currentId = CatalogCategories::findOne(['alias' => $subSubCategory['alias']])) && ! $helpFull->is_complete) {
+                            if( ($currentId = CatalogCategories::findOne(['alias' => $subSubCategory['alias']])) && $subSubCategory->is_complete == 0 ) {
                                 $this->catalogCategoryId = $currentId['id'];
                                 $this->createLinksProductsWithAuto($subSubCategory['alias']);
 
+                                $helpFull = Helpfull::findOne(['alias' => $subSubCategory['alias']]);
                                 $helpFull->is_complete = 1;
                                 $helpFull->save();
                             }
                         }
-                    } else {
+                    } elseif ( $subCategory->is_complete == 0 ) {
                         if($currentId = CatalogCategories::findOne(['alias' => $subCategory['alias']])){
                             $this->catalogCategoryId = $currentId['id'];
                             $this->createLinksProductsWithAuto($subCategory['alias']);

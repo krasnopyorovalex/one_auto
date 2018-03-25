@@ -2,7 +2,7 @@
 
 namespace common\models;
 
-use Yii;
+use frontend\models\Products as P;
 
 /**
  * This is the model class for table "{{%makers}}".
@@ -53,6 +53,6 @@ class Makers extends \yii\db\ActiveRecord
      */
     public function getProducts()
     {
-        return $this->hasMany(Products::class, ['maker_id' => 'id']);
+        return $this->hasMany(P::class, ['maker_id' => 'id']);
     }
 }

@@ -3,7 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\CatalogCategories;
-use common\models\Products;
+use frontend\models\Products;
 use yii\web\NotFoundHttpException;
 
 /**
