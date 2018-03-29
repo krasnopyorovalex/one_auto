@@ -9,6 +9,7 @@ use backend\components\FileBehavior;
  *
  * @property int $id
  * @property string $name
+ * @property string $h1
  * @property string $text
  * @property string $alias
  * @property string $image
@@ -50,7 +51,7 @@ class AutoBrands extends \yii\db\ActiveRecord
         return [
             [['name', 'alias'], 'required'],
             [['text'], 'string'],
-            [['name'], 'string', 'max' => 512],
+            [['name', 'h1'], 'string', 'max' => 512],
             [['alias'], 'string', 'max' => 255],
             [['image'], 'string', 'max' => 36],
             [['alias'], 'unique'],
@@ -64,10 +65,12 @@ class AutoBrands extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
-            'text' => 'Text',
+            'name' => 'Название бренда',
+            'h1' => 'h1',
+            'text' => 'Текст',
             'alias' => 'Alias',
-            'image' => 'Image',
+            'image' => 'Изображение',
+            'file' => 'Изображение'
         ];
     }
 

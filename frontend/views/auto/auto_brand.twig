@@ -20,7 +20,7 @@
             </div>
             <!-- /.content__sidebar -->
             <div class="content__body">
-                <h1>{{ model.name }}</h1>
+                <h1>{{ model.h1 ? model.h1 : model.name }}</h1>
 
                 <div class="items">
                     {% for item in model.autoModels %}

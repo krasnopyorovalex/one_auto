@@ -69,6 +69,7 @@ class DefaultController extends ModuleController
         }
         return $this->render('form', [
             'model' => $form,
+            'catalog' => Catalog::findOne(['id' => (int) Yii::$app->request->get('catalog_id')])
         ]);
     }
 
@@ -90,6 +91,7 @@ class DefaultController extends ModuleController
         }
         return $this->render('form', [
             'model' => $form,
+            'catalog' => $form->catalog
         ]);
     }
 
@@ -111,7 +113,14 @@ class DefaultController extends ModuleController
             }
             return $this->redirect(Url::previous());
         }
-        return $this->render('form', ['model' => $this->repository->get($id)]);
+        /**
+         * @var $model CatalogCategories
+         */
+        $model =  $this->repository->get($id);
+        return $this->render('form', [
+            'model' => $model,
+            'catalog' => $model->catalog
+        ]);
     }
 
     /**

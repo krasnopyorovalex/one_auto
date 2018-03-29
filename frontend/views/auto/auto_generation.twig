@@ -23,6 +23,29 @@
             <div class="content__body">
                 <h1>{{ model.name }}</h1>
 
+                <div class="items cat__details">
+                    {% for item in catalog.catalogCategories %}
+                        <div class="item">
+                            <div class="item__cat">
+                                <img src="/userfiles/categories/{{ item.image }}" alt="">
+                                <div class="item__cat-name">
+                                    <a href="{{ path('auto-catalog/products-with-auto', {
+                                        'catalog': catalog.alias,
+                                        'category': item.alias,
+                                        'brand': model.model.brand.alias,
+                                        'model': model.model.alias,
+                                        'generation': model.alias,
+                                        'page': 0 })
+                                    }}">{{ item.name }}</a>
+                                </div>
+                            </div>
+                            <!-- /.item_cat -->
+                        </div>
+                        <!-- /.item -->
+                    {% endfor %}
+                </div>
+                <!-- /.items -->
+
                 {{ use('frontend/widgets/FormOrder/FormOrder') }}
                 {{ form_order_widget() }}
 

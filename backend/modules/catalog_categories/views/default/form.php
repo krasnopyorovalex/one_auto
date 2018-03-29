@@ -1,6 +1,7 @@
 <?php
 /* @var $this yii\web\View */
 /* @var $model common\models\CatalogCategories */
+/* @var $catalog common\models\Catalog */
 
 use backend\assets\SingleEditorAsset;
 use backend\assets\SelectAsset;
@@ -11,7 +12,8 @@ use yii\helpers\Url;
 SingleEditorAsset::register($this);
 SelectAsset::register($this);
 
-$this->params['breadcrumbs'][] = ['label' => $this->context->module->params['name'], 'url' => Url::toRoute(['/'.$this->context->module->id])];
+$this->params['breadcrumbs'][] = ['label' => 'Каталог', 'url' => Url::toRoute(['/catalog'])];
+$this->params['breadcrumbs'][] = ['label' => $catalog->name, 'url' => Url::toRoute(['/catalog_categories/cat-list/'.$catalog->id])];
 $this->params['breadcrumbs'][] = $this->context->actions[$this->context->action->id];
 ?>
 <div class="row">
@@ -32,6 +34,12 @@ $this->params['breadcrumbs'][] = $this->context->actions[$this->context->action-
                             <div class="row">
                                 <div class="col-md-8">
                                     <?= $form->field($model, 'name')->textInput(['autocomplete' => 'off', 'id' => 'from__generate']) ?>
+                                    <?= $form->field($model, 'h1')->textInput() ?>
+                                    <?php if($model->isNewRecord):?>
+                                        <?= Html::activeInput('hidden',$model,'catalog_id',['value' => Yii::$app->request->get('catalog_id')])?>
+                                    <?php endif;?>
+                                </div>
+                                <div class="col-md-4">
                                     <?= $form->field($model, 'alias', [
                                         'template' => '<div class="form-group">{label}<div class="input-group"><span class="input-group-addon"><i class="icon-pencil"></i></span>{input}{error}{hint}</div></div>'
                                     ])->textInput([
@@ -39,11 +47,6 @@ $this->params['breadcrumbs'][] = $this->context->actions[$this->context->action-
                                         'class' => 'form-control',
                                         'id' => 'to__generate'
                                     ]) ?>
-                                    <?php if($model->isNewRecord):?>
-                                        <?= Html::activeInput('hidden',$model,'catalog_id',['value' => Yii::$app->request->get('catalog_id')])?>
-                                    <?php endif;?>
-                                </div>
-                                <div class="col-md-4">
                                     <?= $form->field($model, 'parent_id')->dropDownList($model->getTree(), [
                                         'class' => 'select-search',
                                         'data-width' => '100%',

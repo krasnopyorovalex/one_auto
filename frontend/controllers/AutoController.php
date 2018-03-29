@@ -5,6 +5,8 @@ namespace frontend\controllers;
 use common\models\AutoBrands;
 use common\models\AutoGenerations;
 use common\models\AutoModels;
+use common\models\Catalog;
+use common\models\CatalogCategories;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -57,8 +59,12 @@ class AutoController extends SiteController
             throw new NotFoundHttpException('The requested page does not exist.');
         }
 
+        $mainCatalog = Catalog::find()->where(['is_main' => 1])->with(['catalogCategories' => function($query){
+            return $query->where(['parent_id' => null]);
+        }])->asArray()->one();
         return $this->render('auto_generation.twig', [
-            'model' => $model
+            'model' => $model,
+            'catalog' => $mainCatalog
         ]);
     }
 }

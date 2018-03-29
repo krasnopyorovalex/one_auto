@@ -28,6 +28,9 @@ class RedirectorService
         $this->uri = \Yii::$app->request->url;
     }
 
+    /**
+     * @throws \yii\base\ExitException
+     */
     public function parse()
     {
         if(strstr($this->uri, '//') || (substr($this->uri, -1) == '/' && $this->uri != '/')){
@@ -40,6 +43,7 @@ class RedirectorService
 
     /**
      * @param $uri
+     * @throws \yii\base\ExitException
      */
     private function clearSlashes($uri)
     {
@@ -55,6 +59,7 @@ class RedirectorService
     /**
      * @param $url
      * @param int $status
+     * @throws \yii\base\ExitException
      */
     private function do_redirect($url, $status = 301)
     {

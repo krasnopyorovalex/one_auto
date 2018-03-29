@@ -1,7 +1,8 @@
+{% set r = app.request %}
 <div class="auto__names">
     <ul>
         {% for brand in model %}
-            <li><a href="{{ path('auto/brand', {'brand': brand.alias}) }}">{{ brand.name }}</a></li>
+            <li><a href="/{{ r.get('catalog') }}/{{ r.get('category') }}/{{ r.get('subcategory') ? r.get('subcategory') ~ '/' : '' }}{{ r.get('subsubcategory') ? r.get('subsubcategory') ~ '/' : '' }}auto-{{ brand.alias }}">{{ brand.name }}</a></li>
         {% endfor %}
     </ul>
 </div>

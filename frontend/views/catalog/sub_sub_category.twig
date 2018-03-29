@@ -32,7 +32,7 @@
             </div>
             <!-- /.content__sidebar -->
             <div class="content__body">
-                <h1>{{ model.name }}</h1>
+                <h1>{{ model.h1 ? model.h1 : model.name }}</h1>
 
                 {{ use('frontend/widgets/AutoBrands/AutoBrands') }}
                 {{ auto_brands_widget() }}

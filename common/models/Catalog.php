@@ -13,6 +13,7 @@ use yii\helpers\ArrayHelper;
  * @property string $text
  * @property string $alias
  * @property string $image
+ * @property integer $is_main
  * @property int $created_at
  * @property int $updated_at
  *
@@ -54,7 +55,7 @@ class Catalog extends MainModel
         return [
             [['name', 'alias'], 'required'],
             [['text'], 'string'],
-            [['created_at', 'updated_at'], 'integer'],
+            [['created_at', 'updated_at', 'is_main'], 'integer'],
             [['name'], 'string', 'max' => 512],
             [['image'], 'string', 'max' => 36],
             [['alias'], 'string', 'max' => 255],
@@ -70,11 +71,11 @@ class Catalog extends MainModel
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
-            'text' => 'Text',
+            'name' => 'Название каталога',
+            'text' => 'Текст',
             'alias' => 'Alias',
-            'image' => 'Image',
-            'file' => 'Image',
+            'image' => 'Изображение',
+            'file' => 'Изображение',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];

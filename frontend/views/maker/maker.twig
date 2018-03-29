@@ -1,4 +1,4 @@
-{{ set(this, 'title', model.name) }}
+{{ set(this, 'title', model.name ~ ' в ' ~ app.params['subdomain_cases']['proposed'] ~ ' - онлайн каталог автозапчастей | One Auto') }}
 
 <div class="wrapper">
     <div class="breadcrumbs">
@@ -19,7 +19,7 @@
             </div>
             <!-- /.content__sidebar -->
             <div class="content__body">
-                <h1>{{ model.name }}</h1>
+                <h1>Каталог автозапчастей {{ model.name }}</h1>
 
                 <div class="items">
                     {{ use('frontend/widgets/ProductsListForCategory/ProductsListForCategory') }}

@@ -2,10 +2,7 @@
 
 namespace frontend\controllers;
 
-use common\models\Catalog;
 use common\models\CatalogCategories;
-use common\models\Products;
-use common\models\ProductsAutoVia;
 use frontend\components\ProductsBehavior;
 use yii\web\NotFoundHttpException;
 
@@ -44,7 +41,14 @@ class AutoCatalogController extends SiteController
         if( ! $catalog = CatalogCategories::find()->where(['alias' => $category])->with(['catalogCategories'])->limit(1)->one() ) {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
-        $this->getProducts($catalog, $page, $brand, $model, $generation);
+
+        $page = is_numeric($generation) ? $generation : (is_numeric($model) ? $model : (is_numeric($brand) ? $brand : $page));
+
+        try {
+            $this->getProducts($catalog, $page, $brand, $model, $generation);
+        } catch (\Exception $exception) {
+            $catalog->text = $exception->getMessage();
+        }
 
         if(\Yii::$app->request->isPost){
             return $this->json();

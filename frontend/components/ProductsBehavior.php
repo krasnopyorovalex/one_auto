@@ -9,6 +9,7 @@ use common\models\CatalogCategories;
 use common\models\Products;
 use common\models\ProductsAutoVia;
 use yii\base\Behavior;
+use yii\helpers\ArrayHelper;
 
 /**
  * Class ProductsBehavior
@@ -36,21 +37,33 @@ class ProductsBehavior extends Behavior
 
         $query = Products::find()->where(['category_id' => $this->ids]);
 
+        $count = 0;
+        $products = false;
+
         if( $productIds = $this->getProductsWithAuto($brand, $model, $generation) ) {
             $ids = array_map(function ($id) {
                 $key = key($id);
                 return $id[$key];
             }, $productIds);
-            $query->andWhere(['id' => $ids]);
+
+            $query->andWhere(['id' => array_slice($ids, $page, \Yii::$app->params['per_page'])]);
+            $count = count($ids);
+
+            $products = $query->with(['maker'])->limit(\Yii::$app->params['per_page'])->asArray()->all();
         }
 
-        $count = clone $query;
+        if( ! $count ) {
+            $count = clone $query;
+            $count = $count->count();
+        }
 
-        $products = $query->with(['maker'])->limit(\Yii::$app->params['per_page'])->offset($page)->asArray()->all();
+        if( ! $products ) {
+            $products = $query->with(['maker'])->limit(\Yii::$app->params['per_page'])->offset($page)->asArray()->all();
+        }
 
         $this->data = [
             'products' => $products,
-            'count' => $count->count(),
+            'count' => $count,
             'offset' => $page + \Yii::$app->params['per_page'],
             'sidebarMenuLinks' => $catalog['catalog']['catalogCategories']
         ];
@@ -110,30 +123,26 @@ class ProductsBehavior extends Behavior
 
             $this->loadConditions($rows);
 
-        } elseif ( $brand && ($rows = AutoBrands::find()->where(['alias' => $brand])->with(['autoModels' => function ($query) {
+        } elseif ( $brand && ($brand = AutoBrands::find()->where(['alias' => $brand])->with(['autoModels' => function ($query) {
                 return $query->with(['autoGenerations']);
-            }])->all()) ) {
+            }])->limit(1)->one()) ) {
 
             array_map(function ($row) {
-                $this->loadConditions($row['autoModels']);
-                array_map(function ($autoModel) {
-                    $this->loadConditions($autoModel['autoGenerations']);
-                }, $row['autoModels']);
-            }, (array) $rows);
+                array_push($this->conditions, [
+                    'type' => $row->getType(),
+                    'auto_id' => $row->id
+                ]);
+                return $this->loadConditions($row['autoGenerations']);
+            }, $brand['autoModels']);
+
         } else {
             return false;
         }
 
         $query = ProductsAutoVia::find()->select('product_id');
+        $autoIds = ArrayHelper::getColumn($this->conditions,'auto_id');
+        $results = $query->where(['auto_id' => array_unique($autoIds)])->asArray()->distinct('product_id')->all();
 
-        array_map(function ($condition) use ($query) {
-            $query->orWhere([
-                'type' => $condition['type'],
-                'auto_id' => $condition['auto_id']
-            ]);
-        }, $this->conditions);
-
-        $results = $query->asArray()->distinct('product_id')->all();
         return !empty($results)
             ? $results
             : [['product_id' => 0]];

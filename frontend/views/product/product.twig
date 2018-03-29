@@ -1,4 +1,5 @@
-{{ set(this, 'title', model.name) }}
+{{ set(this, 'title', model.name ~ ' купить в ' ~ app.params['subdomain_cases']['proposed'] ~ ' от ' ~ model.price ~ ' руб | One Auto') }}
+{{ this.registerMetaTag({'name':'description', 'content': 'Купить '~ model.name ~' от ' ~ model.price ~ ' руб. Магазин One Auto - автозапчасти в ' ~ app.params['subdomain_cases']['proposed'] ~ ' по лучшим ценам!'}) }}
 
 <div class="wrapper">
     <div class="breadcrumbs">

@@ -12,6 +12,7 @@ use yii\helpers\ArrayHelper;
  * @property int $catalog_id
  * @property int $parent_id
  * @property string $name
+ * @property string $h1
  * @property string $text
  * @property string $alias
  * @property string $image
@@ -59,7 +60,7 @@ class CatalogCategories extends MainModel
             [['catalog_id', 'name', 'alias'], 'required'],
             [['catalog_id', 'parent_id', 'created_at', 'updated_at'], 'integer'],
             [['text'], 'string'],
-            [['name'], 'string', 'max' => 512],
+            [['name', 'h1'], 'string', 'max' => 512],
             [['alias'], 'string', 'max' => 255],
             [['alias'], 'unique'],
             [['image'], 'string', 'max' => 36],
@@ -76,11 +77,12 @@ class CatalogCategories extends MainModel
         return [
             'id' => 'ID',
             'catalog_id' => 'Catalog ID',
-            'parent_id' => 'Parent ID',
-            'name' => 'Name',
-            'text' => 'Text',
+            'parent_id' => 'Родительская категория',
+            'name' => 'Название категории',
+            'h1' => 'h1',
+            'text' => 'Текст',
             'alias' => 'Alias',
-            'file' => 'Image',
+            'file' => 'Изображение',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
