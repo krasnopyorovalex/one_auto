@@ -37,33 +37,21 @@ class ProductsBehavior extends Behavior
 
         $query = Products::find()->where(['category_id' => $this->ids]);
 
-        $count = 0;
-        $products = false;
-
         if( $productIds = $this->getProductsWithAuto($brand, $model, $generation) ) {
             $ids = array_map(function ($id) {
                 $key = key($id);
                 return $id[$key];
             }, $productIds);
-
-            $query->andWhere(['id' => array_slice($ids, $page, \Yii::$app->params['per_page'])]);
-            $count = count($ids);
-
-            $products = $query->with(['maker'])->limit(\Yii::$app->params['per_page'])->asArray()->all();
+            $query->andWhere(['id' => $ids]);
         }
 
-        if( ! $count ) {
-            $count = clone $query;
-            $count = $count->count();
-        }
+        $count = clone $query;
 
-        if( ! $products ) {
-            $products = $query->with(['maker'])->limit(\Yii::$app->params['per_page'])->offset($page)->asArray()->all();
-        }
+        $products = $query->with(['maker'])->limit(\Yii::$app->params['per_page'])->offset($page)->asArray()->all();
 
         $this->data = [
             'products' => $products,
-            'count' => $count,
+            'count' => $count->count(),
             'offset' => $page + \Yii::$app->params['per_page'],
             'sidebarMenuLinks' => $catalog['catalog']['catalogCategories'],
             'brand' => $brand,
