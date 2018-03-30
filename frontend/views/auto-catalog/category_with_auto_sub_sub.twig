@@ -1,5 +1,6 @@
-{{ set(this, 'title', model.name) }}
-{{ this.registerMetaTag({'name':'description', 'content': model.name}) }}
+{% set customTitle = model.name ~ (brandAuto.name ? ' ' ~ brandAuto.name : '') ~ (modelAuto.name and not generationAuto ? ' ' ~ modelAuto.name : '') ~ (generationAuto.name ? ' ' ~ generationAuto.name : '') %}
+{{ set(this, 'title', customTitle ~ ' купить в ' ~ app.params['subdomain_cases']['proposed'] ~ ' - лучшие цены в каталоге интернет магазина One Auto') }}
+{{ this.registerMetaTag({'name':'description', 'content': 'Всегда в наличиии ' ~ customTitle ~ ' в ' ~ app.params['subdomain_cases']['proposed'] ~ ' недорого и по доступным ценам. Купить ' ~ (model.h1 ? model.h1 : model.name) ~ ' в каталоге One Auto.'}) }}
 
 <div class="wrapper">
     <div class="breadcrumbs">
@@ -32,7 +33,7 @@
             </div>
             <!-- /.content__sidebar -->
             <div class="content__body">
-                <h1>{{ model.h1 ? model.h1 : model.name }}</h1>
+                <h1>{{ customTitle }}</h1>
 
                 {{ use('frontend/widgets/AutoBrands/AutoBrands') }}
                 {{ auto_brands_widget() }}

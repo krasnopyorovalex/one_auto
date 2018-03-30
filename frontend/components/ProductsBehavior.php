@@ -65,7 +65,10 @@ class ProductsBehavior extends Behavior
             'products' => $products,
             'count' => $count,
             'offset' => $page + \Yii::$app->params['per_page'],
-            'sidebarMenuLinks' => $catalog['catalog']['catalogCategories']
+            'sidebarMenuLinks' => $catalog['catalog']['catalogCategories'],
+            'brand' => $brand,
+            'model' => $model,
+            'generation' => $generation
         ];
     }
 
@@ -90,7 +93,16 @@ class ProductsBehavior extends Behavior
             'model' => $this->model,
             'products' => $this->data['products'],
             'count' => $this->data['count'],
-            'sidebarMenuLinks' => $this->data['sidebarMenuLinks']
+            'sidebarMenuLinks' => $this->data['sidebarMenuLinks'],
+            'brandAuto' => $this->data['brand']
+                ? AutoBrands::findOne(['alias' => $this->data['brand']])
+                : false,
+            'modelAuto' => $this->data['model']
+                ? AutoModels::findOne(['alias' => $this->data['model']])
+                : false,
+            'generationAuto' => $this->data['generation']
+                ? AutoGenerations::findOne(['alias' => $this->data['generation']])
+                : false
         ]);
     }
 

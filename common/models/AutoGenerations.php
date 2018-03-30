@@ -8,6 +8,7 @@ namespace common\models;
  * @property int $id
  * @property int $model_id
  * @property string $name
+ * @property string $h1
  * @property string $alias
  *
  * @property AutoModels $model
@@ -33,7 +34,7 @@ class AutoGenerations extends \yii\db\ActiveRecord
         return [
             [['model_id', 'name', 'alias'], 'required'],
             [['model_id'], 'integer'],
-            [['name'], 'string', 'max' => 512],
+            [['name', 'h1'], 'string', 'max' => 512],
             [['alias'], 'string', 'max' => 255],
             [['alias'], 'unique'],
             [['model_id'], 'exist', 'skipOnError' => true, 'targetClass' => AutoModels::className(), 'targetAttribute' => ['model_id' => 'id']],
@@ -48,7 +49,8 @@ class AutoGenerations extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'model_id' => 'Model ID',
-            'name' => 'Name',
+            'h1' => 'h1',
+            'name' => 'Название модификации',
             'alias' => 'Alias'
         ];
     }
