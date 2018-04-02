@@ -1,5 +1,5 @@
-{{ set(this, 'title', (model.h1 ? model.h1 : model.name) ~ ' купить в ' ~ app.params['subdomain_cases']['proposed'] ~ ' - лучшие цены в каталоге интернет магазина One Auto') }}
-{{ this.registerMetaTag({'name':'description', 'content': 'В наличиии ' ~ (model.h1 ? model.h1 : model.name) ~ ' в ' ~ app.params['subdomain_cases']['proposed'] ~ ' недорого и по доступным ценам. Купить ' ~ (model.h1 ? model.h1 : model.name) ~ ' в каталоге One Auto.'}) }}
+{{ set(this, 'title', 'Автозапчасти для ' ~ (model.h1 ? model.h1 : model.name) ~ ' купить в ' ~ app.params['subdomain_cases']['proposed'] ~ ' - лучшие цены в каталоге интернет магазина One Auto') }}
+{{ this.registerMetaTag({'name':'description', 'content': 'В наличиии автозапчасти для ' ~ (model.h1 ? model.h1 : model.name) ~ ' в ' ~ app.params['subdomain_cases']['proposed'] ~ ' недорого и по доступным ценам. Купить запчасти для автомобилей ' ~ (model.h1 ? model.h1 : model.name) ~ ' в каталоге One Auto.'}) }}
 
 <div class="wrapper">
     <div class="breadcrumbs">
@@ -20,7 +20,7 @@
             </div>
             <!-- /.content__sidebar -->
             <div class="content__body">
-                <h1>{{ model.h1 ? model.h1 : model.name }}</h1>
+                <h1>Запчасти для автомобилей {{ model.h1 ? model.h1 : model.name }}</h1>
 
                 <div class="items">
                     {% for item in model.autoModels %}
