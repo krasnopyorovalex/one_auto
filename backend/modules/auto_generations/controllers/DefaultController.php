@@ -9,6 +9,7 @@ use core\repositories\AutoGenerationsRepository;
 use Yii;
 use yii\helpers\Url;
 use yii\web\NotFoundHttpException;
+use backend\components\FileHelper as FH;
 
 /**
  * Default controller for the `auto_generations` module
@@ -81,5 +82,19 @@ class DefaultController extends SiteController
             'model' => $form,
             'auto_model' => $form['model']
         ]);
+    }
+
+    /**
+     * @param $id
+     * @return bool
+     */
+    public function actionRemoveImage($id)
+    {
+        $model = AutoGenerations::findOne($id);
+        if(FH::removeFile($model->image,$model::PATH)){
+            $model->image = '';
+            return $model->save();
+        }
+        return false;
     }
 }

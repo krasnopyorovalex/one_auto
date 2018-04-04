@@ -10,6 +10,7 @@ use Yii;
 use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
+use backend\components\FileHelper as FH;
 
 /**
  * Default controller for the `auto_brands` module
@@ -82,5 +83,19 @@ class DefaultController extends ModuleController
             'dataProvider' => $this->findData(AutoModels::find()->where(['brand_id' => $id])),
             'brand' => $this->repository->get($id)
         ]);
+    }
+
+    /**
+     * @param $id
+     * @return bool
+     */
+    public function actionRemoveImage($id)
+    {
+        $model = AutoBrands::findOne($id);
+        if(FH::removeFile($model->image,$model::PATH)){
+            $model->image = '';
+            return $model->save();
+        }
+        return false;
     }
 }

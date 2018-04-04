@@ -12,6 +12,7 @@ use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use yii\web\NotFoundHttpException;
+use backend\components\FileHelper as FH;
 
 /**
  * Default controller for the `auto_models` module
@@ -109,5 +110,19 @@ class DefaultController extends SiteController
             'brand' => $model['brand'],
             'model' => $model
         ]);
+    }
+
+    /**
+     * @param $id
+     * @return bool
+     */
+    public function actionRemoveImage($id)
+    {
+        $model = AutoModels::findOne($id);
+        if(FH::removeFile($model->image,$model::PATH)){
+            $model->image = '';
+            return $model->save();
+        }
+        return false;
     }
 }
