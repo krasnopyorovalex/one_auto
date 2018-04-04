@@ -1,5 +1,4 @@
-{{ set(this, 'title', 'Контакты в ' ~ app.params['subdomain_cases']['proposed']) }}
-{{ this.registerMetaTag({'name':'description', 'content': ''}) }}
+{{ set(this, 'title', app.params['subdomain_cases']['proposed']) }}
 
 <div class="wrapper">
     <div class="breadcrumbs">
@@ -15,12 +14,7 @@
     <div class="wrapper">
         <div class="items">
             <div class="content__body info__page">
-                <h1>Контакты в {{ app.params['subdomain_cases']['proposed'] }}</h1>
-
-                <div class="text">
-                    {{ app.params['contact_text']| raw }}
-                </div>
-
+                <h1>{{ app.params['contact_text']| raw }}</h1>
             </div>
             <!-- /.content__body -->
         </div>
