@@ -56,6 +56,7 @@ return [
                 //for main domain
                 '/' => 'site',
                 'robots.txt' => 'robots/txt',
+                'kontakty' => 'site/contacts',
                 'search' => 'search',
                 'send/<action:(order)>' => 'send/<action>',
 

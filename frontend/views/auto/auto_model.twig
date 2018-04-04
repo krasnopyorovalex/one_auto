@@ -23,16 +23,23 @@
             <div class="content__body">
                 <h1>Автозапчасти для {{ model.brand.name }} {{ model.h1 ? model.h1 : model.name }}</h1>
 
-                <div class="auto__names">
-                    <ul>
-                        {% for generation in model.autoGenerations %}
-                            <li><a href="{{ path('auto/generation', {
+                <div class="items">
+                    {% for generation in model.autoGenerations %}
+                        <div class="item">
+                            <div class="item__cat-auto">
+                                <a href="{{ path('auto/generation', {
                                     'brand': model.brand.alias,
                                     'model': model.alias,
                                     'generation': generation.alias
-                                }) }}">{{ generation.name }}</a></li>
-                        {% endfor %}
-                    </ul>
+                                }) }}">
+                                    <img src="/userfiles/auto_generations/{{ generation.image }}" alt="alt">
+                                </a>
+                                <div class="item__cat-model">{{ generation.name }}</div>
+                            </div>
+                            <!-- /.item__cat-auto -->
+                        </div>
+                        <!-- /.item -->
+                    {% endfor %}
                 </div>
 
                 {{ use('frontend/widgets/FormOrder/FormOrder') }}

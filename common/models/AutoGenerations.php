@@ -2,6 +2,8 @@
 
 namespace common\models;
 
+use backend\components\FileBehavior;
+
 /**
  * This is the model class for table "{{%auto_generations}}".
  *
@@ -10,13 +12,28 @@ namespace common\models;
  * @property string $name
  * @property string $h1
  * @property string $alias
+ * @property string $image
  *
  * @property AutoModels $model
  */
 class AutoGenerations extends \yii\db\ActiveRecord
 {
+    const PATH = '/userfiles/auto_generations/';
+    const IMAGE_ENTITY = 'image';
 
+    public $file;
     private $type = 'generation';
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => FileBehavior::class,
+                'path' => self::PATH,
+                'entity_db' => self::IMAGE_ENTITY
+            ]
+        ];
+    }
 
     /**
      * @inheritdoc
@@ -37,6 +54,7 @@ class AutoGenerations extends \yii\db\ActiveRecord
             [['name', 'h1'], 'string', 'max' => 512],
             [['alias'], 'string', 'max' => 255],
             [['alias'], 'unique'],
+            [['image'], 'string', 'max' => 36],
             [['model_id'], 'exist', 'skipOnError' => true, 'targetClass' => AutoModels::className(), 'targetAttribute' => ['model_id' => 'id']],
         ];
     }
@@ -51,7 +69,8 @@ class AutoGenerations extends \yii\db\ActiveRecord
             'model_id' => 'Model ID',
             'h1' => 'h1',
             'name' => 'Название модификации',
-            'alias' => 'Alias'
+            'alias' => 'Alias',
+            'file' => 'Изображение',
         ];
     }
 

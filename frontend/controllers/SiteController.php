@@ -64,6 +64,14 @@ class SiteController extends Controller
     /**
      * @return string
      */
+    public function actionContacts()
+    {
+        return $this->render('contacts.twig');
+    }
+
+    /**
+     * @return string
+     */
     public function actionError()
     {
         return $this->render('error.twig');
@@ -95,6 +103,7 @@ class SiteController extends Controller
         \Yii::$app->params['subdomain_cases'] = json_decode($subdomain['cases_json'], true);
         \Yii::$app->params['phone'] = $subdomain->phone;
         \Yii::$app->params['address'] = $subdomain->address;
+        \Yii::$app->params['contact_text'] = $subdomain->contact_text;
         \Yii::$app->params['subdomains'] = ArrayHelper::map(Subdomains::find()->asArray()->all(), 'domain_name', function($item){
             return json_decode($item['cases_json']);
         });
