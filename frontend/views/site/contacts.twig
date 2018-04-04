@@ -1,4 +1,4 @@
-{{ set(this, 'title', app.params['contact_text']|striptags|replace({'\n',' '})) }}
+{{ set(this, 'title', app.params['contact_text']|striptags|replace({'\n': ' '})) }}
 
 <div class="wrapper">
     <div class="breadcrumbs">
