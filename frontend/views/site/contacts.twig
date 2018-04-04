@@ -1,4 +1,4 @@
-{{ set(this, 'title', app.params['contact_text']| raw) }}
+{{ set(this, 'title', app.params['contact_text']|striptags) }}
 
 <div class="wrapper">
     <div class="breadcrumbs">
